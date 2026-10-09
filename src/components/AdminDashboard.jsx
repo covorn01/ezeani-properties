@@ -154,7 +154,8 @@ export default function AdminDashboard({
   // Confirmation Modals State (Destructive Actions)
   const [deleteConfirmModal, setDeleteConfirmModal] = useState({ open: false, type: '', id: null, title: '' });
 
-  // Career Applications State
+  // Career Applications State & In-Browser CV Document Viewer State
+  const [selectedCvCandidate, setSelectedCvCandidate] = useState(null);
   const [careerApplications, setCareerApplications] = useState([
     {
       id: 'app-1',
@@ -1272,11 +1273,11 @@ export default function AdminDashboard({
                       </button>
 
                       <button
-                        onClick={() => alert(`Downloading CV Resume package for ${app.candidateName}...`)}
-                        className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#34073E] text-white text-xs font-semibold"
+                        onClick={() => setSelectedCvCandidate(app)}
+                        className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#34073E] hover:bg-[#25042D] text-white text-xs font-semibold transition-all shadow-xs cursor-pointer"
                       >
-                        <Download className="w-3.5 h-3.5 text-[#8DC63F]" />
-                        <span>Download CV</span>
+                        <Eye className="w-3.5 h-3.5 text-[#8DC63F]" />
+                        <span>View CV Document</span>
                       </button>
                     </div>
                   </div>
@@ -1760,6 +1761,192 @@ export default function AdminDashboard({
                 Delete Permanently
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* IN-BROWSER CV DOCUMENT VIEWER MODAL */}
+      {selectedCvCandidate && (
+        <div className="fixed inset-0 z-60 bg-[#1E0424]/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto animate-fade-in">
+          <div className="bg-[#1E0424] text-white w-full max-w-4xl max-h-[92vh] rounded-[2.5rem] border border-purple-800 shadow-2xl flex flex-col overflow-hidden my-auto">
+            
+            {/* Viewer Header & PDF Toolbar */}
+            <div className="bg-[#34073E] px-6 py-4 border-b border-purple-800 flex items-center justify-between shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-xl bg-[#8DC63F] text-[#1E0424] font-bold">
+                  <FileText className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-base font-bold font-heading">{selectedCvCandidate.candidateName} &mdash; Official Curriculum Vitae</h3>
+                    <span className="px-2.5 py-0.5 rounded-full bg-[#8DC63F]/20 text-[#8DC63F] font-mono text-[10px] font-bold uppercase">
+                      {selectedCvCandidate.role}
+                    </span>
+                  </div>
+                  <p className="text-xs text-purple-200/80">
+                    Submitted: {selectedCvCandidate.appliedDate} &bull; Document Format: PDF (SURCON Verified)
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => {
+                    setCareerApplications(prev => prev.map(a => a.id === selectedCvCandidate.id ? { ...a, status: 'Shortlisted' } : a));
+                    setSelectedCvCandidate(prev => ({ ...prev, status: 'Shortlisted' }));
+                    addAuditLog('Candidate Shortlisted', `${selectedCvCandidate.candidateName} shortlisted from CV viewer`);
+                  }}
+                  className="px-3.5 py-1.5 bg-[#8DC63F] text-[#1E0424] rounded-xl text-xs font-bold hover:bg-[#7bb532]"
+                >
+                  {selectedCvCandidate.status === 'Shortlisted' ? '✓ Shortlisted' : 'Shortlist Candidate'}
+                </button>
+
+                <button
+                  onClick={() => setSelectedCvCandidate(null)}
+                  className="p-2 rounded-full bg-purple-900/60 text-purple-200 hover:text-white"
+                  title="Close Viewer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* PDF Document Paper Sheet Area */}
+            <div className="flex-1 p-6 sm:p-8 overflow-y-auto bg-[#FAF7FC] text-[#1F0A26]">
+              <div className="max-w-3xl mx-auto bg-white rounded-2xl p-8 sm:p-12 shadow-xl border border-purple-100 space-y-8 text-xs font-sans text-[#1F0A26]">
+                
+                {/* Resume Document Header */}
+                <div className="border-b border-purple-200 pb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div>
+                    <h2 className="text-2xl sm:text-3xl font-bold font-heading text-[#34073E] tracking-tight">
+                      {selectedCvCandidate.candidateName}
+                    </h2>
+                    <p className="text-sm font-bold text-[#8DC63F] font-mono uppercase tracking-wider mt-1">
+                      {selectedCvCandidate.role}
+                    </p>
+                    <div className="flex items-center gap-3 text-xs text-[#52525B] mt-2 font-mono">
+                      <span>SURCON Reg: SURV/2021/88402</span>
+                      <span>&bull;</span>
+                      <span>Licensed Cadastral Practitioner</span>
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-[#FAF7FC] rounded-2xl border border-purple-200 text-[11px] text-[#34073E] space-y-1 shrink-0 font-medium">
+                    <p>📧 {selectedCvCandidate.email}</p>
+                    <p>📞 {selectedCvCandidate.phone}</p>
+                    <p>📍 Lagos & Abuja Operational Base</p>
+                  </div>
+                </div>
+
+                {/* Professional Profile */}
+                <div className="space-y-2">
+                  <h4 className="text-xs font-mono uppercase font-bold text-[#34073E] border-b border-purple-100 pb-1">
+                    Professional Executive Summary
+                  </h4>
+                  <p className="text-xs text-[#52525B] leading-relaxed">
+                    Highly skilled and results-oriented {selectedCvCandidate.role} with {selectedCvCandidate.experience}. Specializing in GIS satellite mapping, cadastral boundary determination, Certificate of Occupancy (C of O) verification, land title registration, and high-yield real estate asset portfolio advisory across Nigeria.
+                  </p>
+                </div>
+
+                {/* Experience Highlights */}
+                <div className="space-y-3">
+                  <h4 className="text-xs font-mono uppercase font-bold text-[#34073E] border-b border-purple-100 pb-1">
+                    Key Work Experience & Major Field Projects
+                  </h4>
+
+                  <div className="space-y-3">
+                    <div className="p-4 bg-[#FAF7FC] rounded-xl border border-purple-100 space-y-1.5">
+                      <div className="flex items-center justify-between font-bold text-[#34073E]">
+                        <span>Lead Cadastral Surveyor & Title Verification Specialist</span>
+                        <span className="text-[10px] font-mono text-[#8DC63F]">2022 &ndash; Present</span>
+                      </div>
+                      <p className="text-[11px] text-[#52525B]">
+                        Led over 140+ boundary survey exercises in Lekki Phase 1, Ikoyi, Victoria Island, and Guzape Abuja. Successfully lodged certified survey plans with the Surveyor-General's office for Governor's Consent approvals with zero boundary overlap disputes.
+                      </p>
+                    </div>
+
+                    <div className="p-4 bg-[#FAF7FC] rounded-xl border border-purple-100 space-y-1.5">
+                      <div className="flex items-center justify-between font-bold text-[#34073E]">
+                        <span>Senior Land & Real Estate Advisor</span>
+                        <span className="text-[10px] font-mono text-[#8DC63F]">2019 &ndash; 2022</span>
+                      </div>
+                      <p className="text-[11px] text-[#52525B]">
+                        Managed title search verification, perfection of titles, and corporate acquisition due diligence for residential estates, commercial office towers, and industrial logistics parks.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Technical Skills & Certifications */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
+                  <div className="space-y-2">
+                    <h4 className="text-xs font-mono uppercase font-bold text-[#34073E] border-b border-purple-100 pb-1">
+                      Core Competencies & Tools
+                    </h4>
+                    <ul className="text-xs text-[#52525B] space-y-1 list-disc list-inside">
+                      <li>Leica RTK GPS & Total Station Operations</li>
+                      <li>GIS Spatial Analysis (ArcGIS, QGIS, AutoCAD Map3D)</li>
+                      <li>Cadastral Title Search & C of O Verification</li>
+                      <li>SURCON Regulatory Compliance</li>
+                      <li>Drone Photogrammetry & Topographic Mapping</li>
+                    </ul>
+                  </div>
+
+                  <div className="space-y-2">
+                    <h4 className="text-xs font-mono uppercase font-bold text-[#34073E] border-b border-purple-100 pb-1">
+                      Education & Credentials
+                    </h4>
+                    <div className="text-xs text-[#52525B] space-y-1.5">
+                      <p className="font-bold text-[#34073E]">B.Sc. Surveying & Geoinformatics (First Class)</p>
+                      <p className="text-[11px]">University of Lagos &bull; 2018</p>
+                      <div className="p-2.5 bg-[#8DC63F]/15 rounded-xl text-[11px] text-[#34073E] font-semibold border border-[#8DC63F]/40 flex items-center gap-2 mt-2">
+                        <CheckCircle2 className="w-4 h-4 text-[#8DC63F]" />
+                        <span>Verified Member, Nigerian Institution of Surveyors (NIS)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Official HR Verification Stamp */}
+                <div className="pt-6 border-t border-purple-200 flex items-center justify-between">
+                  <div className="text-[10px] text-[#52525B] font-mono">
+                    Ezeani Properties Recruitment System &bull; ID #{selectedCvCandidate.id}
+                  </div>
+                  <div className="px-4 py-1.5 rounded-full bg-[#8DC63F] text-[#1E0424] text-[10px] font-mono font-bold uppercase tracking-wider shadow-sm flex items-center gap-1.5">
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    <span>Verified Candidate CV</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            {/* Viewer Modal Bottom Action Controls */}
+            <div className="bg-[#34073E] px-6 py-4 border-t border-purple-800 flex items-center justify-between shrink-0">
+              <span className="text-xs text-purple-200">
+                Viewing Candidate <strong className="text-white">{selectedCvCandidate.candidateName}</strong>
+              </span>
+
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setSelectedCvCandidate(null)}
+                  className="px-5 py-2 rounded-xl bg-purple-900/60 hover:bg-purple-900 text-purple-200 text-xs font-semibold"
+                >
+                  Close Document
+                </button>
+                <button
+                  onClick={() => {
+                    alert(`Interview schedule request initiated for ${selectedCvCandidate.candidateName}. Email notification sent to candidate!`);
+                    addAuditLog('Interview Scheduled', `Interview scheduled with ${selectedCvCandidate.candidateName}`);
+                    setSelectedCvCandidate(null);
+                  }}
+                  className="px-6 py-2 rounded-xl bg-[#8DC63F] hover:bg-[#7bb532] text-[#1E0424] text-xs font-bold"
+                >
+                  Schedule Candidate Interview
+                </button>
+              </div>
+            </div>
+
           </div>
         </div>
       )}
