@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { SURVEY_SERVICES } from '../data/mockData';
 
-export default function SurveyServices({ onOpenBooking }) {
+export default function SurveyServices({ onOpenBooking, companyInfo }) {
   // Survey Cost Estimator State
   const [landAcres, setLandAcres] = useState(2.5);
   const [selectedServiceId, setSelectedServiceId] = useState('boundary');
@@ -47,7 +47,6 @@ export default function SurveyServices({ onOpenBooking }) {
   const maxCost = Math.round(estimatedCost * 1.15);
 
   const selectedServiceObj = SURVEY_SERVICES.find((s) => s.id === selectedServiceId) || SURVEY_SERVICES[0];
-
   const boundarySrv = SURVEY_SERVICES.find((s) => s.id === 'boundary') || SURVEY_SERVICES[0];
   const titleSrv = SURVEY_SERVICES.find((s) => s.id === 'title-search') || SURVEY_SERVICES[2];
   const topoSrv = SURVEY_SERVICES.find((s) => s.id === 'topo') || SURVEY_SERVICES[1];
@@ -62,13 +61,13 @@ export default function SurveyServices({ onOpenBooking }) {
           <div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-100 dark:bg-purple-950 text-[#7A2FB0] dark:text-[#B462E8] text-xs font-mono uppercase tracking-widest font-bold mb-3">
               <Compass className="w-3.5 h-3.5 text-[#8DC63F]" />
-              <span>Geospatial & Land Verification</span>
+              <span>{companyInfo?.surveyBadge || "Geospatial & Land Verification"}</span>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-[#171717] dark:text-white tracking-tight">
-              Land Surveying & Title Clearance Services
+              {companyInfo?.surveyTitle || "Land Surveying & Title Clearance Services"}
             </h2>
             <p className="text-sm sm:text-base text-[#3F3F46] dark:text-purple-200 mt-3 max-w-2xl leading-relaxed">
-              Eliminate boundary disputes and title risks with RTK GPS total stations, 3D LiDAR drone mapping, and official registry title search verification.
+              {companyInfo?.surveySubtitle || "Eliminate boundary disputes and title risks with RTK GPS total stations, 3D LiDAR drone mapping, and official registry title search verification."}
             </p>
           </div>
 

@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { EZEANI_COMPANY_INFO } from '../data/mockData';
 
-export default function Footer({ onOpenBooking, onOpenMyBookings, onOpenAdmin }) {
+export default function Footer({ onOpenBooking, onOpenMyBookings, onOpenAdmin, companyInfo }) {
   const [subscribedEmail, setSubscribedEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
 
@@ -37,17 +37,15 @@ export default function Footer({ onOpenBooking, onOpenMyBookings, onOpenAdmin })
           {/* CTA Left Content */}
           <div className="space-y-4 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#34073E] text-[#8DC63F] dark:bg-purple-950 dark:text-[#8DC63F] text-xs font-mono font-bold uppercase tracking-wider">
-              <span>EZEANI PROPERTIES LTD</span>
-              <span>•</span>
-              <span>NATIONWIDE DELIVERY</span>
+              <span>{companyInfo?.footerCtaBadge || "EZEANI PROPERTIES LTD • NATIONWIDE DELIVERY"}</span>
             </div>
 
             <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-heading text-[#34073E] dark:text-white tracking-tight leading-tight">
-              Ready to find, secure, or build your next property?
+              {companyInfo?.footerCtaTitle || "Ready to find, secure, or build your next property?"}
             </h3>
 
             <p className="text-xs sm:text-sm text-[#52525B] dark:text-purple-200 leading-relaxed font-sans">
-              Call, chat or visit. Our team of certified survey experts and real estate advisors is ready to guide you from initial enquiry to final title handover.
+              {companyInfo?.footerCtaSubtitle || "Call, chat or visit. Our team of certified survey experts and real estate advisors is ready to guide you from initial enquiry to final title handover."}
             </p>
           </div>
 

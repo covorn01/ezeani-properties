@@ -11,8 +11,10 @@ import {
 } from 'lucide-react';
 import { EZEANI_COMPANY_INFO } from '../data/mockData';
 
-export default function WhyEzeani({ onOpenBooking }) {
+export default function WhyEzeani({ onOpenBooking, companyInfo }) {
   const iconMap = [ShieldCheck, Award, Eye, UserCheck];
+  const whyImage = companyInfo?.whyMedia || "/images/hero-villa.jpg";
+  const isWhyVideo = (companyInfo?.whyMediaType === 'video') || whyImage.includes('youtube') || whyImage.endsWith('.mp4');
 
   return (
     <section id="about" className="py-20 bg-[#FAF7FC] dark:bg-[#1E0424] border-t border-b border-purple-200/50 dark:border-purple-900/50">
@@ -22,13 +24,13 @@ export default function WhyEzeani({ onOpenBooking }) {
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-100 dark:bg-purple-950 text-[#7A2FB0] dark:text-[#B462E8] text-xs font-mono uppercase tracking-wider font-bold">
             <Sparkles className="w-3.5 h-3.5 text-[#8DC63F]" />
-            <span>About Ezeani Properties Ltd</span>
+            <span>{companyInfo?.whyBadge || "About Ezeani Properties Ltd"}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold font-heading text-[#171717] dark:text-white tracking-tight">
-            A property company built on trust, quality and reach.
+            {companyInfo?.whyTitle || "A property company built on trust, quality and reach."}
           </h2>
           <p className="text-sm text-[#3F3F46] dark:text-purple-200 leading-relaxed">
-            Ezeani Properties Ltd is a real estate company and a subsidiary of Ezeani Group. We help individuals, families, businesses and investors buy, own and develop property with confidence, delivered nationwide.
+            {companyInfo?.whySubtitle || "Ezeani Properties Ltd is a real estate company and a subsidiary of Ezeani Group. We help individuals, families, businesses and investors buy, own and develop property with confidence, delivered nationwide."}
           </p>
         </div>
 
@@ -38,14 +40,22 @@ export default function WhyEzeani({ onOpenBooking }) {
           {/* Vision Card (Plum background + High Quality Architectural Image Banner) */}
           <div className="bg-[#34073E] text-white rounded-[2rem] overflow-hidden shadow-2xl border border-purple-900 flex flex-col justify-between group transition-all duration-300 hover:shadow-purple-900/30 hover:-translate-y-1">
             
-            {/* Image Banner Container */}
+            {/* Image/Video Banner Container */}
             <div className="relative h-64 sm:h-72 overflow-hidden bg-purple-950">
-              <img
-                src="/images/hero-villa.jpg"
-                alt="Ezeani Vision Luxury Real Estate"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-95"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#34073E] via-[#34073E]/30 to-transparent" />
+              {isWhyVideo ? (
+                <iframe
+                  src={whyImage.includes('youtube') ? whyImage.replace('watch?v=', 'embed/') + '?autoplay=1&mute=1&controls=0&loop=1' : whyImage}
+                  title="Why Ezeani Video"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <img
+                  src={whyImage}
+                  alt="Ezeani Vision Luxury Real Estate"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-95"
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#34073E] via-[#34073E]/30 to-transparent pointer-events-none" />
             </div>
 
             {/* Content Body */}

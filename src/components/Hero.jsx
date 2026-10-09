@@ -105,25 +105,39 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
         {/* Main Hero Rounded Card Container (Reference-inspired Canvas) */}
         <div className="relative rounded-[2.5rem] overflow-hidden bg-[#34073E] shadow-2xl min-h-[460px] sm:min-h-[520px] lg:min-h-[560px] flex flex-col justify-between p-6 sm:p-10 lg:p-14 border border-purple-900/40">
           
-          {/* Background Image Slider with subtle vignette & gradient overlay */}
+          {/* Background Image/Video Slider with subtle vignette & gradient overlay */}
           <div className="absolute inset-0 z-0">
-            {heroSlides.map((s, idx) => (
-              <div
-                key={s.id}
-                className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                  idx === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                }`}
-              >
-                <img
-                  src={s.image}
-                  alt={s.title}
-                  className="w-full h-full object-cover scale-105 transform transition-transform duration-10000 ease-linear"
-                />
-                {/* Controlled gradient overlay: strong top-left for text, clear view of architectural subject on right */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[#1E0424]/90 via-[#1E0424]/60 to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1E0424]/80 via-transparent to-black/30" />
-              </div>
-            ))}
+            {heroSlides.map((s, idx) => {
+              const activeMedia = (idx === 0 && companyInfo?.heroMedia) ? companyInfo.heroMedia : s.image;
+              const isVideo = (idx === 0 && companyInfo?.heroMediaType === 'video') || activeMedia.includes('youtube') || activeMedia.endsWith('.mp4');
+
+              return (
+                <div
+                  key={s.id}
+                  className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                    idx === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                  }`}
+                >
+                  {isVideo ? (
+                    <iframe
+                      src={activeMedia.includes('youtube') ? activeMedia.replace('watch?v=', 'embed/') + '?autoplay=1&mute=1&controls=0&loop=1' : activeMedia}
+                      title="Hero Stream Video"
+                      className="w-full h-full object-cover scale-105"
+                      allow="autoplay; encrypted-media"
+                    />
+                  ) : (
+                    <img
+                      src={activeMedia}
+                      alt={s.title}
+                      className="w-full h-full object-cover scale-105 transform transition-transform duration-10000 ease-linear"
+                    />
+                  )}
+                  {/* Controlled gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#1E0424]/90 via-[#1E0424]/60 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1E0424]/80 via-transparent to-black/30" />
+                </div>
+              );
+            })}
           </div>
 
           {/* Top Pill Header & Controls */}
@@ -131,7 +145,7 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
             <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-black/40 backdrop-blur-md text-white border border-white/20 text-xs font-medium shadow-sm">
               <span className="w-2 h-2 rounded-full bg-[#8DC63F] animate-ping" />
               <span className="font-mono text-[11px] tracking-wide text-purple-100 font-semibold">
-                EZEANI PROPERTIES LTD
+                {companyInfo?.heroPill || "EZEANI PROPERTIES LTD"}
               </span>
             </div>
 
@@ -176,15 +190,15 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
           {/* Top-Left Headline Block */}
           <div className="relative z-20 max-w-2xl mb-16 sm:mb-24 lg:mb-28">
             <div className="inline-block px-3 py-1 rounded-md bg-[#8DC63F] text-[#34073E] text-[11px] font-mono font-bold uppercase tracking-wider mb-4 shadow-sm">
-              {slide.badge}
+              {currentSlide === 0 && companyInfo?.heroPill ? companyInfo.heroPill : slide.badge}
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold font-heading text-white tracking-tight leading-[1.12] drop-shadow-md transition-all duration-500">
-              {slide.title}
+              {currentSlide === 0 && companyInfo?.headline ? companyInfo.headline : slide.title}
             </h1>
 
             <p className="text-sm sm:text-base lg:text-lg text-purple-100 font-normal leading-relaxed mt-4 drop-shadow-xs max-w-xl">
-              {slide.subtitle}
+              {currentSlide === 0 && companyInfo?.subheadline ? companyInfo.subheadline : slide.subtitle}
             </p>
           </div>
 

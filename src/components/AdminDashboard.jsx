@@ -226,15 +226,40 @@ export default function AdminDashboard({
     features: ['Verified Title Certificate', '24/7 Gated Security', 'Solar Power Integration']
   });
 
-  // Copy Editor State
+  // Copy & Section Editor State
   const [copyForm, setCopyForm] = useState({
+    // Hero Section
+    heroPill: companyInfo.heroPill || "SURV. EZEANI EMMANUEL ADOLPHUS (FNIS) • MD/CEO",
     headline: companyInfo.headline || "Every kind of property, one trusted partner.",
     subheadline: companyInfo.subheadline || "Residential, commercial and industrial real estate, luxury lands and expert consultation, delivered nationwide.",
+    heroMedia: companyInfo.heroMedia || "/images/hero-villa.jpg",
+    heroMediaType: companyInfo.heroMediaType || "image",
+
+    // Why Choose Ezeani
+    whyBadge: companyInfo.whyBadge || "THE EZEANI ADVANTAGE",
+    whyTitle: companyInfo.whyTitle || "A property company built on trust, quality and reach.",
+    whySubtitle: companyInfo.whySubtitle || "Ezeani Properties Ltd is a real estate company and a subsidiary of Ezeani Group. We help individuals, families, businesses and investors buy, own and develop property with confidence, delivered nationwide.",
+    whyMedia: companyInfo.whyMedia || "/images/hero-villa.jpg",
+    whyMediaType: companyInfo.whyMediaType || "image",
+
+    // Land Surveying Services
+    surveyBadge: companyInfo.surveyBadge || "CERTIFIED GEOSPATIAL SERVICES",
+    surveyTitle: companyInfo.surveyTitle || "Land Surveying & Title Clearance Services",
+    surveySubtitle: companyInfo.surveySubtitle || "Eliminate boundary disputes and title risks with RTK GPS total stations, 3D LiDAR drone mapping, and official registry title search verification.",
+    surveyMedia: companyInfo.surveyMedia || "/images/hero-surveyor.jpg",
+    surveyMediaType: companyInfo.surveyMediaType || "image",
+
+    // Contact & Office Information
     phone: companyInfo.phone || "0902 171 0933",
     whatsapp: companyInfo.whatsapp || "+2349021710933",
     email: companyInfo.email || "info@ezeaniproperties.com",
     lagosOffice: companyInfo.offices?.[0]?.address || "Plot 14 Admiralty Way, Lekki Phase 1, Lagos, Nigeria",
-    abujaOffice: companyInfo.offices?.[1]?.address || "Suite 402, Capital Place, Maitama, Abuja, Nigeria"
+    abujaOffice: companyInfo.offices?.[1]?.address || "Suite 402, Capital Place, Maitama, Abuja, Nigeria",
+
+    // Footer CTA Block
+    footerCtaBadge: companyInfo.footerCtaBadge || "EZEANI PROPERTIES LTD • NATIONWIDE DELIVERY",
+    footerCtaTitle: companyInfo.footerCtaTitle || "Ready to find, secure, or build your next property?",
+    footerCtaSubtitle: companyInfo.footerCtaSubtitle || "Call, chat or visit. Our team of certified survey experts and real estate advisors is ready to guide you from initial enquiry to final title handover."
   });
   const [copySaved, setCopySaved] = useState(false);
 
@@ -323,25 +348,50 @@ export default function AdminDashboard({
     return matchesSearch && b.status === bookingFilterStatus;
   });
 
-  // Handle Save Copy
+  // Handle Save Copy & Section Media
   const handleSaveCopy = (e) => {
     e.preventDefault();
     if (onUpdateCompanyInfo) {
       onUpdateCompanyInfo({
         ...companyInfo,
+        // Hero Section
+        heroPill: copyForm.heroPill,
         headline: copyForm.headline,
         subheadline: copyForm.subheadline,
+        heroMedia: copyForm.heroMedia,
+        heroMediaType: copyForm.heroMediaType,
+
+        // Why Choose Ezeani Section
+        whyBadge: copyForm.whyBadge,
+        whyTitle: copyForm.whyTitle,
+        whySubtitle: copyForm.whySubtitle,
+        whyMedia: copyForm.whyMedia,
+        whyMediaType: copyForm.whyMediaType,
+
+        // Land Surveying Services Section
+        surveyBadge: copyForm.surveyBadge,
+        surveyTitle: copyForm.surveyTitle,
+        surveySubtitle: copyForm.surveySubtitle,
+        surveyMedia: copyForm.surveyMedia,
+        surveyMediaType: copyForm.surveyMediaType,
+
+        // Contact & Regional Offices
         phone: copyForm.phone,
         whatsapp: copyForm.whatsapp,
         email: copyForm.email,
         offices: [
           { city: "Lagos Office", address: copyForm.lagosOffice },
           { city: "Abuja Office", address: copyForm.abujaOffice }
-        ]
+        ],
+
+        // Footer CTA Block
+        footerCtaBadge: copyForm.footerCtaBadge,
+        footerCtaTitle: copyForm.footerCtaTitle,
+        footerCtaSubtitle: copyForm.footerCtaSubtitle
       });
     }
     setCopySaved(true);
-    addAuditLog('Website Copy Updated', 'Hero headlines & regional contact info saved');
+    addAuditLog('Website Content & Media Updated', 'All website sections headlines, pills, image uploads & video URLs updated live');
     setTimeout(() => setCopySaved(false), 3000);
   };
 
@@ -425,6 +475,12 @@ export default function AdminDashboard({
       const resultUrl = uploadEvent.target.result;
       if (target === 'property') {
         setPropForm((prev) => ({ ...prev, image: resultUrl }));
+      } else if (target === 'heroMedia' || target === 'whyMedia' || target === 'surveyMedia') {
+        setCopyForm((prev) => ({
+          ...prev,
+          [target]: resultUrl,
+          [`${target}Type`]: 'image'
+        }));
       } else {
         const newAsset = {
           id: `m-${Date.now()}`,
@@ -1323,100 +1379,480 @@ export default function AdminDashboard({
             </div>
           )}
 
-          {/* TAB 6: WEBSITE COPY EDITOR */}
+          {/* TAB 6: WEBSITE COPY & SECTION MEDIA EDITOR */}
           {activeTab === 'content' && (
             <div className="space-y-6 animate-fade-in max-w-4xl mx-auto">
               
-              <div className={`${bgCard} p-8 sm:p-10 rounded-[2.25rem] border shadow-md space-y-6`}>
-                <div className="flex items-center justify-between border-b border-purple-800/40 pb-5">
+              <div className={`${bgCard} p-6 sm:p-8 rounded-[2.25rem] border shadow-md space-y-6`}>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-purple-800/40 pb-5">
                   <div>
                     <h3 className={`text-2xl font-bold font-heading ${textHeading}`}>
-                      Live Website Copy & Contact Editor
+                      Live Website Copy, Pills & Section Media Editor
                     </h3>
                     <p className={`text-xs ${textMuted} mt-1`}>
-                      Edit homepage headlines, phone numbers, and regional office addresses live across the website.
+                      Edit headlines, badge pills, custom image uploads (&le;5MB), and video stream URLs for each section of the site.
                     </p>
                   </div>
-                  <Sparkles className="w-6 h-6 text-[#8DC63F]" />
+                  <Sparkles className="w-6 h-6 text-[#8DC63F] shrink-0" />
                 </div>
 
                 {copySaved && (
                   <div className="p-4 bg-[#8DC63F]/20 text-[#8DC63F] border border-[#8DC63F] rounded-2xl text-xs font-bold flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4" />
-                    <span>Website Copy Deployed Successfully! Changes are live across the application.</span>
+                    <span>Website Content & Media Deployed Successfully! Changes are live across the application.</span>
                   </div>
                 )}
 
-                <form onSubmit={handleSaveCopy} className="space-y-5">
-                  <div className="space-y-2">
-                    <label className={`block text-xs font-semibold ${textHeading}`}>Hero Section Main Headline</label>
-                    <input
-                      type="text"
-                      value={copyForm.headline}
-                      onChange={(e) => setCopyForm({ ...copyForm, headline: e.target.value })}
-                      className={`w-full p-3.5 ${bgSubtle} border border-purple-800/60 rounded-xl text-xs sm:text-sm font-medium ${textHeading} focus:outline-none focus:border-[#8DC63F]`}
-                    />
+                {selectedFileError && (
+                  <div className="p-4 bg-red-950/80 text-red-200 border border-red-800 rounded-2xl text-xs font-semibold flex items-center gap-2">
+                    <AlertTriangle className="w-4 h-4 text-red-400 shrink-0" />
+                    <span>{selectedFileError}</span>
                   </div>
+                )}
 
-                  <div className="space-y-2">
-                    <label className={`block text-xs font-semibold ${textHeading}`}>Hero Section Subheadline</label>
-                    <textarea
-                      rows={3}
-                      value={copyForm.subheadline}
-                      onChange={(e) => setCopyForm({ ...copyForm, subheadline: e.target.value })}
-                      className={`w-full p-3.5 ${bgSubtle} border border-purple-800/60 rounded-xl text-xs sm:text-sm font-medium ${textHeading} focus:outline-none focus:border-[#8DC63F] resize-none`}
-                    />
-                  </div>
+                <form onSubmit={handleSaveCopy} className="space-y-8">
+                  
+                  {/* SECTION 1: HERO CANVAS */}
+                  <div className={`p-6 ${bgSubtle} rounded-2xl border border-purple-800/50 space-y-4`}>
+                    <div className="flex items-center justify-between border-b border-purple-800/40 pb-3">
+                      <h4 className={`text-sm font-bold font-heading ${textHeading} flex items-center gap-2`}>
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#8DC63F]" />
+                        <span>1. Hero Canvas Section</span>
+                      </h4>
+                      <span className="text-[10px] font-mono text-[#8DC63F] font-bold">Homepage Top Fold</span>
+                    </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div className="space-y-2">
-                      <label className={`block text-xs font-semibold ${textHeading}`}>Primary Hotline</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className={`block text-xs font-semibold ${textHeading}`}>Badge Pill Text</label>
+                        <input
+                          type="text"
+                          value={copyForm.heroPill}
+                          onChange={(e) => setCopyForm({ ...copyForm, heroPill: e.target.value })}
+                          className={`w-full p-3 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:border-[#8DC63F]`}
+                          placeholder="e.g. SURV. EZEANI EMMANUEL ADOLPHUS (FNIS)"
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className={`block text-xs font-semibold ${textHeading}`}>Hero Media Type</label>
+                        <div className="flex items-center gap-2 bg-[#34073E] p-1 rounded-xl">
+                          <button
+                            type="button"
+                            onClick={() => setCopyForm({ ...copyForm, heroMediaType: 'image' })}
+                            className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${
+                              copyForm.heroMediaType === 'image' ? 'bg-[#8DC63F] text-[#1E0424]' : 'text-purple-200'
+                            }`}
+                          >
+                            📷 Image
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setCopyForm({ ...copyForm, heroMediaType: 'video' })}
+                            className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${
+                              copyForm.heroMediaType === 'video' ? 'bg-[#8DC63F] text-[#1E0424]' : 'text-purple-200'
+                            }`}
+                          >
+                            🎬 Video Stream URL
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className={`block text-xs font-semibold ${textHeading}`}>Main Hero Headline</label>
                       <input
                         type="text"
-                        value={copyForm.phone}
-                        onChange={(e) => setCopyForm({ ...copyForm, phone: e.target.value })}
-                        className={`w-full p-3.5 ${bgSubtle} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:outline-none focus:border-[#8DC63F]`}
+                        value={copyForm.headline}
+                        onChange={(e) => setCopyForm({ ...copyForm, headline: e.target.value })}
+                        className={`w-full p-3 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:border-[#8DC63F]`}
                       />
                     </div>
 
-                    <div className="space-y-2">
-                      <label className={`block text-xs font-semibold ${textHeading}`}>Official Support Email</label>
+                    <div className="space-y-1.5">
+                      <label className={`block text-xs font-semibold ${textHeading}`}>Hero Subheadline</label>
+                      <textarea
+                        rows={2}
+                        value={copyForm.subheadline}
+                        onChange={(e) => setCopyForm({ ...copyForm, subheadline: e.target.value })}
+                        className={`w-full p-3 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:border-[#8DC63F] resize-none`}
+                      />
+                    </div>
+
+                    {/* Hero Media Selector / File Uploader */}
+                    <div className="space-y-2 pt-1">
+                      <label className={`block text-xs font-semibold ${textHeading}`}>
+                        Hero {copyForm.heroMediaType === 'image' ? 'Image Asset Upload / URL' : 'Video Stream URL Link'}
+                      </label>
+
+                      {copyForm.heroMediaType === 'image' ? (
+                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                          <label className="bg-[#34073E] text-[#8DC63F] hover:bg-[#25042D] px-4 py-2.5 rounded-xl text-xs font-bold cursor-pointer transition-all shrink-0 flex items-center justify-center gap-1.5">
+                            <Upload className="w-3.5 h-3.5" />
+                            <span>Upload Image (&le;5MB)</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => handleImageFileChange(e, 'heroMedia')}
+                              className="hidden"
+                            />
+                          </label>
+                          <input
+                            type="text"
+                            value={copyForm.heroMedia}
+                            onChange={(e) => setCopyForm({ ...copyForm, heroMedia: e.target.value })}
+                            placeholder="Or enter Image URL (/images/hero-villa.jpg)..."
+                            className={`flex-1 p-2.5 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading}`}
+                          />
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-3">
+                          <div className="p-2.5 rounded-xl bg-[#34073E] text-[#8DC63F]">
+                            <Video className="w-4 h-4" />
+                          </div>
+                          <input
+                            type="url"
+                            value={copyForm.heroMedia}
+                            onChange={(e) => setCopyForm({ ...copyForm, heroMedia: e.target.value, heroMediaType: 'video' })}
+                            placeholder="Paste Video URL (e.g., https://www.youtube.com/watch?v=... or .mp4 URL)..."
+                            className={`flex-1 p-2.5 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading}`}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* SECTION 2: WHY CHOOSE EZEANI */}
+                  <div className={`p-6 ${bgSubtle} rounded-2xl border border-purple-800/50 space-y-4`}>
+                    <div className="flex items-center justify-between border-b border-purple-800/40 pb-3">
+                      <h4 className={`text-sm font-bold font-heading ${textHeading} flex items-center gap-2`}>
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#8DC63F]" />
+                        <span>2. Why Ezeani / About Us Section</span>
+                      </h4>
+                      <span className="text-[10px] font-mono text-[#8DC63F] font-bold">Brand Story & Vision</span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className={`block text-xs font-semibold ${textHeading}`}>Badge Pill Text</label>
+                        <input
+                          type="text"
+                          value={copyForm.whyBadge}
+                          onChange={(e) => setCopyForm({ ...copyForm, whyBadge: e.target.value })}
+                          className={`w-full p-3 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:border-[#8DC63F]`}
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className={`block text-xs font-semibold ${textHeading}`}>Section Media Type</label>
+                        <div className="flex items-center gap-2 bg-[#34073E] p-1 rounded-xl">
+                          <button
+                            type="button"
+                            onClick={() => setCopyForm({ ...copyForm, whyMediaType: 'image' })}
+                            className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${
+                              copyForm.whyMediaType === 'image' ? 'bg-[#8DC63F] text-[#1E0424]' : 'text-purple-200'
+                            }`}
+                          >
+                            📷 Image
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setCopyForm({ ...copyForm, whyMediaType: 'video' })}
+                            className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${
+                              copyForm.whyMediaType === 'video' ? 'bg-[#8DC63F] text-[#1E0424]' : 'text-purple-200'
+                            }`}
+                          >
+                            🎬 Video Stream URL
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className={`block text-xs font-semibold ${textHeading}`}>Section Headline Title</label>
                       <input
-                        type="email"
-                        value={copyForm.email}
-                        onChange={(e) => setCopyForm({ ...copyForm, email: e.target.value })}
-                        className={`w-full p-3.5 ${bgSubtle} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:outline-none focus:border-[#8DC63F]`}
+                        type="text"
+                        value={copyForm.whyTitle}
+                        onChange={(e) => setCopyForm({ ...copyForm, whyTitle: e.target.value })}
+                        className={`w-full p-3 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:border-[#8DC63F]`}
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className={`block text-xs font-semibold ${textHeading}`}>Section Subtitle / Description</label>
+                      <textarea
+                        rows={2}
+                        value={copyForm.whySubtitle}
+                        onChange={(e) => setCopyForm({ ...copyForm, whySubtitle: e.target.value })}
+                        className={`w-full p-3 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:border-[#8DC63F] resize-none`}
+                      />
+                    </div>
+
+                    {/* Why Section Media Selector */}
+                    <div className="space-y-2 pt-1">
+                      <label className={`block text-xs font-semibold ${textHeading}`}>
+                        Why Ezeani {copyForm.whyMediaType === 'image' ? 'Image Asset Upload / URL' : 'Video Stream URL Link'}
+                      </label>
+
+                      {copyForm.whyMediaType === 'image' ? (
+                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                          <label className="bg-[#34073E] text-[#8DC63F] hover:bg-[#25042D] px-4 py-2.5 rounded-xl text-xs font-bold cursor-pointer transition-all shrink-0 flex items-center justify-center gap-1.5">
+                            <Upload className="w-3.5 h-3.5" />
+                            <span>Upload Image (&le;5MB)</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => handleImageFileChange(e, 'whyMedia')}
+                              className="hidden"
+                            />
+                          </label>
+                          <input
+                            type="text"
+                            value={copyForm.whyMedia}
+                            onChange={(e) => setCopyForm({ ...copyForm, whyMedia: e.target.value })}
+                            placeholder="Or enter Image URL (/images/hero-villa.jpg)..."
+                            className={`flex-1 p-2.5 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading}`}
+                          />
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-3">
+                          <div className="p-2.5 rounded-xl bg-[#34073E] text-[#8DC63F]">
+                            <Video className="w-4 h-4" />
+                          </div>
+                          <input
+                            type="url"
+                            value={copyForm.whyMedia}
+                            onChange={(e) => setCopyForm({ ...copyForm, whyMedia: e.target.value, whyMediaType: 'video' })}
+                            placeholder="Paste Video URL (e.g., YouTube or .mp4 link)..."
+                            className={`flex-1 p-2.5 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading}`}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* SECTION 3: LAND SURVEYING SERVICES */}
+                  <div className={`p-6 ${bgSubtle} rounded-2xl border border-purple-800/50 space-y-4`}>
+                    <div className="flex items-center justify-between border-b border-purple-800/40 pb-3">
+                      <h4 className={`text-sm font-bold font-heading ${textHeading} flex items-center gap-2`}>
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#8DC63F]" />
+                        <span>3. Land Surveying & Title Services Section</span>
+                      </h4>
+                      <span className="text-[10px] font-mono text-[#8DC63F] font-bold">Geospatial Bento Grid</span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className={`block text-xs font-semibold ${textHeading}`}>Badge Pill Text</label>
+                        <input
+                          type="text"
+                          value={copyForm.surveyBadge}
+                          onChange={(e) => setCopyForm({ ...copyForm, surveyBadge: e.target.value })}
+                          className={`w-full p-3 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:border-[#8DC63F]`}
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className={`block text-xs font-semibold ${textHeading}`}>Section Media Type</label>
+                        <div className="flex items-center gap-2 bg-[#34073E] p-1 rounded-xl">
+                          <button
+                            type="button"
+                            onClick={() => setCopyForm({ ...copyForm, surveyMediaType: 'image' })}
+                            className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${
+                              copyForm.surveyMediaType === 'image' ? 'bg-[#8DC63F] text-[#1E0424]' : 'text-purple-200'
+                            }`}
+                          >
+                            📷 Image
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setCopyForm({ ...copyForm, surveyMediaType: 'video' })}
+                            className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${
+                              copyForm.surveyMediaType === 'video' ? 'bg-[#8DC63F] text-[#1E0424]' : 'text-purple-200'
+                            }`}
+                          >
+                            🎬 Video Stream URL
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className={`block text-xs font-semibold ${textHeading}`}>Section Title</label>
+                      <input
+                        type="text"
+                        value={copyForm.surveyTitle}
+                        onChange={(e) => setCopyForm({ ...copyForm, surveyTitle: e.target.value })}
+                        className={`w-full p-3 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:border-[#8DC63F]`}
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className={`block text-xs font-semibold ${textHeading}`}>Section Subtitle</label>
+                      <textarea
+                        rows={2}
+                        value={copyForm.surveySubtitle}
+                        onChange={(e) => setCopyForm({ ...copyForm, surveySubtitle: e.target.value })}
+                        className={`w-full p-3 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:border-[#8DC63F] resize-none`}
+                      />
+                    </div>
+
+                    {/* Survey Section Media Selector */}
+                    <div className="space-y-2 pt-1">
+                      <label className={`block text-xs font-semibold ${textHeading}`}>
+                        Surveying Showcase {copyForm.surveyMediaType === 'image' ? 'Image Asset Upload / URL' : 'Video Stream URL Link'}
+                      </label>
+
+                      {copyForm.surveyMediaType === 'image' ? (
+                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                          <label className="bg-[#34073E] text-[#8DC63F] hover:bg-[#25042D] px-4 py-2.5 rounded-xl text-xs font-bold cursor-pointer transition-all shrink-0 flex items-center justify-center gap-1.5">
+                            <Upload className="w-3.5 h-3.5" />
+                            <span>Upload Image (&le;5MB)</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => handleImageFileChange(e, 'surveyMedia')}
+                              className="hidden"
+                            />
+                          </label>
+                          <input
+                            type="text"
+                            value={copyForm.surveyMedia}
+                            onChange={(e) => setCopyForm({ ...copyForm, surveyMedia: e.target.value })}
+                            placeholder="Or enter Image URL (/images/hero-surveyor.jpg)..."
+                            className={`flex-1 p-2.5 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading}`}
+                          />
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-3">
+                          <div className="p-2.5 rounded-xl bg-[#34073E] text-[#8DC63F]">
+                            <Video className="w-4 h-4" />
+                          </div>
+                          <input
+                            type="url"
+                            value={copyForm.surveyMedia}
+                            onChange={(e) => setCopyForm({ ...copyForm, surveyMedia: e.target.value, surveyMediaType: 'video' })}
+                            placeholder="Paste Video URL (e.g., YouTube or .mp4 link)..."
+                            className={`flex-1 p-2.5 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading}`}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* SECTION 4: CONTACT & REGIONAL OFFICES */}
+                  <div className={`p-6 ${bgSubtle} rounded-2xl border border-purple-800/50 space-y-4`}>
+                    <div className="flex items-center justify-between border-b border-purple-800/40 pb-3">
+                      <h4 className={`text-sm font-bold font-heading ${textHeading} flex items-center gap-2`}>
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#8DC63F]" />
+                        <span>4. Contact & Regional Office Addresses</span>
+                      </h4>
+                      <span className="text-[10px] font-mono text-[#8DC63F] font-bold">Direct Channels</span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div className="space-y-1.5">
+                        <label className={`block text-xs font-semibold ${textHeading}`}>Primary Hotline</label>
+                        <input
+                          type="text"
+                          value={copyForm.phone}
+                          onChange={(e) => setCopyForm({ ...copyForm, phone: e.target.value })}
+                          className={`w-full p-3 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:border-[#8DC63F]`}
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className={`block text-xs font-semibold ${textHeading}`}>WhatsApp Number</label>
+                        <input
+                          type="text"
+                          value={copyForm.whatsapp}
+                          onChange={(e) => setCopyForm({ ...copyForm, whatsapp: e.target.value })}
+                          className={`w-full p-3 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:border-[#8DC63F]`}
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className={`block text-xs font-semibold ${textHeading}`}>Support Email</label>
+                        <input
+                          type="email"
+                          value={copyForm.email}
+                          onChange={(e) => setCopyForm({ ...copyForm, email: e.target.value })}
+                          className={`w-full p-3 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:border-[#8DC63F]`}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className={`block text-xs font-semibold ${textHeading}`}>Lagos Regional Office</label>
+                      <input
+                        type="text"
+                        value={copyForm.lagosOffice}
+                        onChange={(e) => setCopyForm({ ...copyForm, lagosOffice: e.target.value })}
+                        className={`w-full p-3 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:border-[#8DC63F]`}
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className={`block text-xs font-semibold ${textHeading}`}>Abuja Regional Office</label>
+                      <input
+                        type="text"
+                        value={copyForm.abujaOffice}
+                        onChange={(e) => setCopyForm({ ...copyForm, abujaOffice: e.target.value })}
+                        className={`w-full p-3 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:border-[#8DC63F]`}
                       />
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <label className={`block text-xs font-semibold ${textHeading}`}>Lagos Regional Office Address</label>
-                    <input
-                      type="text"
-                      value={copyForm.lagosOffice}
-                      onChange={(e) => setCopyForm({ ...copyForm, lagosOffice: e.target.value })}
-                      className={`w-full p-3.5 ${bgSubtle} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:outline-none focus:border-[#8DC63F]`}
-                    />
+                  {/* SECTION 5: FOOTER CTA CONVERSION BLOCK */}
+                  <div className={`p-6 ${bgSubtle} rounded-2xl border border-purple-800/50 space-y-4`}>
+                    <div className="flex items-center justify-between border-b border-purple-800/40 pb-3">
+                      <h4 className={`text-sm font-bold font-heading ${textHeading} flex items-center gap-2`}>
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#8DC63F]" />
+                        <span>5. Footer Call-To-Action (CTA) Block</span>
+                      </h4>
+                      <span className="text-[10px] font-mono text-[#8DC63F] font-bold">Bottom Fold</span>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className={`block text-xs font-semibold ${textHeading}`}>Badge Pill Text</label>
+                      <input
+                        type="text"
+                        value={copyForm.footerCtaBadge}
+                        onChange={(e) => setCopyForm({ ...copyForm, footerCtaBadge: e.target.value })}
+                        className={`w-full p-3 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:border-[#8DC63F]`}
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className={`block text-xs font-semibold ${textHeading}`}>CTA Headline</label>
+                      <input
+                        type="text"
+                        value={copyForm.footerCtaTitle}
+                        onChange={(e) => setCopyForm({ ...copyForm, footerCtaTitle: e.target.value })}
+                        className={`w-full p-3 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:border-[#8DC63F]`}
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className={`block text-xs font-semibold ${textHeading}`}>CTA Subtitle Description</label>
+                      <textarea
+                        rows={2}
+                        value={copyForm.footerCtaSubtitle}
+                        onChange={(e) => setCopyForm({ ...copyForm, footerCtaSubtitle: e.target.value })}
+                        className={`w-full p-3 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:border-[#8DC63F] resize-none`}
+                      />
+                    </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <label className={`block text-xs font-semibold ${textHeading}`}>Abuja Regional Office Address</label>
-                    <input
-                      type="text"
-                      value={copyForm.abujaOffice}
-                      onChange={(e) => setCopyForm({ ...copyForm, abujaOffice: e.target.value })}
-                      className={`w-full p-3.5 ${bgSubtle} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:outline-none focus:border-[#8DC63F]`}
-                    />
+                  <div className="pt-2">
+                    <button
+                      type="submit"
+                      className="w-full sm:w-auto px-8 py-4 bg-[#8DC63F] hover:bg-[#7bb532] text-[#1E0424] rounded-2xl text-xs sm:text-sm font-bold transition-all shadow-lg flex items-center justify-center gap-2 active:scale-98 cursor-pointer"
+                    >
+                      <Save className="w-4 h-4" />
+                      <span>Deploy All Section Copy & Media Updates Live</span>
+                    </button>
                   </div>
-
-                  <button
-                    type="submit"
-                    className="px-8 py-3.5 bg-[#8DC63F] hover:bg-[#7bb532] text-[#1E0424] rounded-xl text-xs sm:text-sm font-bold transition-all shadow-md flex items-center gap-2 active:scale-98 cursor-pointer"
-                  >
-                    <Save className="w-4 h-4" />
-                    <span>Deploy Copy Updates</span>
-                  </button>
                 </form>
               </div>
 

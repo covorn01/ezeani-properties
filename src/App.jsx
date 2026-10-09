@@ -254,10 +254,10 @@ export default function App() {
         />
 
         {/* Why Ezeani & 4-Step Process */}
-        <WhyEzeani onOpenBooking={handleOpenBooking} />
+        <WhyEzeani onOpenBooking={handleOpenBooking} companyInfo={companyInfo} />
 
         {/* Land Surveying Services */}
-        <SurveyServices onOpenBooking={handleOpenBooking} />
+        <SurveyServices onOpenBooking={handleOpenBooking} companyInfo={companyInfo} />
       </main>
 
       {/* Footer */}
@@ -265,6 +265,7 @@ export default function App() {
         onOpenBooking={handleOpenBooking}
         onOpenMyBookings={() => setMyBookingsModalOpen(true)}
         onOpenAdmin={() => setAdminDashboardOpen(true)}
+        companyInfo={companyInfo}
       />
 
       {/* Property Details Modal */}
