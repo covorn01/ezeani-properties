@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { EZEANI_COMPANY_INFO } from '../data/mockData';
 
-export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey, onQuickBuild, currency }) {
+export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey, onQuickBuild, currency, companyInfo }) {
   const [activeTab, setActiveTab] = useState('properties');
   const [searchQuery, setSearchQuery] = useState('');
   const [propertyType, setPropertyType] = useState('All');
