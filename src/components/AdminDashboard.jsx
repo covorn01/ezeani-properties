@@ -1252,11 +1252,11 @@ export default function AdminDashboard({
                     </div>
 
                     <div className={`space-y-2 text-xs ${textMuted}`}>
-                      <p><strong className="text-white">Email:</strong> {app.email}</p>
-                      <p><strong className="text-white">Phone:</strong> {app.phone}</p>
-                      <p><strong className="text-white">Experience:</strong> {app.experience}</p>
-                      <p><strong className="text-white">Applied Date:</strong> {app.appliedDate}</p>
-                      <div className="p-4 rounded-2xl bg-purple-950/30 dark:bg-purple-950/40 text-purple-200 border border-purple-800/40 text-xs leading-relaxed mt-3 shadow-inner">
+                      <p><strong className={textHeading}>Email:</strong> {app.email}</p>
+                      <p><strong className={textHeading}>Phone:</strong> {app.phone}</p>
+                      <p><strong className={textHeading}>Experience:</strong> {app.experience}</p>
+                      <p><strong className={textHeading}>Applied Date:</strong> {app.appliedDate}</p>
+                      <div className="p-4 rounded-2xl bg-[#F3F3F3] dark:bg-[#1E0424] text-[#27272A] dark:text-purple-200 border border-zinc-200 dark:border-purple-800/60 text-xs sm:text-sm font-medium leading-relaxed mt-3 shadow-xs">
                         {app.notes}
                       </div>
                     </div>
