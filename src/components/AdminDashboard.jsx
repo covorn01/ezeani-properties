@@ -1296,43 +1296,97 @@ export default function AdminDashboard({
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {careerApplications.map((app) => (
-                  <div key={app.id} className={`${bgCard} p-6 rounded-[2rem] border shadow-md space-y-4`}>
-                    <div className="flex items-start justify-between border-b border-purple-800/40 pb-3">
-                      <div>
-                        <h4 className={`text-base font-bold font-heading ${textHeading}`}>{app.candidateName}</h4>
-                        <span className="text-xs font-mono text-[#8DC63F] font-semibold">{app.role}</span>
+                  <div 
+                    key={app.id} 
+                    className={`${bgCard} p-6 sm:p-7 rounded-[2.25rem] border shadow-sm hover:shadow-md transition-all space-y-5 flex flex-col justify-between`}
+                  >
+                    <div className="space-y-4">
+                      {/* Candidate Name, Job Title & Compact Status Badge */}
+                      <div className="flex items-start justify-between gap-3 border-b border-purple-100 dark:border-purple-800/60 pb-4">
+                        <div className="space-y-1">
+                          <h4 className="text-lg sm:text-xl font-bold font-heading text-[#1F0A26] dark:text-white tracking-tight">
+                            {app.candidateName}
+                          </h4>
+                          <p className="text-xs sm:text-sm font-semibold text-[#7A2FB0] dark:text-purple-300">
+                            {app.role}
+                          </p>
+                        </div>
+
+                        <span className={`shrink-0 px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider border ${
+                          app.status === 'Shortlisted'
+                            ? 'bg-[#8DC63F]/20 text-[#254602] dark:text-[#8DC63F] border-[#8DC63F]/60'
+                            : 'bg-purple-100 dark:bg-purple-950 text-[#34073E] dark:text-purple-200 border-purple-200 dark:border-purple-800'
+                        }`}>
+                          {app.status === 'Shortlisted' ? '✓ Shortlisted' : app.status}
+                        </span>
                       </div>
-                      <span className="px-3 py-1 rounded-full bg-purple-900 text-purple-200 text-[10px] font-mono font-bold uppercase">
-                        {app.status}
-                      </span>
+
+                      {/* Organized Metadata Details Grid */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                        <div className="space-y-1 bg-[#FAF7FC] dark:bg-[#1E0424] p-3 rounded-xl border border-purple-100 dark:border-purple-900/40">
+                          <span className="text-[10px] font-mono uppercase font-bold text-[#7A2FB0] dark:text-[#8DC63F] block">
+                            Contact Email
+                          </span>
+                          <p className="font-semibold text-[#1F0A26] dark:text-white truncate" title={app.email}>
+                            {app.email}
+                          </p>
+                        </div>
+
+                        <div className="space-y-1 bg-[#FAF7FC] dark:bg-[#1E0424] p-3 rounded-xl border border-purple-100 dark:border-purple-900/40">
+                          <span className="text-[10px] font-mono uppercase font-bold text-[#7A2FB0] dark:text-[#8DC63F] block">
+                            Phone Number
+                          </span>
+                          <p className="font-semibold text-[#1F0A26] dark:text-white">
+                            {app.phone}
+                          </p>
+                        </div>
+
+                        <div className="space-y-1 bg-[#FAF7FC] dark:bg-[#1E0424] p-3 rounded-xl border border-purple-100 dark:border-purple-900/40">
+                          <span className="text-[10px] font-mono uppercase font-bold text-[#7A2FB0] dark:text-[#8DC63F] block">
+                            Field Experience
+                          </span>
+                          <p className="font-semibold text-[#1F0A26] dark:text-white">
+                            {app.experience}
+                          </p>
+                        </div>
+
+                        <div className="space-y-1 bg-[#FAF7FC] dark:bg-[#1E0424] p-3 rounded-xl border border-purple-100 dark:border-purple-900/40">
+                          <span className="text-[10px] font-mono uppercase font-bold text-[#7A2FB0] dark:text-[#8DC63F] block">
+                            Application Date
+                          </span>
+                          <p className="font-semibold text-[#1F0A26] dark:text-white">
+                            {app.appliedDate}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Candidate Notes & SURCON Credentials Box */}
+                      <div className="p-4 rounded-2xl bg-[#F3F3F3] dark:bg-[#1E0424] text-[#27272A] dark:text-purple-200 border border-zinc-200/80 dark:border-purple-800/60 text-xs sm:text-sm font-medium leading-relaxed shadow-xs space-y-1">
+                        <span className="text-[10px] font-mono uppercase font-bold text-[#52525B] dark:text-purple-300 block">
+                          Credentials & Application Remarks:
+                        </span>
+                        <p>{app.notes}</p>
+                      </div>
                     </div>
 
-                    <div className={`space-y-2 text-xs ${textMuted}`}>
-                      <p><strong className={textHeading}>Email:</strong> {app.email}</p>
-                      <p><strong className={textHeading}>Phone:</strong> {app.phone}</p>
-                      <p><strong className={textHeading}>Experience:</strong> {app.experience}</p>
-                      <p><strong className={textHeading}>Applied Date:</strong> {app.appliedDate}</p>
-                      <div className="p-4 rounded-2xl bg-[#F3F3F3] dark:bg-[#1E0424] text-[#27272A] dark:text-purple-200 border border-zinc-200 dark:border-purple-800/60 text-xs sm:text-sm font-medium leading-relaxed mt-3 shadow-xs">
-                        {app.notes}
-                      </div>
-                    </div>
-
-                    <div className="pt-3 flex flex-wrap items-center justify-between gap-3 border-t border-purple-800/40">
+                    {/* Action Buttons Row with Clear Hierarchy */}
+                    <div className="pt-4 flex flex-col sm:flex-row items-center gap-3 border-t border-purple-100 dark:border-purple-800/40">
                       <button
                         onClick={() => {
                           setCareerApplications(prev => prev.map(a => a.id === app.id ? { ...a, status: 'Shortlisted' } : a));
                           addAuditLog('Candidate Shortlisted', `Candidate ${app.candidateName} marked Shortlisted`);
                         }}
-                        className="px-5 py-3 rounded-2xl bg-[#8DC63F] hover:bg-[#7bb532] text-[#1E0424] text-xs sm:text-sm font-bold transition-all shadow-md active:scale-98 cursor-pointer flex-1 sm:flex-none justify-center text-center"
+                        className="w-full sm:flex-1 py-3 px-4 rounded-2xl bg-[#8DC63F] hover:bg-[#7bb532] text-[#1E0424] text-xs sm:text-sm font-bold transition-all shadow-sm active:scale-98 cursor-pointer flex items-center justify-center gap-2"
                       >
-                        {app.status === 'Shortlisted' ? '✓ Candidate Shortlisted' : 'Shortlist Candidate'}
+                        <CheckCircle2 className="w-4 h-4 text-[#1E0424] shrink-0" />
+                        <span>{app.status === 'Shortlisted' ? '✓ Candidate Shortlisted' : 'Shortlist Candidate'}</span>
                       </button>
 
                       <button
                         onClick={() => setSelectedCvCandidate(app)}
-                        className="flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-[#34073E] hover:bg-[#25042D] text-white text-xs sm:text-sm font-bold transition-all shadow-md active:scale-98 cursor-pointer border border-purple-700/80 flex-1 sm:flex-none"
+                        className="w-full sm:flex-1 py-3 px-4 rounded-2xl bg-[#34073E] hover:bg-[#4A0A58] text-white text-xs sm:text-sm font-bold transition-all shadow-sm active:scale-98 cursor-pointer border border-purple-800/80 flex items-center justify-center gap-2"
                       >
-                        <Eye className="w-4 h-4 text-[#8DC63F]" />
+                        <Eye className="w-4 h-4 text-[#8DC63F] shrink-0" />
                         <span>View CV Document</span>
                       </button>
                     </div>
