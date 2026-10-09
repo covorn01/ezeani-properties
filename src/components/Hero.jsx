@@ -147,14 +147,8 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
             })}
           </div>
 
-          {/* Top Pill Header & Controls */}
-          <div className="relative z-20 flex flex-wrap items-center justify-between gap-4 mb-6">
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-black/40 backdrop-blur-md text-white border border-white/20 text-xs font-medium shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-[#8DC63F] animate-ping" />
-              <span className="font-mono text-[11px] tracking-wide text-purple-100 font-semibold">
-                {companyInfo?.heroPill || "EZEANI PROPERTIES LTD"}
-              </span>
-            </div>
+          {/* Top Header Controls */}
+          <div className="relative z-20 flex items-center justify-end mb-6">
 
             {/* Slide Navigation Buttons & Counter & Dots */}
             <div className="flex items-center gap-3 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 text-xs font-mono font-bold text-white shadow-sm">

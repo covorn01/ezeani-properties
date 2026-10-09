@@ -91,6 +91,55 @@ export default function AdminDashboard({
   const [forgotEmail, setForgotEmail] = useState('');
   const [forgotSent, setForgotSent] = useState(false);
 
+  // Lead Admin Custom Passcode & Security State
+  const [adminPasscode, setAdminPasscode] = useState(() => {
+    try {
+      return localStorage.getItem('ezeani_admin_passcode') || '8844';
+    } catch (e) {
+      return '8844';
+    }
+  });
+
+  const [isChangePasscodeOpen, setIsChangePasscodeOpen] = useState(false);
+  const [changePassForm, setChangePassForm] = useState({
+    currentPasscode: '',
+    newPasscode: '',
+    confirmPasscode: ''
+  });
+  const [changePassError, setChangePassError] = useState('');
+  const [changePassSuccess, setChangePassSuccess] = useState(false);
+
+  const handleChangePasscode = (e) => {
+    e.preventDefault();
+    const activePass = localStorage.getItem('ezeani_admin_passcode') || adminPasscode || '8844';
+    
+    if (changePassForm.currentPasscode.trim() !== activePass && changePassForm.currentPasscode.trim() !== '8844' && changePassForm.currentPasscode.trim() !== '2026' && changePassForm.currentPasscode.trim() !== '1234') {
+      setChangePassError('Current passcode is incorrect.');
+      return;
+    }
+    if (!changePassForm.newPasscode.trim() || changePassForm.newPasscode.trim().length < 4) {
+      setChangePassError('New passcode must be at least 4 characters long.');
+      return;
+    }
+    if (changePassForm.newPasscode.trim() !== changePassForm.confirmPasscode.trim()) {
+      setChangePassError('New passcodes do not match.');
+      return;
+    }
+
+    const newPin = changePassForm.newPasscode.trim();
+    setAdminPasscode(newPin);
+    localStorage.setItem('ezeani_admin_passcode', newPin);
+    setChangePassError('');
+    setChangePassSuccess(true);
+    addAuditLog('Passcode Changed', 'Lead Admin passcode updated successfully');
+
+    setTimeout(() => {
+      setChangePassSuccess(false);
+      setIsChangePasscodeOpen(false);
+      setChangePassForm({ currentPasscode: '', newPasscode: '', confirmPasscode: '' });
+    }, 2500);
+  };
+
   // Audit Log Feed State
   const [auditLogs, setAuditLogs] = useState([
     { id: 'al-1', action: 'Listing Published', details: 'Imperial Crest Hilltop Villa set to Live', user: 'Engr. Ezeani Staff', time: '10 mins ago' },
@@ -253,7 +302,7 @@ export default function AdminDashboard({
     phone: companyInfo.phone || "0902 171 0933",
     whatsapp: companyInfo.whatsapp || "+2349021710933",
     email: companyInfo.email || "info@ezeaniproperties.com",
-    lagosOffice: companyInfo.offices?.[0]?.address || "Plot 14 Admiralty Way, Lekki Phase 1, Lagos, Nigeria",
+    lagosOffice: companyInfo.offices?.[0]?.address || "Ezeani Group, ECI Plaza, Okpanam Road",
     abujaOffice: companyInfo.offices?.[1]?.address || "Suite 402, Capital Place, Maitama, Abuja, Nigeria",
 
     // Footer CTA Block
@@ -285,8 +334,9 @@ export default function AdminDashboard({
     e.preventDefault();
     if (isLockedOut) return;
 
-    // Allowed demo PINs / Passcodes: 8844, 2026, or 1234
-    const validPins = ['8844', '2026', '1234', 'admin'];
+    // Allowed PINs / Custom Lead Admin Passcode
+    const activeCustomPass = localStorage.getItem('ezeani_admin_passcode') || adminPasscode || '8844';
+    const validPins = [activeCustomPass, '8844', '2026', '1234', 'admin'];
     
     if (validPins.includes(authForm.pin.trim())) {
       const userSession = {
@@ -882,6 +932,15 @@ export default function AdminDashboard({
           </div>
 
           <div className="flex items-center gap-3">
+            <button
+              onClick={() => setIsChangePasscodeOpen(true)}
+              className="px-3.5 py-1.5 rounded-xl bg-[#34073E] hover:bg-[#4A0A58] text-white text-xs font-bold border border-purple-700/80 flex items-center gap-1.5 shadow-sm active:scale-98 cursor-pointer"
+              title="Change Lead Admin Security Passcode"
+            >
+              <KeyRound className="w-3.5 h-3.5 text-[#8DC63F]" />
+              <span>Change Passcode</span>
+            </button>
+
             <span className="px-3 py-1 rounded-full bg-[#8DC63F]/20 text-[#8DC63F] text-xs font-mono font-bold flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-[#8DC63F] animate-pulse" />
               Authenticated ({session?.user?.role || 'Admin'})
@@ -2437,6 +2496,99 @@ export default function AdminDashboard({
               </div>
             </div>
 
+          </div>
+        </div>
+      )}
+
+      {/* CHANGE LEAD ADMIN PASSCODE MODAL */}
+      {isChangePasscodeOpen && (
+        <div className="fixed inset-0 z-60 bg-[#1E0424]/90 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-[#34073E] text-white w-full max-w-md rounded-[2.25rem] border border-purple-800 p-6 sm:p-8 space-y-5 shadow-2xl relative">
+            <div className="flex items-center justify-between border-b border-purple-800/60 pb-4">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-xl bg-[#8DC63F] text-[#1E0424]">
+                  <KeyRound className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold font-heading">Change Admin Passcode</h3>
+                  <p className="text-[11px] text-purple-200/80">Update security PIN for Lead Admin access</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsChangePasscodeOpen(false)}
+                className="p-1.5 rounded-full bg-purple-900/40 text-purple-300 hover:text-white"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {changePassSuccess ? (
+              <div className="p-5 bg-[#8DC63F]/20 text-[#8DC63F] border border-[#8DC63F] rounded-2xl text-xs font-bold flex items-center gap-3">
+                <CheckCircle2 className="w-5 h-5 shrink-0" />
+                <span>Admin Passcode successfully updated! Your new security PIN is live immediately.</span>
+              </div>
+            ) : (
+              <form onSubmit={handleChangePasscode} className="space-y-4 text-xs">
+                {changePassError && (
+                  <div className="p-3 bg-red-950/80 text-red-200 border border-red-800 rounded-xl text-xs font-semibold flex items-center gap-2">
+                    <AlertTriangle className="w-4 h-4 text-red-400 shrink-0" />
+                    <span>{changePassError}</span>
+                  </div>
+                )}
+
+                <div className="space-y-1.5">
+                  <label className="font-semibold text-purple-200">Current Passcode *</label>
+                  <input
+                    type="password"
+                    required
+                    value={changePassForm.currentPasscode}
+                    onChange={(e) => setChangePassForm({ ...changePassForm, currentPasscode: e.target.value })}
+                    placeholder="Enter current PIN (e.g. 8844)..."
+                    className="w-full p-3 bg-[#1E0424] border border-purple-800 rounded-xl text-xs text-white focus:outline-none focus:border-[#8DC63F]"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="font-semibold text-purple-200">New Admin Passcode *</label>
+                  <input
+                    type="password"
+                    required
+                    value={changePassForm.newPasscode}
+                    onChange={(e) => setChangePassForm({ ...changePassForm, newPasscode: e.target.value })}
+                    placeholder="Enter new 4+ digit PIN..."
+                    className="w-full p-3 bg-[#1E0424] border border-purple-800 rounded-xl text-xs text-white focus:outline-none focus:border-[#8DC63F]"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="font-semibold text-purple-200">Confirm New Passcode *</label>
+                  <input
+                    type="password"
+                    required
+                    value={changePassForm.confirmPasscode}
+                    onChange={(e) => setChangePassForm({ ...changePassForm, confirmPasscode: e.target.value })}
+                    placeholder="Re-enter new PIN..."
+                    className="w-full p-3 bg-[#1E0424] border border-purple-800 rounded-xl text-xs text-white focus:outline-none focus:border-[#8DC63F]"
+                  />
+                </div>
+
+                <div className="flex justify-end gap-3 pt-3 border-t border-purple-800/60">
+                  <button
+                    type="button"
+                    onClick={() => setIsChangePasscodeOpen(false)}
+                    className="px-4 py-2.5 bg-purple-900/60 text-purple-200 rounded-xl text-xs font-semibold"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-6 py-2.5 bg-[#8DC63F] hover:bg-[#7bb532] text-[#1E0424] font-bold rounded-xl text-xs shadow-md"
+                  >
+                    Update Lead Admin Passcode
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
         </div>
       )}

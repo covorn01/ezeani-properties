@@ -14,7 +14,7 @@ export const EZEANI_COMPANY_INFO = {
     facebook: "Ezeani Properties Ltd"
   },
   offices: [
-    { city: "Lagos Office", address: "Plot 14 Admiralty Way, Lekki Phase 1, Lagos, Nigeria" },
+    { city: "Headquarters", address: "Ezeani Group, ECI Plaza, Okpanam Road" },
     { city: "Abuja Office", address: "Suite 402, Capital Place, Maitama, Abuja, Nigeria" }
   ],
   coreValues: [
