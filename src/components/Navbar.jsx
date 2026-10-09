@@ -311,16 +311,6 @@ export default function Navbar({
               )}
             </button>
 
-            {/* Staff Portal Shortcut (Restricted Access) */}
-            <button
-              onClick={onOpenAdmin}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-purple-300 dark:border-purple-700 bg-[#34073E] text-white text-xs font-bold hover:bg-[#25042D] transition-all shadow-xs"
-              title="Restricted Staff Portal Login"
-            >
-              <Lock className="w-3.5 h-3.5 text-[#8DC63F]" />
-              <span>Staff Portal</span>
-            </button>
-
             {/* Consultation CTA (Door Green #8DC63F) */}
             <button
               onClick={() => onOpenBooking(null)}

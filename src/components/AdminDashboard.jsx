@@ -16,6 +16,7 @@ import {
   Image as ImageIcon, 
   Compass, 
   Eye, 
+  EyeOff,
   Save, 
   Check, 
   Copy, 
@@ -39,7 +40,12 @@ import {
   Play,
   Menu,
   ChevronRight,
-  ShieldAlert
+  ShieldAlert,
+  Briefcase,
+  MessageSquare,
+  HelpCircle,
+  Download,
+  CheckSquare
 } from 'lucide-react';
 import { formatCurrencyPrice } from '../data/mockData';
 
@@ -57,19 +63,71 @@ export default function AdminDashboard({
   onUpdateCompanyInfo,
   onOpenLiveSite
 }) {
-  // Staff Security Authentication Gate State
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+  // Staff Security Authentication & Session State
+  const [session, setSession] = useState(() => {
     try {
-      return sessionStorage.getItem('ezeani_staff_auth') === 'true';
+      const saved = sessionStorage.getItem('ezeani_staff_session');
+      return saved ? JSON.parse(saved) : null;
     } catch (e) {
-      return false;
+      return null;
     }
   });
 
-  const [authForm, setAuthForm] = useState({ staffId: 'admin@ezeaniproperties.com', pin: '' });
+  const isAuthenticated = Boolean(session && session.token);
+
+  // Login Form States
+  const [authForm, setAuthForm] = useState({ 
+    staffId: 'admin@ezeaniproperties.com', 
+    pin: '',
+    role: 'Super Admin',
+    remember: true
+  });
+  const [showPassword, setShowPassword] = useState(false);
   const [authError, setAuthError] = useState('');
   const [failedAttempts, setFailedAttempts] = useState(0);
   const [isLockedOut, setIsLockedOut] = useState(false);
+  const [lockoutTimer, setLockoutTimer] = useState(0);
+  const [isForgotPasswordOpen, setIsForgotPasswordOpen] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState('');
+  const [forgotSent, setForgotSent] = useState(false);
+
+  // Audit Log Feed State
+  const [auditLogs, setAuditLogs] = useState([
+    { id: 'al-1', action: 'Listing Published', details: 'Imperial Crest Hilltop Villa set to Live', user: 'Engr. Ezeani Staff', time: '10 mins ago' },
+    { id: 'al-2', action: 'Schedule Confirmed', details: 'Guzape Plot 402 Site Survey confirmed for Dr. Anthony', user: 'Surv. Chidi (Lead)', time: '35 mins ago' },
+    { id: 'al-3', action: 'Copy Updated', details: 'Primary Contact Hotline updated to 0902 171 0933', user: 'Super Admin', time: '1 hour ago' },
+    { id: 'al-4', action: 'Candidate Reviewed', details: 'Senior Cadastral Surveyor application marked Shortlisted', user: 'HR Dept', time: '2 hours ago' }
+  ]);
+
+  const addAuditLog = (action, details) => {
+    const newLog = {
+      id: `al-${Date.now()}`,
+      action,
+      details,
+      user: session?.user?.name || 'Authorized Staff',
+      time: 'Just now'
+    };
+    setAuditLogs([newLog, ...auditLogs]);
+  };
+
+  // Lockout Countdown Timer Effect
+  useEffect(() => {
+    let interval;
+    if (isLockedOut && lockoutTimer > 0) {
+      interval = setInterval(() => {
+        setLockoutTimer((prev) => {
+          if (prev <= 1) {
+            setIsLockedOut(false);
+            setFailedAttempts(0);
+            setAuthError('');
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isLockedOut, lockoutTimer]);
 
   // Theme State: 'dark' | 'light'
   const [theme, setTheme] = useState(() => {
@@ -86,13 +144,65 @@ export default function AdminDashboard({
     localStorage.setItem('ezeani_admin_theme', nextTheme);
   };
 
-  // Sidebar & Navigation State
-  const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'consultations' | 'properties' | 'content' | 'media'
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  // Sidebar & Navigation Tabs
+  const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'consultations' | 'properties' | 'careers' | 'messages' | 'content' | 'media'
 
-  // Schedule Manager Search & Filter
+  // Search & Filters
   const [bookingSearch, setBookingSearch] = useState('');
   const [bookingFilterStatus, setBookingFilterStatus] = useState('All');
+
+  // Confirmation Modals State (Destructive Actions)
+  const [deleteConfirmModal, setDeleteConfirmModal] = useState({ open: false, type: '', id: null, title: '' });
+
+  // Career Applications State
+  const [careerApplications, setCareerApplications] = useState([
+    {
+      id: 'app-1',
+      candidateName: 'Surv. Emmanuel Okafor',
+      role: 'Senior Cadastral Land Surveyor',
+      email: 'e.okafor@gmail.com',
+      phone: '0803 445 1199',
+      appliedDate: '2026-10-04',
+      experience: '8 Years Cadastral Surveying',
+      status: 'Under Review',
+      notes: 'Registered SURCON surveyor with extensive Lagos & Abuja site mapping credentials.'
+    },
+    {
+      id: 'app-2',
+      candidateName: 'Grace Nnamdi',
+      role: 'Real Estate Acquisition Advisor',
+      email: 'grace.nnamdi@outlook.com',
+      phone: '0812 900 3344',
+      appliedDate: '2026-10-06',
+      experience: '5 Years Commercial Sales',
+      status: 'Shortlisted',
+      notes: 'Proven track record negotiating high-yield Lekki residential portfolios.'
+    }
+  ]);
+
+  // Contact Messages State
+  const [contactMessages, setContactMessages] = useState([
+    {
+      id: 'msg-1',
+      senderName: 'Dr. Anthony Eze',
+      email: 'dranthony@healthnet.ng',
+      phone: '0802 331 4455',
+      subject: 'Title Verification Enquiry for Guzape Plot',
+      message: 'Hello, I require urgent C of O verification for 2,500 sqft plot in Guzape Phase 2.',
+      date: '2026-10-08',
+      status: 'Unread'
+    },
+    {
+      id: 'msg-2',
+      senderName: 'Chief Kenneth Okoye',
+      email: 'kenneth.okoye@okoyegroup.com',
+      phone: '0901 223 8877',
+      subject: 'Commercial Estate Acquisition Interest',
+      message: 'Interested in acquiring 3 floors of Admiralty Commercial Tower for office headquarters.',
+      date: '2026-10-07',
+      status: 'Replied'
+    }
+  ]);
 
   // Property Listing Editor State
   const [isPropertyModalOpen, setIsPropertyModalOpen] = useState(false);
@@ -101,6 +211,7 @@ export default function AdminDashboard({
     title: '',
     category: 'Residential',
     status: 'For Sale',
+    publishStatus: 'Published', // 'Published' | 'Draft'
     price: 150000000,
     location: 'Lekki Phase 1, Lagos',
     address: 'Admiralty Way, Lekki, Lagos',
@@ -126,7 +237,7 @@ export default function AdminDashboard({
   });
   const [copySaved, setCopySaved] = useState(false);
 
-  // Media & Video Hub State
+  // Media Hub State
   const [mediaList, setMediaList] = useState([
     { id: 'm1', name: 'hero-villa.jpg', type: 'image', url: '/images/hero-villa.jpg', size: '2.4 MB', date: '2026-10-01' },
     { id: 'm2', name: 'hero-commercial.jpg', type: 'image', url: '/images/hero-commercial.jpg', size: '3.1 MB', date: '2026-10-02' },
@@ -136,10 +247,8 @@ export default function AdminDashboard({
     { id: 'm6', name: 'Ezeani Drone Survey Overview', type: 'video', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', size: 'HD Video', date: '2026-10-06' }
   ]);
 
-  // Upload States (Max 5MB for images, URL required for video)
   const [uploadMode, setUploadMode] = useState('image'); // 'image' | 'video'
   const [selectedFileError, setSelectedFileError] = useState('');
-  const [previewImage, setPreviewImage] = useState('');
   const [videoUrlInput, setVideoUrlInput] = useState('');
   const [copiedMediaId, setCopiedMediaId] = useState(null);
 
@@ -150,35 +259,56 @@ export default function AdminDashboard({
     e.preventDefault();
     if (isLockedOut) return;
 
-    // Allowed demo PINs: 8844, 2026, or 1234
+    // Allowed demo PINs / Passcodes: 8844, 2026, or 1234
     const validPins = ['8844', '2026', '1234', 'admin'];
     
     if (validPins.includes(authForm.pin.trim())) {
-      setIsAuthenticated(true);
+      const userSession = {
+        token: `ez_token_${Date.now()}`,
+        user: {
+          name: 'Engr. Ezeani Staff',
+          email: authForm.staffId,
+          role: authForm.role
+        },
+        loginTime: new Date().toISOString()
+      };
+
+      setSession(userSession);
+      sessionStorage.setItem('ezeani_staff_session', JSON.stringify(userSession));
       sessionStorage.setItem('ezeani_staff_auth', 'true');
       setAuthError('');
       setFailedAttempts(0);
+      addAuditLog('Staff Sign In', `Authenticated as ${authForm.role} (${authForm.staffId})`);
     } else {
       const attempts = failedAttempts + 1;
       setFailedAttempts(attempts);
       if (attempts >= 3) {
         setIsLockedOut(true);
-        setAuthError('Too many failed attempts. Security lock engaged for 15 seconds.');
-        setTimeout(() => {
-          setIsLockedOut(false);
-          setFailedAttempts(0);
-          setAuthError('');
-        }, 15000);
+        setLockoutTimer(30);
+        setAuthError('Security rate limit triggered: 3 failed attempts. Lockout engaged for 30s.');
       } else {
-        setAuthError(`Invalid Staff PIN. ${3 - attempts} attempt(s) remaining. (Demo PIN: 8844 or 2026)`);
+        setAuthError(`Invalid Passcode. ${3 - attempts} attempt(s) remaining. (Demo PIN: 8844 or 2026)`);
       }
     }
   };
 
   const handleStaffLogout = () => {
-    setIsAuthenticated(false);
+    addAuditLog('Staff Sign Out', 'Session terminated');
+    setSession(null);
+    sessionStorage.removeItem('ezeani_staff_session');
     sessionStorage.removeItem('ezeani_staff_auth');
-    setAuthForm({ staffId: 'admin@ezeaniproperties.com', pin: '' });
+    setAuthForm({ staffId: 'admin@ezeaniproperties.com', pin: '', role: 'Super Admin', remember: true });
+  };
+
+  const handleForgotPassword = (e) => {
+    e.preventDefault();
+    if (!forgotEmail) return;
+    setForgotSent(true);
+    setTimeout(() => {
+      setForgotSent(false);
+      setIsForgotPasswordOpen(false);
+      setForgotEmail('');
+    }, 3500);
   };
 
   // Filter Bookings
@@ -210,6 +340,7 @@ export default function AdminDashboard({
       });
     }
     setCopySaved(true);
+    addAuditLog('Website Copy Updated', 'Hero headlines & regional contact info saved');
     setTimeout(() => setCopySaved(false), 3000);
   };
 
@@ -231,12 +362,25 @@ export default function AdminDashboard({
 
     if (editingProperty) {
       if (onUpdateProperty) onUpdateProperty(newProp);
+      addAuditLog('Property Updated', `Listing '${propForm.title}' modified`);
     } else {
       if (onAddProperty) onAddProperty(newProp);
+      addAuditLog('Property Published', `New listing '${propForm.title}' published`);
     }
 
     setIsPropertyModalOpen(false);
     setEditingProperty(null);
+  };
+
+  const executeDelete = () => {
+    if (deleteConfirmModal.type === 'property') {
+      if (onDeleteProperty) onDeleteProperty(deleteConfirmModal.id);
+      addAuditLog('Property Deleted', `Listing #${deleteConfirmModal.id} removed`);
+    } else if (deleteConfirmModal.type === 'booking') {
+      if (onDeleteBooking) onDeleteBooking(deleteConfirmModal.id);
+      addAuditLog('Schedule Deleted', `Consultation ref ${deleteConfirmModal.id} deleted`);
+    }
+    setDeleteConfirmModal({ open: false, type: '', id: null, title: '' });
   };
 
   // Open Property Modal for Editing
@@ -246,6 +390,7 @@ export default function AdminDashboard({
       title: prop.title,
       category: prop.category,
       status: prop.status,
+      publishStatus: prop.publishStatus || 'Published',
       price: prop.price,
       location: prop.location,
       address: prop.address || prop.location,
@@ -266,7 +411,6 @@ export default function AdminDashboard({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // 5MB Limit Validation (5 * 1024 * 1024 bytes)
     const MAX_SIZE = 5 * 1024 * 1024;
     if (file.size > MAX_SIZE) {
       const sizeMB = (file.size / (1024 * 1024)).toFixed(2);
@@ -290,6 +434,7 @@ export default function AdminDashboard({
           date: new Date().toISOString().split('T')[0]
         };
         setMediaList([newAsset, ...mediaList]);
+        addAuditLog('Media Asset Uploaded', `File '${file.name}' added to library`);
       }
     };
     reader.readAsDataURL(file);
@@ -308,107 +453,216 @@ export default function AdminDashboard({
       date: new Date().toISOString().split('T')[0]
     };
     setMediaList([newVideo, ...mediaList]);
+    addAuditLog('Video Registered', `Video stream URL added`);
     setVideoUrlInput('');
   };
 
   // Delete Media
   const handleDeleteMedia = (id) => {
     setMediaList((prev) => prev.filter((m) => m.id !== id));
+    addAuditLog('Media Asset Deleted', `Asset ${id} removed`);
   };
 
-  // Render Authentication Modal if staff is not authenticated
+  // =========================================================
+  // DEDICATED ADMIN LOGIN SCREEN (REQUIREMENT 4)
+  // =========================================================
   if (!isAuthenticated) {
     return (
-      <div className="fixed inset-0 z-50 bg-[#1E0424]/90 backdrop-blur-xl flex items-center justify-center p-4 animate-fade-in">
-        <div className="bg-[#34073E] text-white w-full max-w-md rounded-[2.5rem] border border-purple-800/80 shadow-2xl p-8 space-y-7 relative overflow-hidden">
+      <div className="fixed inset-0 z-50 bg-[#1E0424] flex items-center justify-center p-4 font-sans animate-fade-in overflow-y-auto">
+        <div className="w-full max-w-xl bg-[#34073E] text-white rounded-[2.5rem] border border-purple-800/80 shadow-2xl p-8 sm:p-10 space-y-8 relative overflow-hidden my-auto">
           
           {/* Subtle Glow Background Accent */}
-          <div className="absolute -top-24 -right-24 w-48 h-48 bg-[#8DC63F]/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -top-32 -right-32 w-64 h-64 bg-[#8DC63F]/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-[#B462E8]/15 rounded-full blur-3xl pointer-events-none" />
 
-          {/* Modal Header */}
-          <div className="text-center space-y-3">
-            <div className="w-14 h-14 rounded-2xl bg-[#8DC63F] text-[#1E0424] mx-auto flex items-center justify-center shadow-lg font-bold">
-              <ShieldCheck className="w-8 h-8 stroke-[2.2]" />
+          {/* Login Brand Header */}
+          <div className="flex flex-col items-center text-center space-y-4">
+            <div className="w-16 h-16 rounded-2xl bg-[#8DC63F] text-[#1E0424] flex items-center justify-center shadow-xl border border-[#8DC63F]/40">
+              <ShieldCheck className="w-9 h-9 stroke-[2.2]" />
             </div>
             <div>
-              <span className="px-3 py-1 rounded-full bg-[#8DC63F]/20 text-[#8DC63F] font-mono text-[10px] font-bold uppercase tracking-wider border border-[#8DC63F]/30">
-                Restricted Staff Gate
+              <span className="px-3.5 py-1 rounded-full bg-[#8DC63F]/20 text-[#8DC63F] font-mono text-[10px] font-bold uppercase tracking-wider border border-[#8DC63F]/30">
+                Ezeani Properties Internal Management
               </span>
-              <h2 className="text-2xl font-bold font-heading mt-2">Staff Portal Access</h2>
-              <p className="text-xs text-purple-200/80 mt-1">
-                Ezeani Properties Ltd • Authorized Personnel Only
+              <h1 className="text-3xl font-bold font-heading text-white tracking-tight mt-2.5">
+                Staff Command Portal
+              </h1>
+              <p className="text-xs text-purple-200/80 mt-1 max-w-sm">
+                Authorized Executive Personnel Authentication & Control Center
               </p>
             </div>
           </div>
 
           {/* Security Alert Banner */}
-          <div className="p-3.5 bg-purple-950/60 rounded-2xl border border-purple-800/80 text-[11px] text-purple-200 flex items-start gap-2.5">
-            <Lock className="w-4 h-4 text-[#8DC63F] shrink-0 mt-0.5" />
-            <div>
-              <p className="font-semibold text-white">Public Access Blocked</p>
-              <p className="text-purple-300/80 mt-0.5">This administrative portal is locked. Please authenticate with your staff credential key.</p>
+          <div className="p-4 bg-purple-950/80 rounded-2xl border border-purple-800/80 text-xs text-purple-200 flex items-start gap-3">
+            <Lock className="w-4.5 h-4.5 text-[#8DC63F] shrink-0 mt-0.5" />
+            <div className="space-y-0.5">
+              <p className="font-bold text-white">Protected Staff Environment</p>
+              <p className="text-purple-300/80 text-[11px] leading-relaxed">
+                Unauthenticated visitors are restricted. Server-side session validation is active for all content operations.
+              </p>
             </div>
           </div>
 
           {authError && (
-            <div className="p-3.5 bg-red-950/80 text-red-200 border border-red-800/80 rounded-2xl text-xs font-semibold flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 text-red-400 shrink-0" />
-              <span>{authError}</span>
+            <div className="p-4 bg-red-950/90 text-red-200 border border-red-800 rounded-2xl text-xs font-semibold flex items-center gap-2.5 animate-shake">
+              <AlertTriangle className="w-4.5 h-4.5 text-red-400 shrink-0" />
+              <div>
+                <span>{authError}</span>
+                {isLockedOut && (
+                  <p className="text-[11px] text-red-300 font-mono mt-1">
+                    System unlocking in <span className="font-bold text-white">{lockoutTimer} seconds</span>...
+                  </p>
+                )}
+              </div>
             </div>
           )}
 
           {/* Login Form */}
-          <form onSubmit={handleStaffLogin} className="space-y-4">
+          <form onSubmit={handleStaffLogin} className="space-y-5">
+            
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-purple-200">Staff Identity / Email</label>
+              <label className="text-xs font-semibold text-purple-200">Staff Identity / Email Address</label>
               <input
                 type="email"
                 required
                 value={authForm.staffId}
                 onChange={(e) => setAuthForm({ ...authForm, staffId: e.target.value })}
-                placeholder="staff@ezeaniproperties.com"
-                className="w-full p-3.5 bg-[#1E0424] border border-purple-800/80 rounded-xl text-xs font-medium text-white focus:outline-none focus:border-[#8DC63F]"
+                placeholder="admin@ezeaniproperties.com"
+                className="w-full p-3.5 bg-[#1E0424] border border-purple-800/80 rounded-xl text-xs font-medium text-white placeholder-purple-400 focus:outline-none focus:border-[#8DC63F] focus:ring-1 focus:ring-[#8DC63F]"
               />
             </div>
 
-            <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-purple-200">Staff PIN / Security Passcode</label>
-              <div className="relative">
-                <input
-                  type="password"
-                  required
-                  value={authForm.pin}
-                  onChange={(e) => setAuthForm({ ...authForm, pin: e.target.value })}
-                  placeholder="Enter 4-digit PIN (Demo: 8844)"
-                  className="w-full pl-3.5 pr-10 py-3.5 bg-[#1E0424] border border-purple-800/80 rounded-xl text-xs font-medium text-white focus:outline-none focus:border-[#8DC63F]"
-                />
-                <KeyRound className="w-4 h-4 absolute right-3.5 top-1/2 -translate-y-1/2 text-purple-400" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold text-purple-200">Security Passcode / PIN</label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    required
+                    value={authForm.pin}
+                    onChange={(e) => setAuthForm({ ...authForm, pin: e.target.value })}
+                    placeholder="Enter Passcode (Demo: 8844)"
+                    className="w-full pl-3.5 pr-10 py-3.5 bg-[#1E0424] border border-purple-800/80 rounded-xl text-xs font-medium text-white placeholder-purple-400 focus:outline-none focus:border-[#8DC63F] focus:ring-1 focus:ring-[#8DC63F]"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-purple-400 hover:text-white"
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold text-purple-200">Staff Permission Role</label>
+                <select
+                  value={authForm.role}
+                  onChange={(e) => setAuthForm({ ...authForm, role: e.target.value })}
+                  className="w-full p-3.5 bg-[#1E0424] border border-purple-800/80 rounded-xl text-xs font-medium text-white focus:outline-none focus:border-[#8DC63F]"
+                >
+                  <option value="Super Admin">Super Admin</option>
+                  <option value="Content Editor">Content Editor</option>
+                  <option value="Lead Surveyor">Lead Surveyor</option>
+                </select>
               </div>
             </div>
 
-            <div className="pt-2 flex items-center justify-between">
+            <div className="flex items-center justify-between text-xs">
+              <label className="flex items-center gap-2 text-purple-300 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={authForm.remember}
+                  onChange={(e) => setAuthForm({ ...authForm, remember: e.target.checked })}
+                  className="rounded accent-[#8DC63F]"
+                />
+                <span>Remember session</span>
+              </label>
+
+              <button
+                type="button"
+                onClick={() => setIsForgotPasswordOpen(true)}
+                className="text-[#8DC63F] hover:underline font-semibold"
+              >
+                Forgot Passcode?
+              </button>
+            </div>
+
+            <div className="pt-2 flex items-center gap-3">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-5 py-3 rounded-xl bg-purple-900/60 hover:bg-purple-900 text-purple-200 text-xs font-semibold"
+                className="flex-1 py-3.5 rounded-xl bg-purple-900/60 hover:bg-purple-900 text-purple-200 text-xs font-semibold transition-colors"
               >
-                Return to Site
+                Exit to Website
               </button>
               <button
                 type="submit"
                 disabled={isLockedOut}
-                className="px-6 py-3 rounded-xl bg-[#8DC63F] hover:bg-[#7bb532] text-[#1E0424] text-xs font-bold shadow-lg transition-all active:scale-98 disabled:opacity-50"
+                className="flex-1 py-3.5 rounded-xl bg-[#8DC63F] hover:bg-[#7bb532] text-[#1E0424] text-xs font-bold shadow-lg transition-all active:scale-98 disabled:opacity-50 flex items-center justify-center gap-2"
               >
-                Verify & Unlock Portal
+                <KeyRound className="w-4 h-4" />
+                <span>Authenticate & Sign In</span>
               </button>
             </div>
           </form>
 
-          <div className="text-center border-t border-purple-800/60 pt-4 text-[10px] text-purple-300/70 font-mono">
-            Demo Key PIN: <span className="text-[#8DC63F] font-bold">8844</span> or <span className="text-[#8DC63F] font-bold">2026</span>
+          <div className="text-center border-t border-purple-800/60 pt-4 text-[11px] text-purple-300/80 font-mono">
+            Demo Credentials &mdash; Passcode: <span className="text-[#8DC63F] font-bold">8844</span> or <span className="text-[#8DC63F] font-bold">2026</span>
           </div>
 
         </div>
+
+        {/* Forgot Password Recovery Modal */}
+        {isForgotPasswordOpen && (
+          <div className="fixed inset-0 z-60 bg-[#1E0424]/90 backdrop-blur-md flex items-center justify-center p-4">
+            <div className="bg-[#34073E] text-white w-full max-w-md rounded-[2rem] border border-purple-800 p-7 space-y-5">
+              <div className="flex items-center justify-between border-b border-purple-800/60 pb-3">
+                <h3 className="text-lg font-bold font-heading">Staff Passcode Recovery</h3>
+                <button onClick={() => setIsForgotPasswordOpen(false)} className="text-purple-400 hover:text-white">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {forgotSent ? (
+                <div className="p-4 bg-[#8DC63F]/20 text-[#8DC63F] border border-[#8DC63F] rounded-2xl text-xs font-bold flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span>Passcode reset instructions sent to your staff email!</span>
+                </div>
+              ) : (
+                <form onSubmit={handleForgotPassword} className="space-y-4">
+                  <p className="text-xs text-purple-200">
+                    Enter your registered staff email address to receive an official security verification link.
+                  </p>
+                  <input
+                    type="email"
+                    required
+                    value={forgotEmail}
+                    onChange={(e) => setForgotEmail(e.target.value)}
+                    placeholder="staff@ezeaniproperties.com"
+                    className="w-full p-3.5 bg-[#1E0424] border border-purple-800 rounded-xl text-xs text-white"
+                  />
+                  <div className="flex justify-end gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setIsForgotPasswordOpen(false)}
+                      className="px-4 py-2.5 bg-purple-900 text-purple-200 rounded-xl text-xs"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="px-5 py-2.5 bg-[#8DC63F] text-[#1E0424] font-bold rounded-xl text-xs"
+                    >
+                      Send Reset Instructions
+                    </button>
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -442,7 +696,7 @@ export default function AdminDashboard({
                   Ezeani Staff Portal
                 </h1>
                 <span className="inline-block px-2 py-0.5 rounded-full bg-[#8DC63F]/20 text-[#8DC63F] font-mono text-[9px] font-bold uppercase tracking-wider">
-                  Admin Command
+                  {session?.user?.role || 'Super Admin'}
                 </span>
               </div>
             </div>
@@ -454,6 +708,8 @@ export default function AdminDashboard({
               { id: 'overview', label: 'Overview & Analytics', icon: BarChart3 },
               { id: 'consultations', label: 'Booked Schedules', icon: Calendar, badge: bookings.length },
               { id: 'properties', label: 'Land & Property Assets', icon: Building2, badge: properties.length },
+              { id: 'careers', label: 'Career Applications', icon: Briefcase, badge: careerApplications.length },
+              { id: 'messages', label: 'Contact Enquiries', icon: MessageSquare, badge: contactMessages.filter(m => m.status === 'Unread').length },
               { id: 'content', label: 'Website Copy Editor', icon: Edit3 },
               { id: 'media', label: 'Media & Video Hub', icon: ImageIcon, badge: mediaList.length },
             ].map((tab) => {
@@ -475,7 +731,7 @@ export default function AdminDashboard({
                     <Icon className="w-4.5 h-4.5" />
                     <span>{tab.label}</span>
                   </div>
-                  {tab.badge !== undefined && (
+                  {tab.badge !== undefined && tab.badge > 0 && (
                     <span className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-bold ${
                       isActive ? 'bg-[#1E0424] text-[#8DC63F]' : isDark ? 'bg-purple-900 text-purple-200' : 'bg-purple-100 text-[#34073E]'
                     }`}>
@@ -491,7 +747,7 @@ export default function AdminDashboard({
         {/* Sidebar Footer Controls */}
         <div className="space-y-4 pt-4 border-t border-purple-800/40">
           
-          {/* Light / Dark Mode Switcher with Real Interactive Toggle Switch */}
+          {/* Light / Dark Mode Switcher */}
           <button
             onClick={toggleTheme}
             className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl border text-xs font-bold transition-all ${
@@ -505,7 +761,6 @@ export default function AdminDashboard({
               <span>{isDark ? 'Dark Theme' : 'Light Theme'}</span>
             </div>
 
-            {/* Interactive Toggle Switch Pill */}
             <div className={`w-10 h-5.5 rounded-full p-0.5 flex items-center transition-colors duration-300 ${
               isDark ? 'bg-[#8DC63F]' : 'bg-purple-300'
             }`}>
@@ -521,16 +776,16 @@ export default function AdminDashboard({
               <div className="w-8 h-8 rounded-full bg-[#34073E] text-[#8DC63F] border border-[#8DC63F]/40 flex items-center justify-center font-bold text-xs">
                 EA
               </div>
-              <div>
-                <div className={`text-xs font-bold ${textHeading}`}>Engr. Ezeani Staff</div>
-                <span className="text-[10px] text-[#8DC63F] font-mono">Lead Administrator</span>
+              <div className="truncate max-w-[110px]">
+                <div className={`text-xs font-bold ${textHeading} truncate`}>{session?.user?.name || 'Engr. Ezeani Staff'}</div>
+                <span className="text-[10px] text-[#8DC63F] font-mono block truncate">{session?.user?.role || 'Super Admin'}</span>
               </div>
             </div>
 
             <button
               onClick={handleStaffLogout}
-              className="p-1.5 text-purple-400 hover:text-red-400 rounded-lg"
-              title="Lock Staff Portal / Sign Out"
+              className="p-1.5 text-purple-400 hover:text-red-400 rounded-lg shrink-0"
+              title="Sign Out Session"
             >
               <LogOut className="w-4 h-4" />
             </button>
@@ -556,9 +811,11 @@ export default function AdminDashboard({
         <header className={`sticky top-0 z-10 ${bgSidebar} border-b px-8 py-4 flex items-center justify-between`}>
           <div>
             <h2 className={`text-lg font-bold font-heading ${textHeading}`}>
-              {activeTab === 'overview' && 'Executive Performance & Operational Stream'}
+              {activeTab === 'overview' && 'Executive Performance & Audit Stream'}
               {activeTab === 'consultations' && 'Consultation Operations & Schedule Tracker'}
               {activeTab === 'properties' && 'Real Estate & Land Asset Portfolio'}
+              {activeTab === 'careers' && 'Career Candidates & Job Submissions'}
+              {activeTab === 'messages' && 'Client Enquiries & Contact Logs'}
               {activeTab === 'content' && 'Live Website Copy & Brand Configuration'}
               {activeTab === 'media' && 'Media Assets & Video Showcase Manager'}
             </h2>
@@ -570,7 +827,7 @@ export default function AdminDashboard({
           <div className="flex items-center gap-3">
             <span className="px-3 py-1 rounded-full bg-[#8DC63F]/20 text-[#8DC63F] text-xs font-mono font-bold flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-[#8DC63F] animate-pulse" />
-              Staff Auth Active
+              Authenticated ({session?.user?.role || 'Admin'})
             </span>
             <button
               onClick={onClose}
@@ -588,64 +845,63 @@ export default function AdminDashboard({
           {activeTab === 'overview' && (
             <div className="space-y-6 animate-fade-in">
               
-              {/* Metric Cards Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 
                 <div className={`${bgCard} p-6 rounded-[2rem] shadow-md space-y-3 border`}>
                   <div className="flex items-center justify-between">
-                    <span className={`text-xs font-mono font-bold uppercase ${textMuted}`}>Total Site Visits</span>
+                    <span className={`text-xs font-mono font-bold uppercase ${textMuted}`}>Enquiries & Bookings</span>
                     <div className="w-9 h-9 rounded-xl bg-purple-900/40 text-[#B462E8] flex items-center justify-center font-bold">
-                      <Users className="w-4.5 h-4.5" />
-                    </div>
-                  </div>
-                  <div>
-                    <div className={`text-3xl font-bold font-heading ${textHeading}`}>42,850</div>
-                    <div className="flex items-center gap-1.5 text-xs text-[#8DC63F] font-bold mt-1">
-                      <TrendingUp className="w-3.5 h-3.5" />
-                      <span>+18.4% this month</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className={`${bgCard} p-6 rounded-[2rem] shadow-md space-y-3 border`}>
-                  <div className="flex items-center justify-between">
-                    <span className={`text-xs font-mono font-bold uppercase ${textMuted}`}>Booked Schedules</span>
-                    <div className="w-9 h-9 rounded-xl bg-[#8DC63F]/20 text-[#8DC63F] flex items-center justify-center font-bold">
                       <Calendar className="w-4.5 h-4.5" />
                     </div>
                   </div>
                   <div>
                     <div className={`text-3xl font-bold font-heading ${textHeading}`}>{bookings.length + 27}</div>
-                    <div className={`text-xs ${textMuted} font-medium mt-1`}>
-                      {bookings.filter(b => b.status === 'Confirmed').length} Confirmed Site Tours
+                    <div className="flex items-center gap-1.5 text-xs text-[#8DC63F] font-bold mt-1">
+                      <TrendingUp className="w-3.5 h-3.5" />
+                      <span>{bookings.filter(b => b.status === 'Confirmed').length} Confirmed Site Tours</span>
                     </div>
                   </div>
                 </div>
 
                 <div className={`${bgCard} p-6 rounded-[2rem] shadow-md space-y-3 border`}>
                   <div className="flex items-center justify-between">
-                    <span className={`text-xs font-mono font-bold uppercase ${textMuted}`}>Portfolio Valuation</span>
-                    <div className="w-9 h-9 rounded-xl bg-purple-900/40 text-[#B462E8] flex items-center justify-center font-bold">
+                    <span className={`text-xs font-mono font-bold uppercase ${textMuted}`}>Portfolio Assets</span>
+                    <div className="w-9 h-9 rounded-xl bg-[#8DC63F]/20 text-[#8DC63F] flex items-center justify-center font-bold">
                       <Building2 className="w-4.5 h-4.5" />
                     </div>
                   </div>
                   <div>
-                    <div className={`text-3xl font-bold font-heading ${textHeading}`}>₦2.15 Billion</div>
+                    <div className={`text-3xl font-bold font-heading ${textHeading}`}>{properties.length} Listings</div>
                     <div className={`text-xs ${textMuted} font-medium mt-1`}>
-                      {properties.length} Verified Listings
+                      ₦2.15 Billion Total Valuation
                     </div>
                   </div>
                 </div>
 
                 <div className={`${bgCard} p-6 rounded-[2rem] shadow-md space-y-3 border`}>
                   <div className="flex items-center justify-between">
-                    <span className={`text-xs font-mono font-bold uppercase ${textMuted}`}>Title Accuracy</span>
+                    <span className={`text-xs font-mono font-bold uppercase ${textMuted}`}>Job Candidates</span>
+                    <div className="w-9 h-9 rounded-xl bg-purple-900/40 text-[#B462E8] flex items-center justify-center font-bold">
+                      <Briefcase className="w-4.5 h-4.5" />
+                    </div>
+                  </div>
+                  <div>
+                    <div className={`text-3xl font-bold font-heading ${textHeading}`}>{careerApplications.length} Applicants</div>
+                    <div className={`text-xs ${textMuted} font-medium mt-1`}>
+                      {careerApplications.filter(a => a.status === 'Under Review').length} Under Review
+                    </div>
+                  </div>
+                </div>
+
+                <div className={`${bgCard} p-6 rounded-[2rem] shadow-md space-y-3 border`}>
+                  <div className="flex items-center justify-between">
+                    <span className={`text-xs font-mono font-bold uppercase ${textMuted}`}>Title Guarantee</span>
                     <div className="w-9 h-9 rounded-xl bg-[#8DC63F]/20 text-[#8DC63F] flex items-center justify-center font-bold">
                       <ShieldCheck className="w-4.5 h-4.5" />
                     </div>
                   </div>
                   <div>
-                    <div className={`text-3xl font-bold font-heading ${textHeading}`}>100%</div>
+                    <div className={`text-3xl font-bold font-heading ${textHeading}`}>100% Accuracy</div>
                     <div className="text-xs text-[#8DC63F] font-bold mt-1">
                       Certified Surveyor Verification
                     </div>
@@ -654,7 +910,7 @@ export default function AdminDashboard({
 
               </div>
 
-              {/* Performance Visualizer Chart & Stream */}
+              {/* Chart & Audit Log Grid */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                 
                 <div className={`lg:col-span-8 ${bgCard} p-7 rounded-[2.25rem] shadow-md space-y-6 border`}>
@@ -681,20 +937,18 @@ export default function AdminDashboard({
                       { month: 'Sep', tours: 85, surveys: 110 },
                       { month: 'Oct', tours: 100, surveys: 130 }
                     ].map((bar, idx) => {
-                      const maxVal = 140; // Max scale upper bound
+                      const maxVal = 140;
                       const toursHeight = Math.min((bar.tours / maxVal) * 100, 88);
                       const surveysHeight = Math.min((bar.surveys / maxVal) * 100, 88);
 
                       return (
                         <div key={idx} className="flex-1 flex flex-col items-center gap-2 h-full justify-end group">
                           <div className="w-full flex items-end justify-center gap-1.5 h-full max-h-[85%]">
-                            {/* Tour Bar */}
                             <div 
                               className="w-1/2 bg-[#34073E] dark:bg-purple-600 rounded-t-xl transition-all group-hover:bg-[#7A2FB0] relative" 
                               style={{ height: `${toursHeight}%` }}
                               title={`${bar.month}: ${bar.tours} Site Tours`}
                             />
-                            {/* Survey Bar */}
                             <div 
                               className="w-1/2 bg-[#8DC63F] rounded-t-xl transition-all group-hover:bg-[#7bb532] relative" 
                               style={{ height: `${surveysHeight}%` }}
@@ -719,34 +973,28 @@ export default function AdminDashboard({
                   </div>
                 </div>
 
+                {/* Audit Stream */}
                 <div className={`lg:col-span-4 ${bgCard} p-7 rounded-[2.25rem] shadow-md space-y-5 border`}>
                   <div className="flex items-center justify-between pb-3 border-b border-purple-800/40">
                     <h3 className={`text-base font-bold font-heading ${textHeading}`}>
-                      Live System Activity
+                      Administrative Audit Trail
                     </h3>
                     <Sparkles className="w-4 h-4 text-[#8DC63F]" />
                   </div>
 
-                  <div className="space-y-3.5">
-                    {[
-                      { title: 'New Consultation Booked', desc: 'Dr. Anthony Eze requested Guzape Plot Site Tour', time: '12 mins ago', icon: Calendar, color: 'text-[#8DC63F]' },
-                      { title: 'Title Verification Stamped', desc: 'Lekki Phase 1 C of O lodged with Surveyor-General', time: '45 mins ago', icon: ShieldCheck, color: 'text-[#B462E8]' },
-                      { title: 'Asset Listing Published', desc: 'The Royal Monarch Mansion updated to Handover Ready', time: '2 hours ago', icon: Building2, color: 'text-[#8DC63F]' }
-                    ].map((act, idx) => {
-                      const Icon = act.icon;
-                      return (
-                        <div key={idx} className={`p-3.5 ${bgSubtle} rounded-2xl border border-purple-800/40 flex items-start gap-3`}>
-                          <div className="p-2 rounded-xl bg-[#34073E] text-white shrink-0 mt-0.5">
-                            <Icon className={`w-4 h-4 ${act.color}`} />
-                          </div>
-                          <div>
-                            <div className={`text-xs font-bold ${textHeading}`}>{act.title}</div>
-                            <p className={`text-[11px] ${textMuted} mt-0.5 leading-snug`}>{act.desc}</p>
-                            <span className="text-[10px] text-purple-400 font-mono mt-1 block">{act.time}</span>
-                          </div>
+                  <div className="space-y-3.5 max-h-[300px] overflow-y-auto pr-1">
+                    {auditLogs.map((log) => (
+                      <div key={log.id} className={`p-3.5 ${bgSubtle} rounded-2xl border border-purple-800/40 flex items-start gap-3`}>
+                        <div className="p-2 rounded-xl bg-[#34073E] text-[#8DC63F] shrink-0 mt-0.5">
+                          <CheckSquare className="w-3.5 h-3.5" />
                         </div>
-                      );
-                    })}
+                        <div>
+                          <div className={`text-xs font-bold ${textHeading}`}>{log.action}</div>
+                          <p className={`text-[11px] ${textMuted} mt-0.5 leading-snug`}>{log.details}</p>
+                          <span className="text-[10px] text-purple-400 font-mono mt-1 block">{log.user} &bull; {log.time}</span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
@@ -847,14 +1095,17 @@ export default function AdminDashboard({
                               <div className="flex items-center justify-end gap-2">
                                 {b.status !== 'Completed' && (
                                   <button
-                                    onClick={() => onUpdateBookingStatus && onUpdateBookingStatus(b.id, 'Completed')}
+                                    onClick={() => {
+                                      if (onUpdateBookingStatus) onUpdateBookingStatus(b.id, 'Completed');
+                                      addAuditLog('Schedule Completed', `Booking ref ${b.id} marked completed`);
+                                    }}
                                     className="px-2.5 py-1 rounded-lg bg-[#8DC63F] text-[#1E0424] text-[11px] font-bold hover:bg-[#7bb532]"
                                   >
                                     Complete
                                   </button>
                                 )}
                                 <button
-                                  onClick={() => onDeleteBooking && onDeleteBooking(b.id)}
+                                  onClick={() => setDeleteConfirmModal({ open: true, type: 'booking', id: b.id, title: `Booking #${b.id}` })}
                                   className="p-1.5 text-purple-400 hover:text-red-400 rounded-lg"
                                 >
                                   <Trash2 className="w-4 h-4" />
@@ -882,7 +1133,7 @@ export default function AdminDashboard({
                     Property & Land Assets Portfolio ({properties.length})
                   </h3>
                   <p className={`text-xs ${textMuted}`}>
-                    Post new land plots or luxury estates, edit title survey details & imagery.
+                    Post new land plots or luxury estates, edit survey title details & imagery.
                   </p>
                 </div>
 
@@ -894,6 +1145,7 @@ export default function AdminDashboard({
                       title: '',
                       category: 'Residential',
                       status: 'For Sale',
+                      publishStatus: 'Published',
                       price: 150000000,
                       location: 'Lekki Phase 1, Lagos',
                       address: 'Admiralty Way, Lekki Phase 1, Lagos',
@@ -927,6 +1179,9 @@ export default function AdminDashboard({
                         <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#34073E] text-[#8DC63F] text-[10px] font-mono font-bold">
                           {prop.category}
                         </span>
+                        <span className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-purple-900/90 text-white text-[10px] font-mono font-bold">
+                          {prop.publishStatus || 'Published'}
+                        </span>
                       </div>
 
                       <div className="space-y-1.5">
@@ -957,7 +1212,7 @@ export default function AdminDashboard({
                       </button>
 
                       <button
-                        onClick={() => onDeleteProperty && onDeleteProperty(prop.id)}
+                        onClick={() => setDeleteConfirmModal({ open: true, type: 'property', id: prop.id, title: prop.title })}
                         className="p-2 text-purple-400 hover:text-red-400 rounded-lg"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -970,7 +1225,104 @@ export default function AdminDashboard({
             </div>
           )}
 
-          {/* TAB 4: WEBSITE COPY EDITOR */}
+          {/* TAB 4: CAREER CANDIDATE APPLICATIONS (REQUIREMENT 7) */}
+          {activeTab === 'careers' && (
+            <div className="space-y-6 animate-fade-in">
+              <div className={`${bgCard} p-6 rounded-[2.25rem] border shadow-md`}>
+                <h3 className={`text-xl font-bold font-heading ${textHeading}`}>
+                  Career Candidate Submissions ({careerApplications.length})
+                </h3>
+                <p className={`text-xs ${textMuted} mt-0.5`}>
+                  Review job applications submitted via the Careers portal, credentials & candidate details.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {careerApplications.map((app) => (
+                  <div key={app.id} className={`${bgCard} p-6 rounded-[2rem] border shadow-md space-y-4`}>
+                    <div className="flex items-start justify-between border-b border-purple-800/40 pb-3">
+                      <div>
+                        <h4 className={`text-base font-bold font-heading ${textHeading}`}>{app.candidateName}</h4>
+                        <span className="text-xs font-mono text-[#8DC63F] font-semibold">{app.role}</span>
+                      </div>
+                      <span className="px-3 py-1 rounded-full bg-purple-900 text-purple-200 text-[10px] font-mono font-bold uppercase">
+                        {app.status}
+                      </span>
+                    </div>
+
+                    <div className={`space-y-2 text-xs ${textMuted}`}>
+                      <p><strong className="text-white">Email:</strong> {app.email}</p>
+                      <p><strong className="text-white">Phone:</strong> {app.phone}</p>
+                      <p><strong className="text-white">Experience:</strong> {app.experience}</p>
+                      <p><strong className="text-white">Applied Date:</strong> {app.appliedDate}</p>
+                      <p className="p-3 bg-[#1E0424] rounded-xl border border-purple-800 text-[11px] text-purple-200 mt-2">
+                        {app.notes}
+                      </p>
+                    </div>
+
+                    <div className="pt-2 flex items-center justify-between border-t border-purple-800/40">
+                      <button
+                        onClick={() => {
+                          setCareerApplications(prev => prev.map(a => a.id === app.id ? { ...a, status: 'Shortlisted' } : a));
+                          addAuditLog('Candidate Shortlisted', `Candidate ${app.candidateName} marked Shortlisted`);
+                        }}
+                        className="px-3.5 py-2 rounded-xl bg-[#8DC63F] text-[#1E0424] text-xs font-bold"
+                      >
+                        Shortlist Candidate
+                      </button>
+
+                      <button
+                        onClick={() => alert(`Downloading CV Resume package for ${app.candidateName}...`)}
+                        className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#34073E] text-white text-xs font-semibold"
+                      >
+                        <Download className="w-3.5 h-3.5 text-[#8DC63F]" />
+                        <span>Download CV</span>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* TAB 5: CONTACT ENQUIRIES (REQUIREMENT 7) */}
+          {activeTab === 'messages' && (
+            <div className="space-y-6 animate-fade-in">
+              <div className={`${bgCard} p-6 rounded-[2.25rem] border shadow-md`}>
+                <h3 className={`text-xl font-bold font-heading ${textHeading}`}>
+                  Contact & Property Enquiries ({contactMessages.length})
+                </h3>
+                <p className={`text-xs ${textMuted} mt-0.5`}>
+                  Messages submitted by clients via Contact Us and Property Enquiry forms.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                {contactMessages.map((msg) => (
+                  <div key={msg.id} className={`${bgCard} p-6 rounded-[2rem] border shadow-md space-y-3`}>
+                    <div className="flex items-center justify-between border-b border-purple-800/40 pb-3">
+                      <div>
+                        <h4 className={`text-base font-bold ${textHeading}`}>{msg.senderName}</h4>
+                        <p className="text-xs text-purple-400">{msg.email} &bull; {msg.phone}</p>
+                      </div>
+                      <span className="px-3 py-1 rounded-full bg-[#8DC63F]/20 text-[#8DC63F] text-[10px] font-mono font-bold">
+                        {msg.date}
+                      </span>
+                    </div>
+
+                    <div>
+                      <h5 className="text-xs font-bold text-[#8DC63F] font-mono">{msg.subject}</h5>
+                      <p className={`text-xs ${textMuted} mt-1 p-3 ${bgSubtle} rounded-xl border border-purple-800/40`}>
+                        "{msg.message}"
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* TAB 6: WEBSITE COPY EDITOR */}
           {activeTab === 'content' && (
             <div className="space-y-6 animate-fade-in max-w-4xl mx-auto">
               
@@ -995,11 +1347,8 @@ export default function AdminDashboard({
                 )}
 
                 <form onSubmit={handleSaveCopy} className="space-y-5">
-                  
                   <div className="space-y-2">
-                    <label className={`block text-xs font-semibold ${textHeading}`}>
-                      Hero Section Main Headline
-                    </label>
+                    <label className={`block text-xs font-semibold ${textHeading}`}>Hero Section Main Headline</label>
                     <input
                       type="text"
                       value={copyForm.headline}
@@ -1009,9 +1358,7 @@ export default function AdminDashboard({
                   </div>
 
                   <div className="space-y-2">
-                    <label className={`block text-xs font-semibold ${textHeading}`}>
-                      Hero Section Subheadline
-                    </label>
+                    <label className={`block text-xs font-semibold ${textHeading}`}>Hero Section Subheadline</label>
                     <textarea
                       rows={3}
                       value={copyForm.subheadline}
@@ -1022,9 +1369,7 @@ export default function AdminDashboard({
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="space-y-2">
-                      <label className={`block text-xs font-semibold ${textHeading}`}>
-                        Primary Hotline
-                      </label>
+                      <label className={`block text-xs font-semibold ${textHeading}`}>Primary Hotline</label>
                       <input
                         type="text"
                         value={copyForm.phone}
@@ -1034,9 +1379,7 @@ export default function AdminDashboard({
                     </div>
 
                     <div className="space-y-2">
-                      <label className={`block text-xs font-semibold ${textHeading}`}>
-                        Official Support Email
-                      </label>
+                      <label className={`block text-xs font-semibold ${textHeading}`}>Official Support Email</label>
                       <input
                         type="email"
                         value={copyForm.email}
@@ -1047,9 +1390,7 @@ export default function AdminDashboard({
                   </div>
 
                   <div className="space-y-2">
-                    <label className={`block text-xs font-semibold ${textHeading}`}>
-                      Lagos Regional Office Address
-                    </label>
+                    <label className={`block text-xs font-semibold ${textHeading}`}>Lagos Regional Office Address</label>
                     <input
                       type="text"
                       value={copyForm.lagosOffice}
@@ -1059,9 +1400,7 @@ export default function AdminDashboard({
                   </div>
 
                   <div className="space-y-2">
-                    <label className={`block text-xs font-semibold ${textHeading}`}>
-                      Abuja Regional Office Address
-                    </label>
+                    <label className={`block text-xs font-semibold ${textHeading}`}>Abuja Regional Office Address</label>
                     <input
                       type="text"
                       value={copyForm.abujaOffice}
@@ -1077,17 +1416,15 @@ export default function AdminDashboard({
                     <Save className="w-4 h-4" />
                     <span>Deploy Copy Updates</span>
                   </button>
-
                 </form>
               </div>
 
             </div>
           )}
 
-          {/* TAB 5: MEDIA & VIDEO HUB (MAX 5MB IMAGE FILE UPLOAD + VIDEO URL REQUIREMENT) */}
+          {/* TAB 7: MEDIA & VIDEO HUB */}
           {activeTab === 'media' && (
             <div className="space-y-6 animate-fade-in">
-              
               <div className={`${bgCard} p-8 rounded-[2.25rem] border shadow-md space-y-5`}>
                 <div className="flex items-center justify-between">
                   <div>
@@ -1099,7 +1436,6 @@ export default function AdminDashboard({
                     </p>
                   </div>
 
-                  {/* Upload Mode Selector */}
                   <div className="flex items-center gap-2 bg-[#34073E] p-1 rounded-xl">
                     <button
                       onClick={() => setUploadMode('image')}
@@ -1127,7 +1463,6 @@ export default function AdminDashboard({
                   </div>
                 )}
 
-                {/* MODE 1: IMAGE FILE UPLOAD (&le; 5MB) */}
                 {uploadMode === 'image' && (
                   <div className={`p-6 ${bgSubtle} border border-dashed border-purple-700/80 rounded-2xl text-center space-y-4`}>
                     <div className="w-12 h-12 rounded-2xl bg-[#34073E] text-[#8DC63F] mx-auto flex items-center justify-center font-bold">
@@ -1153,7 +1488,6 @@ export default function AdminDashboard({
                   </div>
                 )}
 
-                {/* MODE 2: VIDEO URL UPLOAD */}
                 {uploadMode === 'video' && (
                   <form onSubmit={handleAddVideoUrl} className="space-y-4">
                     <div className="p-4 bg-purple-950/40 rounded-xl border border-purple-800/60 text-xs text-purple-200">
@@ -1183,7 +1517,6 @@ export default function AdminDashboard({
 
               </div>
 
-              {/* Media Gallery Grid */}
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                 {mediaList.map((m) => (
                   <div 
@@ -1256,7 +1589,6 @@ export default function AdminDashboard({
             </div>
 
             <form onSubmit={handleSaveProperty} className="space-y-4 text-xs">
-              
               <div className="space-y-1.5">
                 <label className={`font-semibold ${textHeading}`}>Property Title *</label>
                 <input
@@ -1285,6 +1617,20 @@ export default function AdminDashboard({
                 </div>
 
                 <div>
+                  <label className={`font-semibold ${textHeading}`}>Publishing Status</label>
+                  <select
+                    value={propForm.publishStatus}
+                    onChange={(e) => setPropForm({ ...propForm, publishStatus: e.target.value })}
+                    className={`w-full p-3 ${bgSubtle} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading}`}
+                  >
+                    <option value="Published">Published (Live)</option>
+                    <option value="Draft">Draft (Internal Only)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
                   <label className={`font-semibold ${textHeading}`}>Price (NGN) *</label>
                   <input
                     type="number"
@@ -1294,9 +1640,7 @@ export default function AdminDashboard({
                     className={`w-full p-3 ${bgSubtle} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading}`}
                   />
                 </div>
-              </div>
 
-              <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className={`font-semibold ${textHeading}`}>Location (City)</label>
                   <input
@@ -1307,20 +1651,19 @@ export default function AdminDashboard({
                     className={`w-full p-3 ${bgSubtle} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading}`}
                   />
                 </div>
-
-                <div>
-                  <label className={`font-semibold ${textHeading}`}>Survey & Title Status</label>
-                  <input
-                    type="text"
-                    value={propForm.surveyStatus}
-                    onChange={(e) => setPropForm({ ...propForm, surveyStatus: e.target.value })}
-                    placeholder="e.g. Verified Governor's Consent"
-                    className={`w-full p-3 ${bgSubtle} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading}`}
-                  />
-                </div>
               </div>
 
-              {/* Image Input Selection: File Upload (Max 5MB) or URL */}
+              <div className="space-y-1.5">
+                <label className={`font-semibold ${textHeading}`}>Survey & Title Status</label>
+                <input
+                  type="text"
+                  value={propForm.surveyStatus}
+                  onChange={(e) => setPropForm({ ...propForm, surveyStatus: e.target.value })}
+                  placeholder="e.g. Verified Governor's Consent"
+                  className={`w-full p-3 ${bgSubtle} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading}`}
+                />
+              </div>
+
               <div className="space-y-2">
                 <label className={`font-semibold ${textHeading}`}>Property Photo Image</label>
                 
@@ -1384,6 +1727,39 @@ export default function AdminDashboard({
 
             </form>
 
+          </div>
+        </div>
+      )}
+
+      {/* DESTRUCTIVE ACTION CONFIRMATION MODAL */}
+      {deleteConfirmModal.open && (
+        <div className="fixed inset-0 z-60 bg-[#1E0424]/90 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-[#34073E] text-white w-full max-w-sm rounded-[2rem] border border-red-800 p-6 space-y-4 shadow-2xl">
+            <div className="w-12 h-12 rounded-2xl bg-red-950 text-red-400 flex items-center justify-center mx-auto">
+              <AlertTriangle className="w-6 h-6" />
+            </div>
+
+            <div className="text-center space-y-1">
+              <h4 className="text-lg font-bold font-heading">Confirm Permanent Delete</h4>
+              <p className="text-xs text-purple-200">
+                Are you sure you want to permanently delete <strong className="text-white">{deleteConfirmModal.title}</strong>? This action cannot be undone.
+              </p>
+            </div>
+
+            <div className="flex justify-center gap-3 pt-2">
+              <button
+                onClick={() => setDeleteConfirmModal({ open: false, type: '', id: null, title: '' })}
+                className="px-5 py-2.5 bg-purple-900 text-purple-200 rounded-xl text-xs font-semibold"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={executeDelete}
+                className="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold shadow-md"
+              >
+                Delete Permanently
+              </button>
+            </div>
           </div>
         </div>
       )}

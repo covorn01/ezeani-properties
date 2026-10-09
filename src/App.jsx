@@ -99,6 +99,46 @@ export default function App() {
   const [contactsModalOpen, setContactsModalOpen] = useState(false);
   const [adminDashboardOpen, setAdminDashboardOpen] = useState(false);
 
+  // Dedicated Secret Admin Route Handling (/internal-admin or #admin)
+  const [isAdminRoute, setIsAdminRoute] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname.toLowerCase();
+      const hash = window.location.hash.toLowerCase();
+      return path === '/internal-admin' || path === '/admin' || hash === '#internal-admin' || hash === '#admin';
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    const handleLocationChange = () => {
+      if (typeof window !== 'undefined') {
+        const path = window.location.pathname.toLowerCase();
+        const hash = window.location.hash.toLowerCase();
+        const shouldBeAdmin = path === '/internal-admin' || path === '/admin' || hash === '#internal-admin' || hash === '#admin';
+        setIsAdminRoute(shouldBeAdmin);
+        if (shouldBeAdmin) setAdminDashboardOpen(true);
+      }
+    };
+
+    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('hashchange', handleLocationChange);
+
+    // Keyboard shortcut for staff: Ctrl + Shift + A
+    const handleKeyDown = (e) => {
+      if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+        e.preventDefault();
+        window.location.hash = '#internal-admin';
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('hashchange', handleLocationChange);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add('dark');
@@ -296,8 +336,14 @@ export default function App() {
 
       {/* Admin Command Center Portal */}
       <AdminDashboard
-        isOpen={adminDashboardOpen}
-        onClose={() => setAdminDashboardOpen(false)}
+        isOpen={adminDashboardOpen || isAdminRoute}
+        onClose={() => {
+          setAdminDashboardOpen(false);
+          setIsAdminRoute(false);
+          if (window.location.hash.includes('admin')) {
+            window.location.hash = '';
+          }
+        }}
         properties={properties}
         onAddProperty={handleAddProperty}
         onUpdateProperty={handleUpdateProperty}
@@ -307,7 +353,13 @@ export default function App() {
         onDeleteBooking={handleDeleteBooking}
         companyInfo={companyInfo}
         onUpdateCompanyInfo={(newInfo) => setCompanyInfo(newInfo)}
-        onOpenLiveSite={() => setAdminDashboardOpen(false)}
+        onOpenLiveSite={() => {
+          setAdminDashboardOpen(false);
+          setIsAdminRoute(false);
+          if (window.location.hash.includes('admin')) {
+            window.location.hash = '';
+          }
+        }}
       />
 
     </div>

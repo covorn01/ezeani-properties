@@ -217,13 +217,6 @@ export default function Footer({ onOpenBooking, onOpenMyBookings, onOpenAdmin })
             <span>Verified Titles Guaranteed</span>
             <span>•</span>
             <span>Nationwide Delivery</span>
-            <span>•</span>
-            <button 
-              onClick={onOpenAdmin} 
-              className="text-[#8DC63F] hover:underline font-bold"
-            >
-              Staff Portal (Restricted)
-            </button>
           </div>
         </div>
 
