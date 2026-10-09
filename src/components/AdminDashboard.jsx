@@ -1256,27 +1256,27 @@ export default function AdminDashboard({
                       <p><strong className="text-white">Phone:</strong> {app.phone}</p>
                       <p><strong className="text-white">Experience:</strong> {app.experience}</p>
                       <p><strong className="text-white">Applied Date:</strong> {app.appliedDate}</p>
-                      <p className="p-3 bg-[#1E0424] rounded-xl border border-purple-800 text-[11px] text-purple-200 mt-2">
+                      <div className="p-4 rounded-2xl bg-purple-950/30 dark:bg-purple-950/40 text-purple-200 border border-purple-800/40 text-xs leading-relaxed mt-3 shadow-inner">
                         {app.notes}
-                      </p>
+                      </div>
                     </div>
 
-                    <div className="pt-2 flex items-center justify-between border-t border-purple-800/40">
+                    <div className="pt-3 flex flex-wrap items-center justify-between gap-3 border-t border-purple-800/40">
                       <button
                         onClick={() => {
                           setCareerApplications(prev => prev.map(a => a.id === app.id ? { ...a, status: 'Shortlisted' } : a));
                           addAuditLog('Candidate Shortlisted', `Candidate ${app.candidateName} marked Shortlisted`);
                         }}
-                        className="px-3.5 py-2 rounded-xl bg-[#8DC63F] text-[#1E0424] text-xs font-bold"
+                        className="px-5 py-3 rounded-2xl bg-[#8DC63F] hover:bg-[#7bb532] text-[#1E0424] text-xs sm:text-sm font-bold transition-all shadow-md active:scale-98 cursor-pointer flex-1 sm:flex-none justify-center text-center"
                       >
-                        Shortlist Candidate
+                        {app.status === 'Shortlisted' ? '✓ Candidate Shortlisted' : 'Shortlist Candidate'}
                       </button>
 
                       <button
                         onClick={() => setSelectedCvCandidate(app)}
-                        className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#34073E] hover:bg-[#25042D] text-white text-xs font-semibold transition-all shadow-xs cursor-pointer"
+                        className="flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-[#34073E] hover:bg-[#25042D] text-white text-xs sm:text-sm font-bold transition-all shadow-md active:scale-98 cursor-pointer border border-purple-700/80 flex-1 sm:flex-none"
                       >
-                        <Eye className="w-3.5 h-3.5 text-[#8DC63F]" />
+                        <Eye className="w-4 h-4 text-[#8DC63F]" />
                         <span>View CV Document</span>
                       </button>
                     </div>
