@@ -14,7 +14,14 @@ import { EZEANI_COMPANY_INFO } from '../data/mockData';
 export default function WhyEzeani({ onOpenBooking, companyInfo }) {
   const iconMap = [ShieldCheck, Award, Eye, UserCheck];
   const whyImage = companyInfo?.whyMedia || "/images/hero-villa.jpg";
-  const isWhyVideo = (companyInfo?.whyMediaType === 'video') || whyImage.includes('youtube') || whyImage.endsWith('.mp4');
+  const isWhyVideo = Boolean(
+    whyImage && (
+      (companyInfo?.whyMediaType === 'video') ||
+      whyImage.includes('youtube') ||
+      whyImage.includes('vimeo') ||
+      whyImage.endsWith('.mp4')
+    )
+  );
 
   return (
     <section id="about" className="py-20 bg-[#FAF7FC] dark:bg-[#1E0424] border-t border-b border-purple-200/50 dark:border-purple-900/50">

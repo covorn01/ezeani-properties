@@ -108,8 +108,15 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
           {/* Background Image/Video Slider with subtle vignette & gradient overlay */}
           <div className="absolute inset-0 z-0">
             {heroSlides.map((s, idx) => {
-              const activeMedia = (idx === 0 && companyInfo?.heroMedia) ? companyInfo.heroMedia : s.image;
-              const isVideo = (idx === 0 && companyInfo?.heroMediaType === 'video') || activeMedia.includes('youtube') || activeMedia.endsWith('.mp4');
+              const activeMedia = (idx === 0 && companyInfo?.heroMedia) ? companyInfo.heroMedia : (s.image || '/images/hero-villa.jpg');
+              const isVideo = Boolean(
+                activeMedia && (
+                  (idx === 0 && companyInfo?.heroMediaType === 'video') ||
+                  activeMedia.includes('youtube') ||
+                  activeMedia.includes('vimeo') ||
+                  activeMedia.endsWith('.mp4')
+                )
+              );
 
               return (
                 <div
