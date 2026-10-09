@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  /* Brand Core Tokens */
+  --brand-plum: #34073E;
+  --brand-lilac: #B462E8;
+  --brand-violet: #9A48C8;
+  --brand-green: #8DC63F;
+
+  /* Light Mode Palette (Clean White Base) */
+  --bg: #FFFFFF;
+  --bg-alt: #FAF7FC;
+  --surface: #FFFFFF;
+  --surface-raised: #FFFFFF;
+  --surface-brand: #34073E;
+  --border: #E4DCE9;
+  --border-strong: #CDBAD6;
+
+  --text: #171717;
+  --text-heading: #171717;
+  --text-muted: #3F3F46;
+  --text-subtle: #52525B;
+  --text-on-brand: #FFFFFF;
+
+  --primary: #7A2FB0;
+  --primary-hover: #5A1A80;
+  --primary-text: #FFFFFF;
+  --primary-soft: #EEE3F5;
+
+  --accent: #8DC63F;
+  --accent-hover: #9ECF52;
+  --accent-text: #34073E;
+
+  --link: #7A2FB0;
+  --link-hover: #34073E;
+  --focus-ring: #B462E8;
+
+  --shadow: 0 8px 24px rgba(52, 7, 62, 0.08);
+}
+
+.dark, [data-theme="dark"] {
+  /* Dark Mode Palette */
+  --bg: #1E0424;
+  --bg-alt: #2A0631;
+  --surface: #34073E;
+  --surface-raised: #431050;
+  --surface-brand: #34073E;
+  --border: #44334B;
+  --border-strong: #5A1A80;
+
+  --text: #F7F2FA;
+  --text-heading: #FFFFFF;
+  --text-muted: #CDBAD6;
+  --text-subtle: #A898B0;
+  --text-on-brand: #FFFFFF;
+
+  --primary: #B462E8;
+  --primary-hover: #C584EF;
+  --primary-text: #1E0424;
+  --primary-soft: #431050;
+
+  --accent: #8DC63F;
+  --accent-hover: #9ECF52;
+  --accent-text: #1E0424;
+
+  --link: #D4A3F5;
+  --link-hover: #FFFFFF;
+  --focus-ring: #8DC63F;
+
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-heading {
+    font-family: 'Outfit', sans-serif;
+  }
+}
+
+/* Custom Ezeani Glass Cards */
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+}
+
+.dark .glass-card {
+  background: rgba(52, 7, 62, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(68, 51, 75, 0.8);
+}
+
+.glass-nav {
+  background: rgba(250, 247, 252, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.dark .glass-nav {
+  background: rgba(30, 4, 36, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #B462E8;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9A48C8;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
