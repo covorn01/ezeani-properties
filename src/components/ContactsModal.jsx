@@ -89,27 +89,17 @@ export default function ContactsModal({ isOpen, onClose }) {
               {/* Office Locations Overlay Cards */}
               <div className="space-y-3 pt-2">
                 
-                {/* Lagos Office Box */}
-                <div className="p-4 bg-white/10 backdrop-blur-md rounded-2xl border border-white/15 space-y-1">
-                  <div className="flex items-center gap-2 text-xs font-bold text-[#8DC63F]">
-                    <MapPin className="w-4 h-4 shrink-0" />
-                    <span>Lagos Regional Office</span>
+                {EZEANI_COMPANY_INFO.offices.map((office, idx) => (
+                  <div key={idx} className="p-4 bg-white/10 backdrop-blur-md rounded-2xl border border-white/15 space-y-1">
+                    <div className="flex items-center gap-2 text-xs font-bold text-[#8DC63F]">
+                      <MapPin className="w-4 h-4 shrink-0" />
+                      <span>{office.city}</span>
+                    </div>
+                    <p className="text-xs text-purple-100 font-medium leading-snug pl-6">
+                      {office.address}
+                    </p>
                   </div>
-                  <p className="text-xs text-purple-100 font-medium leading-snug pl-6">
-                    {EZEANI_COMPANY_INFO.offices[0].address}
-                  </p>
-                </div>
-
-                {/* Abuja Office Box */}
-                <div className="p-4 bg-white/10 backdrop-blur-md rounded-2xl border border-white/15 space-y-1">
-                  <div className="flex items-center gap-2 text-xs font-bold text-[#8DC63F]">
-                    <MapPin className="w-4 h-4 shrink-0" />
-                    <span>Abuja Regional Office</span>
-                  </div>
-                  <p className="text-xs text-purple-100 font-medium leading-snug pl-6">
-                    {EZEANI_COMPANY_INFO.offices[1].address}
-                  </p>
-                </div>
+                ))}
 
                 {/* Direct Phone & WhatsApp */}
                 <div className="p-4 bg-white/10 backdrop-blur-md rounded-2xl border border-white/15 flex items-center justify-between gap-3">

@@ -178,6 +178,7 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
               );
             })}
           </div>
+        </div>
         {/* EXECUTIVE LEADERSHIP & MANAGEMENT SECTION */}
         <div className="space-y-8 pt-4">
           <div className="text-center max-w-3xl mx-auto space-y-3">
@@ -194,9 +195,9 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {(EZEANI_COMPANY_INFO.leadership || []).map((leader) => (
+            {(companyInfo?.leadership || EZEANI_COMPANY_INFO.leadership || []).map((leader, idx) => (
               <div 
-                key={leader.name}
+                key={leader.name + idx}
                 className="bg-white dark:bg-[#34073E] p-6 sm:p-8 rounded-[2rem] border border-purple-200/90 dark:border-purple-800 shadow-md hover:shadow-xl transition-all duration-300 space-y-4 flex flex-col justify-between group"
               >
                 <div className="space-y-3">

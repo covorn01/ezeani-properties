@@ -78,12 +78,11 @@ export default function Footer({ onOpenBooking, onOpenMyBookings, onOpenAdmin, c
           {/* Column 1: Company (4 Cols on LG) */}
           <div className="lg:col-span-4 space-y-5">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#1E0424] border border-purple-800 flex items-center justify-center p-1.5 shadow-sm">
-                <svg viewBox="0 0 100 100" className="w-full h-full" fill="none">
-                  <path d="M20 50 L30 20 L50 35 L70 20 L80 50 Z" fill="#B462E8" />
-                  <rect x="38" y="52" width="24" height="36" rx="4" fill="#8DC63F" />
-                </svg>
-              </div>
+              <img 
+                src="/images/logo-dark.png" 
+                alt="Ezeani Properties Logo" 
+                className="h-10 sm:h-11 w-auto object-contain"
+              />
               <span className="font-heading font-bold text-lg tracking-tight text-white">
                 EZEANI PROPERTIES LTD
               </span>
@@ -147,25 +146,17 @@ export default function Footer({ onOpenBooking, onOpenMyBookings, onOpenAdmin, c
                 <span className="font-bold text-white text-sm">{EZEANI_COMPANY_INFO.phone}</span>
               </div>
 
-              <div className="flex items-start gap-2.5">
-                <div className="w-7 h-7 rounded-lg bg-[#1E0424] text-[#8DC63F] flex items-center justify-center shrink-0 border border-purple-900 mt-0.5">
-                  <MapPin className="w-3.5 h-3.5" />
+              {EZEANI_COMPANY_INFO.offices.map((office, idx) => (
+                <div key={idx} className="flex items-start gap-2.5">
+                  <div className="w-7 h-7 rounded-lg bg-[#1E0424] text-[#8DC63F] flex items-center justify-center shrink-0 border border-purple-900 mt-0.5">
+                    <MapPin className="w-3.5 h-3.5" />
+                  </div>
+                  <div>
+                    <div className="font-semibold text-white">{office.city}:</div>
+                    <div className="text-xs text-purple-300 mt-0.5 leading-snug">{office.address}</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="font-semibold text-white">Lagos Office:</div>
-                  <div className="text-xs text-purple-300 mt-0.5 leading-snug">{EZEANI_COMPANY_INFO.offices[0].address}</div>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-2.5">
-                <div className="w-7 h-7 rounded-lg bg-[#1E0424] text-[#8DC63F] flex items-center justify-center shrink-0 border border-purple-900 mt-0.5">
-                  <MapPin className="w-3.5 h-3.5" />
-                </div>
-                <div>
-                  <div className="font-semibold text-white">Abuja Office:</div>
-                  <div className="text-xs text-purple-300 mt-0.5 leading-snug">{EZEANI_COMPANY_INFO.offices[1].address}</div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 

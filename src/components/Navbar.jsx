@@ -104,12 +104,11 @@ export default function Navbar({
             onClick={() => scrollToSection('hero')}
             className="flex items-center gap-3 cursor-pointer group"
           >
-            <div className="w-10 h-10 rounded-xl bg-[#34073E] flex items-center justify-center p-1.5 shadow-md group-hover:scale-105 transition-transform border border-purple-800">
-              <svg viewBox="0 0 100 100" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 50 L30 20 L50 35 L70 20 L80 50 Z" fill="#B462E8" />
-                <rect x="38" y="52" width="24" height="36" rx="4" fill="#8DC63F" />
-              </svg>
-            </div>
+            <img 
+              src="/images/logo-dark.png" 
+              alt="Ezeani Properties Logo" 
+              className="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform"
+            />
 
             <div className="flex flex-col">
               <span className="font-heading font-bold text-lg tracking-tight text-[#34073E] dark:text-white leading-tight">

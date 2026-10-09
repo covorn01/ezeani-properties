@@ -302,13 +302,15 @@ export default function AdminDashboard({
     phone: companyInfo.phone || "0902 171 0933",
     whatsapp: companyInfo.whatsapp || "+2349021710933",
     email: companyInfo.email || "info@ezeaniproperties.com",
-    lagosOffice: companyInfo.offices?.[0]?.address || "Ezeani Group, ECI Plaza, Okpanam Road",
-    abujaOffice: companyInfo.offices?.[1]?.address || "Suite 402, Capital Place, Maitama, Abuja, Nigeria",
+    hqOffice: companyInfo.offices?.[0]?.address || "Ezeani Group, ECI Plaza, Okpanam Road, Asaba, Delta State, Nigeria",
 
     // Footer CTA Block
     footerCtaBadge: companyInfo.footerCtaBadge || "EZEANI PROPERTIES LTD • NATIONWIDE DELIVERY",
     footerCtaTitle: companyInfo.footerCtaTitle || "Ready to find, secure, or build your next property?",
-    footerCtaSubtitle: companyInfo.footerCtaSubtitle || "Call, chat or visit. Our team of certified survey experts and real estate advisors is ready to guide you from initial enquiry to final title handover."
+    footerCtaSubtitle: companyInfo.footerCtaSubtitle || "Call, chat or visit. Our team of certified survey experts and real estate advisors is ready to guide you from initial enquiry to final title handover.",
+
+    // Leadership & Executive Profiles
+    leadership: companyInfo.leadership || EZEANI_COMPANY_INFO.leadership || []
   });
   const [copySaved, setCopySaved] = useState(false);
 
@@ -430,14 +432,16 @@ export default function AdminDashboard({
         whatsapp: copyForm.whatsapp,
         email: copyForm.email,
         offices: [
-          { city: "Lagos Office", address: copyForm.lagosOffice },
-          { city: "Abuja Office", address: copyForm.abujaOffice }
+          { city: "Headquarters (Delta State)", address: copyForm.hqOffice }
         ],
 
         // Footer CTA Block
         footerCtaBadge: copyForm.footerCtaBadge,
         footerCtaTitle: copyForm.footerCtaTitle,
-        footerCtaSubtitle: copyForm.footerCtaSubtitle
+        footerCtaSubtitle: copyForm.footerCtaSubtitle,
+
+        // Leadership & Executive Profiles
+        leadership: copyForm.leadership
       });
     }
     setCopySaved(true);
@@ -795,9 +799,11 @@ export default function AdminDashboard({
           {/* Brand Header */}
           <div className="flex items-center justify-between pb-4 border-b border-purple-800/40">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-[#8DC63F] text-[#1E0424] font-bold flex items-center justify-center shadow-md">
-                <Building2 className="w-5 h-5 stroke-[2.5]" />
-              </div>
+              <img 
+                src="/images/logo-dark.png" 
+                alt="Ezeani Properties Logo" 
+                className="h-10 w-auto object-contain"
+              />
               <div>
                 <h1 className={`text-base font-bold font-heading tracking-tight ${textHeading}`}>
                   Ezeani Staff Portal
@@ -1896,21 +1902,11 @@ export default function AdminDashboard({
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className={`block text-xs font-semibold ${textHeading}`}>Lagos Regional Office</label>
+                      <label className={`block text-xs font-semibold ${textHeading}`}>Headquarters (Asaba, Delta State)</label>
                       <input
                         type="text"
-                        value={copyForm.lagosOffice}
-                        onChange={(e) => setCopyForm({ ...copyForm, lagosOffice: e.target.value })}
-                        className={`w-full p-3 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:border-[#8DC63F]`}
-                      />
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <label className={`block text-xs font-semibold ${textHeading}`}>Abuja Regional Office</label>
-                      <input
-                        type="text"
-                        value={copyForm.abujaOffice}
-                        onChange={(e) => setCopyForm({ ...copyForm, abujaOffice: e.target.value })}
+                        value={copyForm.hqOffice}
+                        onChange={(e) => setCopyForm({ ...copyForm, hqOffice: e.target.value })}
                         className={`w-full p-3 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:border-[#8DC63F]`}
                       />
                     </div>
@@ -1954,6 +1950,131 @@ export default function AdminDashboard({
                         onChange={(e) => setCopyForm({ ...copyForm, footerCtaSubtitle: e.target.value })}
                         className={`w-full p-3 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:border-[#8DC63F] resize-none`}
                       />
+                    </div>
+                  </div>
+
+                  {/* SECTION 6: EXECUTIVE LEADERSHIP & CEO PROFILES */}
+                  <div className={`p-6 ${bgSubtle} rounded-2xl border border-purple-800/50 space-y-4`}>
+                    <div className="flex items-center justify-between border-b border-purple-800/40 pb-3">
+                      <h4 className={`text-sm font-bold font-heading ${textHeading} flex items-center gap-2`}>
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#8DC63F]" />
+                        <span>6. Executive Leadership & CEO Profiles</span>
+                      </h4>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const newLeader = {
+                            name: 'New Executive Leader',
+                            role: 'Executive Director',
+                            badge: 'LEADERSHIP',
+                            credentials: 'SURCON / NIS Registered',
+                            bio: 'Experienced real estate advisor and executive director at Ezeani Properties Ltd.'
+                          };
+                          setCopyForm({
+                            ...copyForm,
+                            leadership: [...(copyForm.leadership || []), newLeader]
+                          });
+                        }}
+                        className="px-3 py-1.5 rounded-lg bg-[#8DC63F] text-[#1E0424] text-xs font-bold flex items-center gap-1 hover:bg-[#7bb532] transition-colors cursor-pointer"
+                      >
+                        <Plus className="w-3.5 h-3.5" />
+                        <span>Add Profile</span>
+                      </button>
+                    </div>
+
+                    <div className="space-y-4">
+                      {(copyForm.leadership || []).map((leader, index) => (
+                        <div key={index} className={`p-4 ${bgCard} border border-purple-800/40 rounded-xl space-y-3 relative`}>
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-bold text-[#8DC63F] font-mono">
+                              Leader #{index + 1} {index === 0 ? '(CEO Profile)' : ''}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const updatedLeaders = copyForm.leadership.filter((_, i) => i !== index);
+                                setCopyForm({ ...copyForm, leadership: updatedLeaders });
+                              }}
+                              className="text-red-400 hover:text-red-300 p-1 rounded-lg hover:bg-red-500/10 transition-colors"
+                              title="Delete Profile"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                              <label className={`block text-[11px] font-semibold ${textHeading}`}>Full Name & Titles</label>
+                              <input
+                                type="text"
+                                value={leader.name}
+                                onChange={(e) => {
+                                  const updated = [...copyForm.leadership];
+                                  updated[index].name = e.target.value;
+                                  setCopyForm({ ...copyForm, leadership: updated });
+                                }}
+                                className={`w-full p-2.5 ${bgSubtle} border border-purple-800/60 rounded-lg text-xs ${textHeading}`}
+                              />
+                            </div>
+
+                            <div>
+                              <label className={`block text-[11px] font-semibold ${textHeading}`}>Official Role / Designation</label>
+                              <input
+                                type="text"
+                                value={leader.role}
+                                onChange={(e) => {
+                                  const updated = [...copyForm.leadership];
+                                  updated[index].role = e.target.value;
+                                  setCopyForm({ ...copyForm, leadership: updated });
+                                }}
+                                className={`w-full p-2.5 ${bgSubtle} border border-purple-800/60 rounded-lg text-xs ${textHeading}`}
+                              />
+                            </div>
+
+                            <div>
+                              <label className={`block text-[11px] font-semibold ${textHeading}`}>Badge Tag (e.g. FOUNDER & MD)</label>
+                              <input
+                                type="text"
+                                value={leader.badge}
+                                onChange={(e) => {
+                                  const updated = [...copyForm.leadership];
+                                  updated[index].badge = e.target.value;
+                                  setCopyForm({ ...copyForm, leadership: updated });
+                                }}
+                                className={`w-full p-2.5 ${bgSubtle} border border-purple-800/60 rounded-lg text-xs ${textHeading}`}
+                              />
+                            </div>
+
+                            <div>
+                              <label className={`block text-[11px] font-semibold ${textHeading}`}>Professional Credentials</label>
+                              <input
+                                type="text"
+                                value={leader.credentials}
+                                onChange={(e) => {
+                                  const updated = [...copyForm.leadership];
+                                  updated[index].credentials = e.target.value;
+                                  setCopyForm({ ...copyForm, leadership: updated });
+                                }}
+                                className={`w-full p-2.5 ${bgSubtle} border border-purple-800/60 rounded-lg text-xs ${textHeading}`}
+                              />
+                            </div>
+                          </div>
+
+                          <div>
+                            <label className={`block text-[11px] font-semibold ${textHeading}`}>Executive Biography</label>
+                            <textarea
+                              rows={2}
+                              value={leader.bio}
+                              onChange={(e) => {
+                                const updated = [...copyForm.leadership];
+                                updated[index].bio = e.target.value;
+                                setCopyForm({ ...copyForm, leadership: updated });
+                              }}
+                              className={`w-full p-2.5 ${bgSubtle} border border-purple-800/60 rounded-lg text-xs ${textHeading} resize-none`}
+                            />
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
 
