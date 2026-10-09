@@ -7,7 +7,8 @@ import {
   CheckCircle2, 
   ArrowRight,
   Sparkles,
-  MapPin
+  MapPin,
+  Users
 } from 'lucide-react';
 import { EZEANI_COMPANY_INFO } from '../data/mockData';
 
@@ -176,6 +177,66 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
                 </div>
               );
             })}
+          </div>
+        {/* EXECUTIVE LEADERSHIP & MANAGEMENT SECTION */}
+        <div className="space-y-8 pt-4">
+          <div className="text-center max-w-3xl mx-auto space-y-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-100 dark:bg-purple-950 text-[#7A2FB0] dark:text-[#B462E8] text-xs font-mono uppercase tracking-widest font-bold">
+              <Users className="w-3.5 h-3.5 text-[#8DC63F]" />
+              <span>Executive Leadership & Management</span>
+            </div>
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-heading text-[#171717] dark:text-white tracking-tight">
+              Guided by Industry Veterans & Certified Geospatial Leaders
+            </h3>
+            <p className="text-sm text-[#3F3F46] dark:text-purple-200 leading-relaxed font-sans">
+              Our executive leadership brings together seasoned cadastral surveyors, legal title perfection experts, and commercial real estate advisors dedicated to client success.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {(EZEANI_COMPANY_INFO.leadership || []).map((leader) => (
+              <div 
+                key={leader.name}
+                className="bg-white dark:bg-[#34073E] p-6 sm:p-8 rounded-[2rem] border border-purple-200/90 dark:border-purple-800 shadow-md hover:shadow-xl transition-all duration-300 space-y-4 flex flex-col justify-between group"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between gap-2 border-b border-purple-100 dark:border-purple-800/60 pb-3">
+                    <span className="px-3 py-1 rounded-full bg-[#34073E] text-[#8DC63F] dark:bg-[#8DC63F] dark:text-[#34073E] text-[10px] font-mono font-bold uppercase tracking-wider">
+                      {leader.badge}
+                    </span>
+                    <span className="text-[11px] font-mono text-[#7A2FB0] dark:text-purple-300 font-semibold">
+                      {leader.role}
+                    </span>
+                  </div>
+
+                  <div>
+                    <h4 className="text-lg sm:text-xl font-bold font-heading text-[#171717] dark:text-white group-hover:text-[#7A2FB0] dark:group-hover:text-[#8DC63F] transition-colors">
+                      {leader.name}
+                    </h4>
+                    <p className="text-xs font-mono font-bold text-[#8DC63F] dark:text-[#8DC63F] mt-1">
+                      {leader.credentials}
+                    </p>
+                  </div>
+
+                  <p className="text-xs text-[#3F3F46] dark:text-purple-200 leading-relaxed pt-1">
+                    {leader.bio}
+                  </p>
+                </div>
+
+                <div className="pt-3 border-t border-purple-100 dark:border-purple-800/40 flex items-center justify-between">
+                  <span className="text-[11px] font-mono text-[#52525B] dark:text-purple-300 font-medium">
+                    SURCON & NIS Certified Leadership
+                  </span>
+                  <button
+                    onClick={() => onOpenBooking({ notes: `Request consultation with ${leader.name}` })}
+                    className="text-xs font-bold text-[#7A2FB0] dark:text-[#8DC63F] hover:underline flex items-center gap-1"
+                  >
+                    <span>Consult</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
