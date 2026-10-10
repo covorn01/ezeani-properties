@@ -47,7 +47,7 @@ import {
   Download,
   CheckSquare
 } from 'lucide-react';
-import { formatCurrencyPrice } from '../data/mockData';
+import { formatCurrencyPrice, EZEANI_COMPANY_INFO } from '../data/mockData';
 
 export default function AdminDashboard({ 
   isOpen, 
@@ -278,7 +278,7 @@ export default function AdminDashboard({
   // Copy & Section Editor State
   const [copyForm, setCopyForm] = useState({
     // Hero Section
-    heroPill: companyInfo.heroPill || "SURV. EZEANI EMMANUEL ADOLPHUS (FNIS) • MD/CEO",
+    heroPill: companyInfo.heroPill || "CHRISTIAN EZEANI • MD/CEO",
     headline: companyInfo.headline || "Every kind of property, one trusted partner.",
     subheadline: companyInfo.subheadline || "Residential, commercial and industrial real estate, luxury lands and expert consultation, delivered nationwide.",
     heroMedia: companyInfo.heroMedia || "/images/hero-villa.jpg",
@@ -1549,7 +1549,7 @@ export default function AdminDashboard({
                           value={copyForm.heroPill}
                           onChange={(e) => setCopyForm({ ...copyForm, heroPill: e.target.value })}
                           className={`w-full p-3 ${bgCard} border border-purple-800/60 rounded-xl text-xs font-medium ${textHeading} focus:border-[#8DC63F]`}
-                          placeholder="e.g. SURV. EZEANI EMMANUEL ADOLPHUS (FNIS)"
+                          placeholder="e.g. CHRISTIAN EZEANI • MD/CEO"
                         />
                       </div>
 

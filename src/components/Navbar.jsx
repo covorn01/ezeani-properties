@@ -102,22 +102,13 @@ export default function Navbar({
           {/* Ezeani Brand Logo */}
           <div 
             onClick={() => scrollToSection('hero')}
-            className="flex items-center gap-3 cursor-pointer group"
+            className="flex items-center cursor-pointer group"
           >
             <img 
-              src="/images/logo-dark.png" 
+              src={darkMode ? "/images/logo-dark.png" : "/images/logo-light.png"} 
               alt="Ezeani Properties Logo" 
-              className="h-10 sm:h-11 w-auto object-contain group-hover:scale-105 transition-transform"
+              className="h-8 w-auto object-contain group-hover:scale-105 transition-transform"
             />
-
-            <div className="flex flex-col">
-              <span className="font-heading font-bold text-lg tracking-tight text-[#34073E] dark:text-white leading-tight">
-                EZEANI
-              </span>
-              <span className="text-[10px] tracking-widest text-[#7A2FB0] dark:text-[#B462E8] font-mono uppercase font-semibold">
-                PROPERTIES LTD
-              </span>
-            </div>
           </div>
 
           {/* Desktop Nav Items */}

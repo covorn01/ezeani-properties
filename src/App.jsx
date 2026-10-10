@@ -14,6 +14,7 @@ import CareersModal from './components/CareersModal';
 import ContactsModal from './components/ContactsModal';
 import AdminDashboard from './components/AdminDashboard';
 import Footer from './components/Footer';
+import LeadershipSection from './components/LeadershipSection';
 
 import { MOCK_PROPERTIES, SAMPLE_BOOKINGS, EZEANI_COMPANY_INFO } from './data/mockData';
 
@@ -49,7 +50,14 @@ export default function App() {
   const [companyInfo, setCompanyInfo] = useState(() => {
     try {
       const saved = localStorage.getItem('ezeani_company_info');
-      return saved ? JSON.parse(saved) : EZEANI_COMPANY_INFO;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.leadership && parsed.leadership.some(l => l.name?.includes('Emmanuel') || l.name?.includes('Victoria'))) {
+          parsed.leadership = EZEANI_COMPANY_INFO.leadership;
+        }
+        return parsed;
+      }
+      return EZEANI_COMPANY_INFO;
     } catch (e) {
       return EZEANI_COMPANY_INFO;
     }
@@ -253,7 +261,18 @@ export default function App() {
           currency={currency}
         />
 
-        {/* Why Ezeani & 4-Step Process */}
+        {/* Home Page Leadership Preview */}
+        <LeadershipSection 
+          variant="preview" 
+          companyInfo={companyInfo} 
+          onOpenBooking={handleOpenBooking}
+          onViewAll={() => {
+            const el = document.getElementById('about');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }}
+        />
+
+        {/* Why Ezeani & 4-Step Process (About Section) */}
         <WhyEzeani onOpenBooking={handleOpenBooking} companyInfo={companyInfo} />
 
         {/* Land Surveying Services */}

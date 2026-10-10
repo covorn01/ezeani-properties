@@ -76,16 +76,13 @@ export default function Footer({ onOpenBooking, onOpenMyBookings, onOpenAdmin, c
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 mt-16 sm:mt-20 mb-16">
           
           {/* Column 1: Company (4 Cols on LG) */}
-          <div className="lg:col-span-4 space-y-5">
-            <div className="flex items-center gap-3">
+          <div className="lg:col-span-4 space-y-4">
+            <div className="flex items-center">
               <img 
                 src="/images/logo-dark.png" 
                 alt="Ezeani Properties Logo" 
-                className="h-10 sm:h-11 w-auto object-contain"
+                className="h-9 sm:h-10 w-auto object-contain"
               />
-              <span className="font-heading font-bold text-lg tracking-tight text-white">
-                EZEANI PROPERTIES LTD
-              </span>
             </div>
 
             <p className="text-xs sm:text-sm text-purple-200 leading-relaxed max-w-sm">

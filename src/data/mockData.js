@@ -1,3 +1,5 @@
+import { LEADERSHIP_MEMBERS } from './leadershipData';
+
 export const EZEANI_COMPANY_INFO = {
   name: "Ezeani Properties Ltd",
   group: "A subsidiary of Ezeani Group",
@@ -28,37 +30,10 @@ export const EZEANI_COMPANY_INFO = {
     { num: "03", title: "Secure", desc: "We handle verification, documentation and payment steps." },
     { num: "04", title: "Deliver", desc: "You receive your keys or land, wherever you are." }
   ],
-  leadership: [
-    {
-      name: "Surv. Ezeani Emmanuel Adolphus (FNIS)",
-      role: "Managing Director / CEO",
-      badge: "FOUNDER & MD",
-      credentials: "Fellow, Nigerian Institution of Surveyors (FNIS) • SURCON Reg.",
-      bio: "Visionary founder and leader of Ezeani Group & Ezeani Properties Ltd. Over 20+ years of pioneered leadership in geospatial mapping, land acquisition, estate development, and certified title clearance nationwide."
-    },
-    {
-      name: "Surv. Chidi Okonkwo (FNIS / NIS)",
-      role: "Head of Cadastral & Geospatial Operations",
-      badge: "LEAD SURVEYOR",
-      credentials: "SURCON Certified Cadastral Lead Practitioner",
-      bio: "Oversees high-precision RTK GPS field surveys, 3D drone photogrammetry, boundary determinations, and Governor's Consent survey lodgements across Lagos and Abuja."
-    },
-    {
-      name: "Mrs. Victoria Ezeani",
-      role: "Executive Director, Real Estate Acquisitions",
-      badge: "EXECUTIVE DIRECTOR",
-      credentials: "M.Sc. Corporate Strategy & Commercial Real Estate Advisory",
-      bio: "Directs high-yield commercial estate portfolios, luxury residential acquisitions, asset management, and institutional investor relations nationwide."
-    },
-    {
-      name: "Barr. Nnamdi Igwe (LL.B, BL)",
-      role: "Chief Legal Counsel & Title Verification Officer",
-      badge: "LEGAL & TITLE LEAD",
-      credentials: "Legal Practitioner & Title Perfection Specialist",
-      bio: "Spearheads C of O registry searches, land title verification due diligence, contract perfection, and legal dispute prevention for all client acquisitions."
-    }
-  ]
+  leadership: LEADERSHIP_MEMBERS
 };
+
+export { LEADERSHIP_MEMBERS };
 
 export const MOCK_PROPERTIES = [
   {
