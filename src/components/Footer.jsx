@@ -40,12 +40,18 @@ export default function Footer({ onOpenBooking, onOpenMyBookings, onOpenAdmin, c
               <span>{companyInfo?.footerCtaBadge || "EZEANI PROPERTIES LTD • NATIONWIDE DELIVERY"}</span>
             </div>
 
-            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-heading text-[#34073E] dark:text-white tracking-tight leading-tight">
+            {/* <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-heading text-[#34073E] dark:text-white tracking-tight leading-tight">
               {companyInfo?.footerCtaTitle || "Ready to find, secure, or build your next property?"}
+            </h3> */}
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-heading text-[#34073E] dark:text-white tracking-tight leading-tight">
+              {companyInfo?.footerCtaTitle || "Ready to acquire or invest in your next luxury property?"}
             </h3>
 
-            <p className="text-xs sm:text-sm text-[#52525B] dark:text-purple-200 leading-relaxed font-sans">
+            {/* <p className="text-xs sm:text-sm text-[#52525B] dark:text-purple-200 leading-relaxed font-sans">
               {companyInfo?.footerCtaSubtitle || "Call, chat or visit. Our team of certified survey experts and real estate advisors is ready to guide you from initial enquiry to final title handover."}
+            </p> */}
+            <p className="text-xs sm:text-sm text-[#52525B] dark:text-purple-200 leading-relaxed font-sans">
+              {companyInfo?.footerCtaSubtitle || "Call, chat or visit. Our team of luxury real estate advisors and property portfolio specialists is ready to guide you from initial enquiry to final deed handover."}
             </p>
           </div>
 
@@ -121,11 +127,13 @@ export default function Footer({ onOpenBooking, onOpenMyBookings, onOpenAdmin, c
                   <span>Luxury Lands</span>
                 </a>
               </li>
+              {/* COMMENTED OUT FOR REAL ESTATE & LUXURY FOCUS:
               <li>
                 <a href="#surveying" className="hover:text-[#8DC63F] transition-colors flex items-center gap-1.5">
                   <span>Land Surveying & Title Search</span>
                 </a>
               </li>
+              */}
             </ul>
           </div>
 

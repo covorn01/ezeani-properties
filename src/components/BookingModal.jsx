@@ -72,12 +72,14 @@ export default function BookingModal({ isOpen, onClose, initialData, onSaveBooki
       icon: Building2,
       desc: 'Private site inspections, verified title checks, land verification & investment advisory.' 
     },
+    /* COMMENTED OUT FOR REAL ESTATE & LUXURY FOCUS:
     { 
       id: 'Land Surveying', 
       label: 'Land Surveying & Title Clearance', 
       icon: Compass,
       desc: 'Boundary mapping, RTK GPS survey, Governor’s Consent & Lagos/Abuja clearance.' 
     },
+    */
     { 
       id: 'General Advisory', 
       label: 'Real Estate & Land Advisory', 
@@ -109,9 +111,12 @@ export default function BookingModal({ isOpen, onClose, initialData, onSaveBooki
         budget,
         notes: notes || 'Standard consultation request',
         status: 'Confirmed',
+        assignedSpecialist: 'Ezeani Senior Advisory Team',
+        /* COMMENTED OUT:
         assignedSpecialist: serviceCategory.includes('Survey') 
           ? 'Surv. Chidi Ezeani (Principal Cadastral Lead)' 
           : 'Ezeani Senior Advisory Team',
+        */
         createdDate: new Date().toLocaleDateString()
       };
 

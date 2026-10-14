@@ -106,13 +106,18 @@ export default function LeadershipSection({
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-heading text-[#171717] dark:text-white tracking-tight">
               {isPreview 
                 ? "Meet Our Executive Leadership" 
-                : "Guided by Certified Surveyors & Property Leaders"}
+                : "Executive Leadership & Real Estate Directors"}
             </h2>
 
-            <p className="text-xs sm:text-sm text-[#3F3F46] dark:text-purple-200 leading-relaxed font-sans">
+            {/* <p className="text-xs sm:text-sm text-[#3F3F46] dark:text-purple-200 leading-relaxed font-sans">
               {isPreview 
                 ? "Direct executive oversight across certified cadastral mapping, luxury property acquisitions, and transparent title handovers nationwide."
                 : "Our multidisciplinary leadership combines seasoned cadastral surveyors, legal title perfection experts, and commercial real estate advisors dedicated to client success."}
+            </p> */}
+            <p className="text-xs sm:text-sm text-[#3F3F46] dark:text-purple-200 leading-relaxed font-sans">
+              {isPreview 
+                ? "Direct executive oversight across luxury property acquisitions, commercial developments, and transparent title handovers nationwide."
+                : "Our multidisciplinary leadership combines seasoned corporate strategists, legal title perfection experts, and commercial real estate advisors dedicated to client success."}
             </p>
           </div>
 
@@ -128,9 +133,15 @@ export default function LeadershipSection({
           )}
         </div>
 
-        {/* Team Grid */}
+        {/* Team Grid - Dynamically fills full container width based on team count */}
         <div className={`grid grid-cols-1 ${
-          isPreview 
+          displayTeam.length === 3
+            ? "md:grid-cols-3 gap-6 lg:gap-8"
+            : displayTeam.length === 2
+            ? "md:grid-cols-2 gap-6 lg:gap-8"
+            : displayTeam.length === 1
+            ? "max-w-md mx-auto"
+            : isPreview 
             ? "md:grid-cols-3 gap-6 lg:gap-8" 
             : "md:grid-cols-2 lg:grid-cols-4 gap-6"
         }`}>
@@ -181,8 +192,11 @@ export default function LeadershipSection({
 
               {/* Card Footer / Action */}
               <div className="pt-3 border-t border-purple-100 dark:border-purple-800/50 flex items-center justify-between text-xs">
-                <span className="text-[10px] font-mono text-[#52525B] dark:text-purple-300 font-medium">
+                {/* <span className="text-[10px] font-mono text-[#52525B] dark:text-purple-300 font-medium">
                   NIS & SURCON Certified
+                </span> */}
+                <span className="text-[10px] font-mono text-[#52525B] dark:text-purple-300 font-medium">
+                  Certified Title Due Diligence
                 </span>
                 
                 {onOpenBooking ? (
@@ -212,7 +226,8 @@ export default function LeadershipSection({
           <div className="bg-purple-50 dark:bg-purple-950/40 rounded-2xl p-4 sm:p-5 border border-purple-200 dark:border-purple-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono">
             <div className="flex items-center gap-2.5 text-[#34073E] dark:text-purple-200">
               <ShieldCheck className="w-5 h-5 text-[#8DC63F] shrink-0" />
-              <span>All corporate real estate acquisitions and surveys are vetted by registered SURCON surveyors and Nigerian Bar legal counsel.</span>
+              {/* <span>All corporate real estate acquisitions and surveys are vetted by registered SURCON surveyors and Nigerian Bar legal counsel.</span> */}
+              <span>All corporate and luxury real estate acquisitions are vetted by Nigerian Bar legal counsel and certified title perfection officers.</span>
             </div>
 
             {onOpenBooking && (

@@ -77,7 +77,8 @@ export default function CompareModal({ isOpen, onClose, comparedIds, properties,
                   ))}
                 </tr>
                 <tr>
-                  <td className="p-3.5 font-semibold text-[#52525B] dark:text-purple-300/70 font-mono">Survey Status</td>
+                  {/* <td className="p-3.5 font-semibold text-[#52525B] dark:text-purple-300/70 font-mono">Survey Status</td> */}
+                  <td className="p-3.5 font-semibold text-[#52525B] dark:text-purple-300/70 font-mono">Title Verification Status</td>
                   {comparedProperties.map((p) => (
                     <td key={p.id} className="p-3.5 text-[#8DC63F] font-bold">{p.surveyStatus}</td>
                   ))}

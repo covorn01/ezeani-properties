@@ -44,6 +44,17 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
       category: 'properties'
     },
     {
+      id: 'slide-luxury',
+      title: 'Waterfront Villas & Ultra-Luxury Estates',
+      subtitle: 'Exclusive private sanctuaries with deep-water access, smart architectural automation & prime capital appreciation.',
+      badge: 'ULTRA-LUXURY COLLECTION',
+      image: '/images/mansion.jpg',
+      ctaText: 'View Elite Mansions',
+      category: 'properties'
+    }
+    /* COMMENTED OUT FOR REAL ESTATE & LUXURY FOCUS:
+    ,
+    {
       id: 'slide-3',
       title: 'Geospatial Cadastral Surveying & RTK Mapping',
       subtitle: 'Eliminate boundary disputes with RTK GPS total station surveys & FCDA / Lagos title verification.',
@@ -61,6 +72,7 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
       ctaText: 'Consult Architect',
       category: 'construction'
     }
+    */
   ];
 
   // Auto-play slider every 6 seconds
@@ -224,6 +236,7 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
                 <span>Property Directory</span>
               </button>
 
+              {/* COMMENTED OUT FOR REAL ESTATE & LUXURY FOCUS:
               <button
                 type="button"
                 onClick={() => setActiveTab('survey')}
@@ -249,6 +262,7 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
                 <HardHat className="w-4 h-4" />
                 <span>Turnkey Construction</span>
               </button>
+              */}
             </div>
 
             {/* Tab Forms */}
@@ -300,6 +314,7 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
                 </>
               )}
 
+              {/* COMMENTED OUT FOR REAL ESTATE & LUXURY FOCUS:
               {activeTab === 'survey' && (
                 <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 py-1">
                   <div className="text-left space-y-1">
@@ -359,6 +374,7 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
                   </div>
                 </div>
               )}
+              */}
             </form>
           </div>
         </div>
@@ -374,7 +390,8 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
               </div>
               <div className="flex -space-x-2">
                 <div className="w-8 h-8 rounded-full bg-purple-200 border-2 border-white dark:border-[#1E0424] overflow-hidden">
-                  <img src="/images/hero-surveyor.jpg" alt="Verified Title Specialist" className="w-full h-full object-cover" />
+                  {/* <img src="/images/hero-surveyor.jpg" alt="Verified Title Specialist" className="w-full h-full object-cover" /> */}
+                  <img src="/images/mansion.jpg" alt="Luxury Estate" className="w-full h-full object-cover" />
                 </div>
                 <div className="w-8 h-8 rounded-full bg-purple-300 border-2 border-white dark:border-[#1E0424] overflow-hidden">
                   <img src="/images/hero-villa.jpg" alt="Happy Property Owner" className="w-full h-full object-cover" />
@@ -386,10 +403,11 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
             </div>
             <div>
               <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#7A2FB0] dark:text-[#B462E8] mb-1">
-                Verified Land Titles
+                Verified Title Security
               </div>
               <p className="text-xs text-[#3F3F46] dark:text-purple-200 font-normal">
-                Cadastral RTK GPS surveys & C of O guarantees across Nigeria.
+                {/* Cadastral RTK GPS surveys & C of O guarantees across Nigeria. */}
+                100% C of O & Governor's Consent verification on all luxury properties.
               </p>
             </div>
           </div>
@@ -414,7 +432,8 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
             </div>
           </div>
 
-          {/* Card 3: Ezeani Group Backed Fixed-Cost Construction */}
+          {/* Card 3: Ezeani Group Backed Fixed-Cost Construction (Commented out) / Curated Luxury Real Estate Portfolio */}
+          {/* COMMENTED OUT FOR REAL ESTATE & LUXURY FOCUS:
           <div className="bg-[#34073E] text-white rounded-[2rem] p-6 border border-purple-800 shadow-xl hover:shadow-2xl transition-all flex flex-col justify-between relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#8DC63F]/10 rounded-full blur-2xl pointer-events-none" />
             <div className="flex items-center justify-between mb-4 relative z-10">
@@ -431,6 +450,28 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
               </div>
               <p className="text-xs text-purple-100 font-normal">
                 10-Year structural guarantee on all architectural turnkey builds.
+              </p>
+            </div>
+          </div>
+          */}
+
+          {/* Active Card 3: Curated Ultra-Luxury Portfolios */}
+          <div className="bg-[#34073E] text-white rounded-[2rem] p-6 border border-purple-800 shadow-xl hover:shadow-2xl transition-all flex flex-col justify-between relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#8DC63F]/10 rounded-full blur-2xl pointer-events-none" />
+            <div className="flex items-center justify-between mb-4 relative z-10">
+              <div className="text-3xl font-bold font-heading text-white tracking-tight">
+                Ultra-Luxury
+              </div>
+              <span className="px-2.5 py-1 rounded-full bg-[#8DC63F] text-[#34073E] text-[10px] font-mono font-bold uppercase">
+                Curated
+              </span>
+            </div>
+            <div className="relative z-10">
+              <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#8DC63F] mb-1">
+                Prime Acquisitions
+              </div>
+              <p className="text-xs text-purple-100 font-normal">
+                Exclusive residential mansions, waterfront villas & commercial investments.
               </p>
             </div>
           </div>

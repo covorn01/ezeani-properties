@@ -128,8 +128,11 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
                   To connect our clients with genuine, well-located property through honest advice and seamless delivery.
                 </h3>
 
-                <p className="text-sm text-[#3F3F46] dark:text-purple-200 leading-relaxed font-sans pt-1">
+                {/* <p className="text-sm text-[#3F3F46] dark:text-purple-200 leading-relaxed font-sans pt-1">
                   Providing transparent property valuation, certified land survey plans, and expert real estate advisory across every region of Nigeria.
+                </p> */}
+                <p className="text-sm text-[#3F3F46] dark:text-purple-200 leading-relaxed font-sans pt-1">
+                  Providing transparent property valuation, verified title deeds, and expert luxury real estate advisory across every region of Nigeria.
                 </p>
               </div>
 

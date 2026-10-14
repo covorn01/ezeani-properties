@@ -15,6 +15,7 @@ export const LEADERSHIP_MEMBERS = [
     initials: "CE",
     featured: true
   },
+  /* COMMENTED OUT FOR REAL ESTATE & LUXURY FOCUS:
   {
     id: "exec-2",
     name: "Surv. Chidi Okonkwo (FNIS / NIS)",
@@ -26,6 +27,7 @@ export const LEADERSHIP_MEMBERS = [
     initials: "CO",
     featured: true
   },
+  */
   {
     id: "exec-3",
     name: "Mrs. Ezeani",
@@ -46,6 +48,6 @@ export const LEADERSHIP_MEMBERS = [
     bio: "Spearheads C of O registry searches, land title verification due diligence, contract perfection, and legal dispute prevention for all client acquisitions.",
     image: null, // Empty frame for photo drop-in
     initials: "NI",
-    featured: false
+    featured: true
   }
 ];

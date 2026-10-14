@@ -52,8 +52,11 @@ export const MOCK_PROPERTIES = [
     image: "/images/hero-villa.jpg",
     gallery: [
       "/images/hero-villa.jpg",
+      "/images/mansion.jpg"
+      /* COMMENTED OUT:
       "/images/hero-construction.jpg",
       "/images/hero-surveyor.jpg"
+      */
     ],
     description: "A luxury mansion in the heart of Ikoyi. Features cantilevered floor-to-ceiling glass, private infinity pool, fully automated smart home system, Italian marble finishing, and 24/7 security. Certificate of Occupancy (C of O) fully verified.",
     surveyStatus: "Verified Governor's Consent & C of O",
@@ -119,10 +122,12 @@ export const MOCK_PROPERTIES = [
     baths: 0,
     sqft: 0,
     acres: 2.1,
-    image: "/images/hero-surveyor.jpg",
+    /* image: "/images/hero-surveyor.jpg", */
+    image: "/images/hero-villa.jpg",
     gallery: [
-      "/images/hero-surveyor.jpg",
-      "/images/hero-villa.jpg"
+      "/images/hero-villa.jpg",
+      "/images/mansion.jpg"
+      /* COMMENTED OUT: "/images/hero-surveyor.jpg" */
     ],
     description: "Prime elevated 2.1-acre residential plot offering breathtaking vistas over Abuja central area. Cleared, fully beaconed with FCDA Certificate of Occupancy, and ready for immediate luxury development.",
     surveyStatus: "FCDA Registered Title & Cadastral Beacons",
@@ -153,10 +158,15 @@ export const MOCK_PROPERTIES = [
     baths: 4,
     sqft: 45000,
     acres: 8.5,
-    image: "/images/hero-construction.jpg",
+    /* image: "/images/hero-construction.jpg", */
+    image: "/images/hero-commercial.jpg",
     gallery: [
+      "/images/hero-commercial.jpg",
+      "/images/mansion.jpg"
+      /* COMMENTED OUT:
       "/images/hero-construction.jpg",
       "/images/hero-surveyor.jpg"
+      */
     ],
 
     description: "Strategic 8.5-acre industrial logistics site positioned along the expanding Epe-Ibeju corridor, close to the Dangote Refinery and Lekki Deep Sea Port. Ideal for factory warehouses, logistics centers, or manufacturing assembly plants.",
@@ -190,7 +200,8 @@ export const MOCK_PROPERTIES = [
     image: "/images/mansion.jpg",
     gallery: [
       "/images/mansion.jpg",
-      "/images/survey.jpg"
+      "/images/hero-villa.jpg"
+      /* COMMENTED OUT: "/images/survey.jpg" */
     ],
     description: "Sleek contemporary 4-bedroom terrace home with fully fitted kitchen, swimming pool access, BQ, and 24-hour estate power supply. Located in a secure gated enclave in Lekki Phase 1.",
     surveyStatus: "Verified Ownership Title",
@@ -210,6 +221,7 @@ export const MOCK_PROPERTIES = [
 ];
 
 export const SURVEY_SERVICES = [
+  /* COMMENTED OUT FOR REAL ESTATE & LUXURY FOCUS:
   {
     id: "boundary",
     title: "Boundary & Cadastral Survey",
@@ -246,9 +258,11 @@ export const SURVEY_SERVICES = [
     deliverables: ["High-Res Orthomosaic TIFF Map", "LiDAR Point Cloud Data", "Digital Surface Model (DSM)", "Web GIS Interactive Map Link"],
     estimatedDays: "2 - 3 Business Days"
   }
+  */
 ];
 
 export const CONSTRUCTION_SERVICES = [
+  /* COMMENTED OUT FOR REAL ESTATE & LUXURY FOCUS:
   {
     id: "turnkey",
     title: "Turnkey Residential Construction",
@@ -270,6 +284,7 @@ export const CONSTRUCTION_SERVICES = [
     description: "Transformative structural renovations, facade modernizations, penthouse upgrades, and luxury interior finishing.",
     highlights: ["Structural Load Modification", "Bespoke Italian Kitchen & Wardrobes", "Smart Home Automation", "Energy Efficient Retrofits"]
   }
+  */
 ];
 
 export const CONSULTATION_TYPES = [
@@ -297,6 +312,7 @@ export const CONSULTATION_TYPES = [
 ];
 
 export const SAMPLE_BOOKINGS = [
+  /* COMMENTED OUT FOR REAL ESTATE & LUXURY FOCUS:
   {
     id: "EZ-2026-9014",
     clientName: "Dr. Anthony Eze",
@@ -311,9 +327,25 @@ export const SAMPLE_BOOKINGS = [
     assignedSpecialist: "Eng. Marcus Thorne (Lead Surveyor)",
     notes: "Requires boundary pin re-establishment and topographical contour map for hillside residential build."
   }
+  */
+  {
+    id: "EZ-2026-9014",
+    clientName: "Dr. Anthony Eze",
+    email: "a.eze@example.com",
+    phone: "0902 171 0933",
+    serviceCategory: "Property Acquisition",
+    consultationType: "On-Site Property Inspection Visit",
+    date: "2026-10-12",
+    time: "10:00 AM",
+    location: "The Royal Monarch Mansion, Ikoyi",
+    status: "Confirmed",
+    assignedSpecialist: "Christian Ezeani (Founder & MD)",
+    notes: "Private VIP inspection and closing deed perfection review."
+  }
 ];
 
 export const NEWS_ARTICLES = [
+  /* COMMENTED OUT FOR REAL ESTATE & LUXURY FOCUS:
   {
     id: "news-1",
     title: "Ezeani Group Expands Cadastral Title Verification Hub in Abuja & Lagos",
@@ -323,6 +355,7 @@ export const NEWS_ARTICLES = [
     image: "/images/hero-surveyor.jpg",
     summary: "Ezeani Properties Ltd launches advanced RTK GPS GIS title mapping service across Lagos and Abuja to provide 100% verified, encumbrance-free property documentation for local and diaspora buyers."
   },
+  */
   {
     id: "news-2",
     title: "2026 Real Estate Investment Outlook: Prime Corridors in Lekki, Epe & Guzape",
@@ -333,6 +366,17 @@ export const NEWS_ARTICLES = [
     summary: "Our research team analyzes capital appreciation trends, infrastructure expansion, and high-yield residential development opportunities across Nigeria's fastest growing urban centers."
   },
   {
+    id: "news-luxury",
+    title: "The Rise of Waterfront Ultra-Luxury Mansions in Lagos & Island Penthouses",
+    date: "October 2026",
+    category: "Luxury Portfolio",
+    readTime: "4 min read",
+    image: "/images/mansion.jpg",
+    summary: "High-net-worth investors and diaspora families are driving unprecedented demand for turn-key waterfront villas in Ikoyi and Epe waterfront enclaves."
+  }
+  /* COMMENTED OUT FOR REAL ESTATE & LUXURY FOCUS:
+  ,
+  {
     id: "news-3",
     title: "Ezeani Master Builders Achieves Fixed-Cost Architectural Delivery Benchmark",
     date: "August 2026",
@@ -341,9 +385,11 @@ export const NEWS_ARTICLES = [
     image: "/images/hero-construction.jpg",
     summary: "How Ezeani Construction eliminates cost overrun risks through BIM 3D architectural modeling, fixed-price turnkey contracts, and rigorous 10-year structural warranty standards."
   }
+  */
 ];
 
 export const CAREERS_LIST = [
+  /* COMMENTED OUT FOR REAL ESTATE & LUXURY FOCUS:
   {
     id: "car-1",
     title: "Senior Cadastral Land Surveyor (RTK & GIS)",
@@ -362,6 +408,7 @@ export const CAREERS_LIST = [
     experience: "7+ Years",
     desc: "Drive master 3D BIM architectural designs, structural detailing, client project consultations, and site execution oversight."
   },
+  */
   {
     id: "car-3",
     title: "Real Estate Investment Advisor",
@@ -370,6 +417,15 @@ export const CAREERS_LIST = [
     type: "Full-Time",
     experience: "3+ Years",
     desc: "Guide high-net-worth individuals, institutions, and diaspora investors through property acquisitions, inspections, and title verification."
+  },
+  {
+    id: "car-4",
+    title: "Luxury Residential Portfolio Manager",
+    department: "Prime Estates & Client Relations",
+    location: "Ikoyi / Victoria Island, Lagos",
+    type: "Full-Time",
+    experience: "4+ Years",
+    desc: "Oversee premier residential listings, conduct exclusive private viewings, and manage high-net-worth investor relationships."
   }
 ];
 

@@ -165,32 +165,37 @@ export default function CareersModal({ isOpen, onClose }) {
                   Build Your Career Shaping Property Standards
                 </h4>
 
-                <p className="text-xs text-purple-200 leading-relaxed">
+                {/* <p className="text-xs text-purple-200 leading-relaxed">
                   At Ezeani Group, we combine RTK GPS field engineering, LiDAR drone photogrammetry, and title search diligence to safeguard real estate investments across Nigeria.
+                </p> */}
+                <p className="text-xs text-purple-200 leading-relaxed">
+                  At Ezeani Group, we curate high-value residential and commercial properties, safeguarding real estate investments with transparent legal due diligence across Nigeria.
                 </p>
 
                 <div className="space-y-3 pt-2 border-t border-purple-900">
                   <div className="text-[10px] font-mono uppercase text-[#8DC63F] font-bold tracking-wider">
-                    Why Engineers & Professionals Join Us:
+                    Why Advisors & Professionals Join Us:
                   </div>
                   <div className="space-y-2 text-xs text-purple-100">
                     <div className="flex items-center gap-2">
                       <div className="w-4 h-4 rounded-full bg-[#8DC63F]/20 text-[#8DC63F] flex items-center justify-center shrink-0">
                         ✓
                       </div>
-                      <span>RTK GPS & 3D LiDAR Drone Stack</span>
+                      {/* <span>RTK GPS & 3D LiDAR Drone Stack</span> */}
+                      <span>Curated Luxury Portfolios & Elite Developments</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-4 h-4 rounded-full bg-[#8DC63F]/20 text-[#8DC63F] flex items-center justify-center shrink-0">
                         ✓
                       </div>
-                      <span>State Surveyor-General Lodgement Practice</span>
+                      {/* <span>State Surveyor-General Lodgement Practice</span> */}
+                      <span>Institutional Title Diligence & Client Transparency</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-4 h-4 rounded-full bg-[#8DC63F]/20 text-[#8DC63F] flex items-center justify-center shrink-0">
                         ✓
                       </div>
-                      <span>Competitive Salaries & Development</span>
+                      <span>Competitive Compensation & Executive Mentorship</span>
                     </div>
                   </div>
                 </div>

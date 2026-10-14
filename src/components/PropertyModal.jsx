@@ -144,7 +144,8 @@ export default function PropertyModal({ property, onClose, onOpenBooking, isFavo
                 {property.priceFormatted}
               </div>
               <div className="text-xs text-[#52525B] dark:text-purple-300 font-mono">
-                Survey & Title Clearance Included
+                {/* Survey & Title Clearance Included */}
+                Verified Title & Legal Due Diligence Included
               </div>
             </div>
           </div>
@@ -197,6 +198,7 @@ export default function PropertyModal({ property, onClose, onOpenBooking, isFavo
             >
               Overview & Features
             </button>
+            {/* COMMENTED OUT FOR REAL ESTATE & LUXURY FOCUS:
             <button
               onClick={() => setActiveTab('survey')}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
@@ -208,6 +210,7 @@ export default function PropertyModal({ property, onClose, onOpenBooking, isFavo
               <Compass className="w-3.5 h-3.5" />
               <span>Survey & Legal Report</span>
             </button>
+            */}
             <button
               onClick={() => setActiveTab('mortgage')}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
@@ -244,7 +247,7 @@ export default function PropertyModal({ property, onClose, onOpenBooking, isFavo
             </div>
           )}
 
-          {/* Tab Content 2: Survey & Legal */}
+          {/* COMMENTED OUT FOR REAL ESTATE & LUXURY FOCUS:
           {activeTab === 'survey' && (
             <div className="space-y-4 bg-[#34073E] text-white p-5 rounded-2xl border border-purple-800">
               <div className="flex items-center justify-between border-b border-purple-800 pb-3">
@@ -273,6 +276,7 @@ export default function PropertyModal({ property, onClose, onOpenBooking, isFavo
               </div>
             </div>
           )}
+          */}
 
           {/* Tab Content 3: Financing Estimator */}
           {activeTab === 'mortgage' && (

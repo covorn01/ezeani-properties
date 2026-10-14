@@ -21,7 +21,8 @@ export default function ContactsModal({ isOpen, onClose }) {
     name: '', 
     email: '', 
     phone: '', 
-    serviceCategory: 'Land Surveying & Title Clearance',
+    /* serviceCategory: 'Land Surveying & Title Clearance', */
+    serviceCategory: 'Residential & Luxury Property Acquisition',
     message: '' 
   });
 
@@ -78,11 +79,17 @@ export default function ContactsModal({ isOpen, onClose }) {
 
               {/* Headline */}
               <div className="space-y-3">
-                <h3 className="text-3xl sm:text-4xl font-bold font-heading text-white tracking-tight leading-tight">
+                {/* <h3 className="text-3xl sm:text-4xl font-bold font-heading text-white tracking-tight leading-tight">
                   Let's Discuss Your Property & Survey Needs
+                </h3> */}
+                <h3 className="text-3xl sm:text-4xl font-bold font-heading text-white tracking-tight leading-tight">
+                  Let's Discuss Your Luxury Property & Investment Needs
                 </h3>
-                <p className="text-xs sm:text-sm text-purple-100/90 leading-relaxed font-sans max-w-md">
+                {/* <p className="text-xs sm:text-sm text-purple-100/90 leading-relaxed font-sans max-w-md">
                   Our certified surveyors, title clearance specialists, and real estate advisors are available across Lagos and Abuja to assist your acquisitions.
+                </p> */}
+                <p className="text-xs sm:text-sm text-purple-100/90 leading-relaxed font-sans max-w-md">
+                  Our luxury property consultants, legal title specialists, and real estate advisors are available across Lagos and Abuja to assist your acquisitions.
                 </p>
               </div>
 
@@ -250,7 +257,9 @@ export default function ContactsModal({ isOpen, onClose }) {
                       onChange={(e) => setFormData({ ...formData, serviceCategory: e.target.value })}
                       className="w-full py-3.5 px-4 bg-[#FAF7FC] dark:bg-[#1E0424] border border-purple-200/80 dark:border-purple-800/80 rounded-xl text-xs sm:text-sm font-medium text-[#34073E] dark:text-white focus:outline-none focus:border-[#8DC63F] focus:ring-2 focus:ring-[#8DC63F]/20 cursor-pointer"
                     >
+                      {/* COMMENTED OUT FOR REAL ESTATE & LUXURY FOCUS:
                       <option value="Land Surveying & Title Clearance">Land Surveying & Title Clearance (RTK / GIS)</option>
+                      */}
                       <option value="Residential & Luxury Property Acquisition">Residential & Luxury Property Acquisition</option>
                       <option value="Commercial Land & Industrial Acreage">Commercial Land & Industrial Acreage</option>
                       <option value="Governor's Consent & C of O Verification">Governor's Consent & C of O Legal Search</option>

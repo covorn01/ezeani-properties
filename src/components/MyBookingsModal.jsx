@@ -30,8 +30,11 @@ export default function MyBookingsModal({ isOpen, onClose, bookings = [] }) {
               <h3 className="text-base sm:text-lg font-bold font-heading text-[#34073E] dark:text-white">
                 Lookup Scheduled Consultations
               </h3>
-              <p className="text-xs text-[#52525B] dark:text-purple-300/80 font-medium">
+              {/* <p className="text-xs text-[#52525B] dark:text-purple-300/80 font-medium">
                 Track status of your land survey, build consultation, or private site visit
+              </p> */}
+              <p className="text-xs text-[#52525B] dark:text-purple-300/80 font-medium">
+                Track status of your luxury property consultation, acquisition advisory, or private site visit
               </p>
             </div>
           </div>

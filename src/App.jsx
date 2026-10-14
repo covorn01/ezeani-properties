@@ -36,7 +36,17 @@ export default function App() {
   const [properties, setProperties] = useState(() => {
     try {
       const saved = localStorage.getItem('ezeani_properties');
-      return saved ? JSON.parse(saved) : MOCK_PROPERTIES;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return parsed.map((p) => {
+          const match = MOCK_PROPERTIES.find(m => m.id === p.id);
+          if (match) {
+            return { ...p, image: match.image, gallery: match.gallery };
+          }
+          return p;
+        });
+      }
+      return MOCK_PROPERTIES;
     } catch (e) {
       return MOCK_PROPERTIES;
     }
@@ -52,7 +62,7 @@ export default function App() {
       const saved = localStorage.getItem('ezeani_company_info');
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (parsed.leadership && parsed.leadership.some(l => l.name?.includes('Emmanuel') || l.name?.includes('Victoria'))) {
+        if (parsed.leadership) {
           parsed.leadership = EZEANI_COMPANY_INFO.leadership;
         }
         return parsed;
@@ -85,7 +95,14 @@ export default function App() {
   const [bookings, setBookings] = useState(() => {
     try {
       const saved = localStorage.getItem('ezeani_bookings');
-      return saved ? JSON.parse(saved) : SAMPLE_BOOKINGS;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.some(b => b.serviceCategory === 'Land Surveying')) {
+          return SAMPLE_BOOKINGS;
+        }
+        return parsed;
+      }
+      return SAMPLE_BOOKINGS;
     } catch (e) {
       return SAMPLE_BOOKINGS;
     }
@@ -275,8 +292,8 @@ export default function App() {
         {/* Why Ezeani & 4-Step Process (About Section) */}
         <WhyEzeani onOpenBooking={handleOpenBooking} companyInfo={companyInfo} />
 
-        {/* Land Surveying Services */}
-        <SurveyServices onOpenBooking={handleOpenBooking} companyInfo={companyInfo} />
+        {/* Land Surveying Services (Commented out for real estate & luxury focus) */}
+        {/* <SurveyServices onOpenBooking={handleOpenBooking} companyInfo={companyInfo} /> */}
       </main>
 
       {/* Footer */}

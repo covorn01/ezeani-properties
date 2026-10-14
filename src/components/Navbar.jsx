@@ -185,7 +185,7 @@ export default function Navbar({
               About
             </button>
 
-            {/* 3. Services (Land Surveying & GIS) */}
+            {/* 3. Services (Land Surveying & GIS) - Commented out for Real Estate & Luxury Focus
             <button
               onClick={() => scrollToSection('surveying')}
               className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
@@ -196,6 +196,7 @@ export default function Navbar({
             >
               Services
             </button>
+            */}
 
             {/* 4. News */}
             <button
@@ -347,12 +348,14 @@ export default function Navbar({
             >
               About Ezeani
             </button>
+            {/* COMMENTED OUT FOR REAL ESTATE & LUXURY FOCUS:
             <button
               onClick={() => scrollToSection('surveying')}
               className="w-full text-left px-4 py-3 rounded-lg text-sm font-bold text-[#34073E] dark:text-purple-100 hover:bg-purple-100 dark:hover:bg-purple-900"
             >
               Land Surveying & GIS Services
             </button>
+            */}
             <button
               onClick={() => { setMobileMenuOpen(false); onOpenNews(); }}
               className="w-full text-left px-4 py-3 rounded-lg text-sm font-bold text-[#34073E] dark:text-purple-100 hover:bg-purple-100 dark:hover:bg-purple-900"
