@@ -15,6 +15,8 @@ import ContactsModal from './components/ContactsModal';
 import AdminDashboard from './components/AdminDashboard';
 import Footer from './components/Footer';
 import LeadershipSection from './components/LeadershipSection';
+import FounderStorySection from './components/FounderStorySection';
+import FounderStoryModal from './components/FounderStoryModal';
 
 import { MOCK_PROPERTIES, SAMPLE_BOOKINGS, EZEANI_COMPANY_INFO } from './data/mockData';
 
@@ -123,6 +125,7 @@ export default function App() {
   const [careersModalOpen, setCareersModalOpen] = useState(false);
   const [contactsModalOpen, setContactsModalOpen] = useState(false);
   const [adminDashboardOpen, setAdminDashboardOpen] = useState(false);
+  const [founderStoryModalOpen, setFounderStoryModalOpen] = useState(false);
 
   // Dedicated Secret Admin Route Handling (/internal-admin or #admin)
   const [isAdminRoute, setIsAdminRoute] = useState(() => {
@@ -278,6 +281,12 @@ export default function App() {
           currency={currency}
         />
 
+        {/* The Founder's Journey & Identity Section */}
+        <FounderStorySection
+          onOpenFullStory={() => setFounderStoryModalOpen(true)}
+          onOpenBooking={handleOpenBooking}
+        />
+
         {/* Home Page Leadership Preview */}
         <LeadershipSection 
           variant="preview" 
@@ -369,6 +378,13 @@ export default function App() {
       <ContactsModal
         isOpen={contactsModalOpen}
         onClose={() => setContactsModalOpen(false)}
+      />
+
+      {/* Founder Story Unabridged Reading Modal */}
+      <FounderStoryModal
+        isOpen={founderStoryModalOpen}
+        onClose={() => setFounderStoryModalOpen(false)}
+        onOpenBooking={handleOpenBooking}
       />
 
       {/* Admin Command Center Portal */}

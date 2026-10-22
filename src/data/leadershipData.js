@@ -9,8 +9,11 @@ export const LEADERSHIP_MEMBERS = [
     name: "Christian Ezeani",
     role: "MD, Ezeani Properties Ltd | CEO/Founder, Ezeani Group",
     badge: "FOUNDER & MD",
-    credentials: "Real Estate Development & Corporate Strategy",
-    bio: "Visionary founder and chief executive leading Ezeani Group and Ezeani Properties Ltd. Drives strategic property investment, high-value commercial and residential estate developments, corporate growth, and seamless nationwide delivery.",
+    titleAlias: "Ezeani na-eme ife ani",
+    aliasMeaning: "The King of the Land who deals in Lands",
+    credentials: "Luxury Land Specialist & Positioning Strategist",
+    bio: "Shaped by real-world field experience since 2010—from working as a survey labourer at Ubajekwe Survey Services to closing his first deal at Ebonyi State University—Christian Ezeani earned the respected title 'Ezeani na-eme ife ani'. Driven by the philosophy that real estate is who he is, he leads Ezeani Properties Ltd with a mission to eliminate land disputes, protect diaspora and young investors, and position clients where tomorrow's wealth is created.",
+    quote: "Real Estate is not what I do, it is who I am.",
     image: null, // Empty frame for photo drop-in
     initials: "CE",
     featured: true

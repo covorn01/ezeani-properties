@@ -27,29 +27,29 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
   const heroSlides = [
     {
       id: 'slide-1',
-      title: 'Discover Your Perfect Property Today',
-      subtitle: 'Luxury residential mansions, waterfront villas & prime surveyed plots across Lagos & Abuja.',
-      badge: 'RESIDENTIAL PORTFOLIO',
+      title: 'Luxury Through Positioning: Where Tomorrow’s Wealth Is Created',
+      subtitle: 'Specializing in verified luxury lands, generational estates & strategic commercial corridors across Delta State, Anambra State & nationwide.',
+      badge: 'LUXURY THROUGH POSITIONING',
       image: '/images/hero-villa.jpg',
-      ctaText: 'Browse Luxury Homes',
+      ctaText: 'Browse Verified Lands & Homes',
       category: 'properties'
     },
     {
       id: 'slide-2',
-      title: 'Prime Commercial Towers & Business Hubs',
-      subtitle: 'Corporate office towers, retail centers & industrial developments in Victoria Island & Epe.',
-      badge: 'COMMERCIAL REAL ESTATE',
+      title: 'Prime Asaba, Okpanam Road & Awka Strategic Plots',
+      subtitle: 'Position your portfolio in high-growth commercial and residential corridors with verified titles and zero boundary encumbrances.',
+      badge: 'DELTA & ANAMBRA SPECIALIST',
       image: '/images/hero-commercial.jpg',
-      ctaText: 'Explore Commercial Hubs',
+      ctaText: 'Explore Strategic Plots',
       category: 'properties'
     },
     {
       id: 'slide-luxury',
-      title: 'Waterfront Villas & Ultra-Luxury Estates',
-      subtitle: 'Exclusive private sanctuaries with deep-water access, smart architectural automation & prime capital appreciation.',
-      badge: 'ULTRA-LUXURY COLLECTION',
+      title: 'Generational Estates & Ultra-Luxury Sanctuaries',
+      subtitle: 'Exclusive private sanctuaries, master-planned layouts & architectural developments built to preserve and grow lasting family wealth.',
+      badge: 'CREATING LEGACIES',
       image: '/images/mansion.jpg',
-      ctaText: 'View Elite Mansions',
+      ctaText: 'View Elite Estates',
       category: 'properties'
     }
     /* COMMENTED OUT FOR REAL ESTATE & LUXURY FOCUS:
@@ -202,8 +202,13 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
 
           {/* Top-Left Headline Block */}
           <div className="relative z-20 max-w-2xl mb-16 sm:mb-24 lg:mb-28">
-            <div className="inline-block px-3 py-1 rounded-md bg-[#8DC63F] text-[#34073E] text-[11px] font-mono font-bold uppercase tracking-wider mb-4 shadow-sm">
-              {currentSlide === 0 && companyInfo?.heroPill ? companyInfo.heroPill : slide.badge}
+            <div className="flex flex-wrap items-center gap-2 mb-4">
+              <div className="inline-block px-3 py-1 rounded-md bg-[#8DC63F] text-[#34073E] text-[11px] font-mono font-bold uppercase tracking-wider shadow-sm">
+                {currentSlide === 0 && companyInfo?.heroPill ? companyInfo.heroPill : slide.badge}
+              </div>
+              <div className="inline-block px-3 py-1 rounded-md bg-white/20 backdrop-blur-md text-white text-[11px] font-mono font-semibold tracking-wider">
+                Creating Legacies • Building Trust
+              </div>
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold font-heading text-white tracking-tight leading-[1.12] drop-shadow-md transition-all duration-500">
@@ -213,6 +218,18 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
             <p className="text-sm sm:text-base lg:text-lg text-purple-100 font-normal leading-relaxed mt-4 drop-shadow-xs max-w-xl">
               {currentSlide === 0 && companyInfo?.subheadline ? companyInfo.subheadline : slide.subtitle}
             </p>
+
+            {/* Founder Story Quick Link Pill */}
+            <div className="mt-5">
+              <a
+                href="#founder-story"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs font-mono font-semibold backdrop-blur-md border border-white/20 transition-all group"
+              >
+                <span className="text-[#8DC63F] font-bold">Founder's Journey:</span>
+                <span className="italic">"Real Estate is not what I do, it is who I am"</span>
+                <ArrowRight className="w-3.5 h-3.5 text-[#8DC63F] group-hover:translate-x-1 transition-transform" />
+              </a>
+            </div>
           </div>
 
         </div>
@@ -415,8 +432,8 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
           {/* Card 2: Property Scale & Regional Coverage */}
           <div className="bg-[#FAF7FC] dark:bg-[#1E0424] rounded-[2rem] p-6 border border-purple-100/90 dark:border-purple-800/60 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
             <div className="flex items-center justify-between mb-4">
-              <div className="text-3xl font-bold font-heading text-[#171717] dark:text-white tracking-tight">
-                Lagos & Abuja
+              <div className="text-2xl sm:text-3xl font-bold font-heading text-[#171717] dark:text-white tracking-tight">
+                Delta & Anambra
               </div>
               <div className="p-2.5 rounded-xl bg-purple-100 dark:bg-purple-900/40 text-[#7A2FB0] dark:text-[#B462E8]">
                 <MapPin className="w-5 h-5" />
@@ -424,54 +441,31 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
             </div>
             <div>
               <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#7A2FB0] dark:text-[#B462E8] mb-1">
-                Nationwide Footprint
+                Headquarters & Regional Corridors
               </div>
               <p className="text-xs text-[#3F3F46] dark:text-purple-200 font-normal">
-                Dedicated regional desks in Victoria Island, Ikeja & Guzape.
+                ECI Plaza, Okpanam Road, Asaba (HQ) and Awka commercial hub, delivering nationwide.
               </p>
             </div>
           </div>
 
-          {/* Card 3: Ezeani Group Backed Fixed-Cost Construction (Commented out) / Curated Luxury Real Estate Portfolio */}
-          {/* COMMENTED OUT FOR REAL ESTATE & LUXURY FOCUS:
+          {/* Active Card 3: Founder Identity & Philosophy */}
           <div className="bg-[#34073E] text-white rounded-[2rem] p-6 border border-purple-800 shadow-xl hover:shadow-2xl transition-all flex flex-col justify-between relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#8DC63F]/10 rounded-full blur-2xl pointer-events-none" />
             <div className="flex items-center justify-between mb-4 relative z-10">
-              <div className="text-3xl font-bold font-heading text-white tracking-tight">
-                Fixed Cost
+              <div className="text-xl sm:text-2xl font-bold font-heading text-[#8DC63F] tracking-tight">
+                “Ezeani na-eme ife ani”
               </div>
               <span className="px-2.5 py-1 rounded-full bg-[#8DC63F] text-[#34073E] text-[10px] font-mono font-bold uppercase">
-                Zero Overrun
+                Founder Identity
               </span>
             </div>
             <div className="relative z-10">
               <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#8DC63F] mb-1">
-                Ezeani Group Warranty
+                14+ Years Field Mastery
               </div>
               <p className="text-xs text-purple-100 font-normal">
-                10-Year structural guarantee on all architectural turnkey builds.
-              </p>
-            </div>
-          </div>
-          */}
-
-          {/* Active Card 3: Curated Ultra-Luxury Portfolios */}
-          <div className="bg-[#34073E] text-white rounded-[2rem] p-6 border border-purple-800 shadow-xl hover:shadow-2xl transition-all flex flex-col justify-between relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#8DC63F]/10 rounded-full blur-2xl pointer-events-none" />
-            <div className="flex items-center justify-between mb-4 relative z-10">
-              <div className="text-3xl font-bold font-heading text-white tracking-tight">
-                Ultra-Luxury
-              </div>
-              <span className="px-2.5 py-1 rounded-full bg-[#8DC63F] text-[#34073E] text-[10px] font-mono font-bold uppercase">
-                Curated
-              </span>
-            </div>
-            <div className="relative z-10">
-              <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#8DC63F] mb-1">
-                Prime Acquisitions
-              </div>
-              <p className="text-xs text-purple-100 font-normal">
-                Exclusive residential mansions, waterfront villas & commercial investments.
+                "Real estate is not what I do, it is who I am." Built on integrity, security & positioning.
               </p>
             </div>
           </div>

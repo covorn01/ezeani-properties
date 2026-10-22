@@ -3,11 +3,20 @@ import { LEADERSHIP_MEMBERS } from './leadershipData';
 export const EZEANI_COMPANY_INFO = {
   name: "Ezeani Properties Ltd",
   group: "A subsidiary of Ezeani Group",
-  tagline: "We’re into all kind of homes.",
-  headline: "Every kind of property, one trusted partner.",
-  subheadline: "Residential, commercial and industrial real estate, luxury lands and expert consultation, delivered nationwide.",
-  vision: "To be the most trusted name in Nigerian real estate, the first call for every kind of home.",
-  mission: "To connect our clients with genuine, well-located property through honest advice and seamless delivery.",
+  tagline: "Luxury Through Positioning",
+  motto: "Creating Legacies, Building Trust, Securing Properties",
+  identity: "Real Estate is not what I do, it is who I am.",
+  brandPromise: "We are committed to helping you position your investment where tomorrow’s wealth is being created and to help you make property decisions with greater clarity and confidence.",
+  headline: "Luxury Through Positioning — Where Tomorrow’s Wealth Is Being Created.",
+  subheadline: "Specializing in verified luxury lands, generational wealth, and strategic commercial properties across Delta State, Anambra State, and nationwide.",
+  vision: "To become one of Africa’s most trusted Real Estate brands, recognized for transforming the property/land acquisition experience through transparency, positioning and commitment to helping young generations, couples and investors secure properties that creates lasting wealth.",
+  mission: "To simplify and improve property acquisition process by providing reliable property information, professional guidance and transparent services that help younger generations, couples and investors make informed Real Estate decisions. We are committed to helping our clients avoid risks through proper verification, professional diligence and responsible services.",
+  founderStorySnippet: {
+    title: "Ezeani na-eme ife ani",
+    meaning: "The King of the Land who deals in Lands",
+    quote: "Real Estate is not what I do, it is who I am.",
+    philosophy: "Nothing is truly bad if you have the mindset to learn from it. Every setback, challenge, and disappointment was not an obstacle — it was alignment with purpose, alignment with calling, alignment with who I am."
+  },
   phone: "0902 171 0933",
   whatsapp: "+2349021710933",
   email: "info@ezeaniproperties.com",
@@ -16,19 +25,58 @@ export const EZEANI_COMPANY_INFO = {
     facebook: "Ezeani Properties Ltd"
   },
   offices: [
-    { city: "Headquarters (Delta State)", address: "Ezeani Group, ECI Plaza, Okpanam Road, Asaba, Delta State, Nigeria" }
+    { city: "Headquarters (Delta State)", address: "Ezeani Group, ECI Plaza, Okpanam Road, Asaba, Delta State, Nigeria" },
+    { city: "Anambra Regional Desk", address: "Awka Commercial Corridor, Awka, Anambra State, Nigeria" }
   ],
   coreValues: [
-    { title: "Integrity", desc: "Verified titles and honest dealings, every time." },
-    { title: "Excellence", desc: "Quality properties and a premium client experience." },
-    { title: "Transparency", desc: "Clear pricing, clear paperwork, no surprises." },
-    { title: "Client First", desc: "Your goals shape every recommendation we make." }
+    { 
+      title: "Integrity", 
+      desc: "We do what is right, even when it is not the easiest option." 
+    },
+    { 
+      title: "Transparency", 
+      desc: "Our clients deserve clarity before they make commitments." 
+    },
+    { 
+      title: "Positioning", 
+      desc: "Our clients deserve to be where tomorrow’s wealth is being created." 
+    },
+    { 
+      title: "Accountability", 
+      desc: "We take responsibility for our actions, commitments, and professional conduct." 
+    },
+    { 
+      title: "Relationship", 
+      desc: "We build people that help build the city." 
+    }
+  ],
+  clientSegments: [
+    {
+      title: "Young Generations",
+      tagline: "First-Time Property Buyers",
+      desc: "Helping ambitious young professionals acquire genuine land the right way, avoiding costly traps and laying early foundations for lasting generational wealth."
+    },
+    {
+      title: "Couples & Families",
+      tagline: "Zero Dispute Security",
+      desc: "Protecting couples from fraudulent middle-men, overlapping claims, and bitter conflicts with 100% verified documentation and clear boundary beacons."
+    },
+    {
+      title: "Diaspora Clients",
+      tagline: "Safe Remote Investment",
+      desc: "Eliminating the fear of lost savings. Direct video inspections, verified registry searches, and transparent execution so you invest home with confidence."
+    },
+    {
+      title: "Strategic Investors",
+      tagline: "Positioning Where Wealth Grows",
+      desc: "Identifying high-growth corridors in Delta State, Anambra State, and national economic centers before value explodes, maximizing long-term appreciation."
+    }
   ],
   processSteps: [
-    { num: "01", title: "Consult", desc: "We listen to your goals, budget and preferred location." },
-    { num: "02", title: "Select", desc: "We shortlist matching properties and arrange inspections." },
-    { num: "03", title: "Secure", desc: "We handle verification, documentation and payment steps." },
-    { num: "04", title: "Deliver", desc: "You receive your keys or land, wherever you are." }
+    { num: "01", title: "Consult & Clarify", desc: "We listen to your goals, family vision, and preferred region to define your ideal acquisition." },
+    { num: "02", title: "Strategic Positioning", desc: "We shortlist properties in high-growth corridors with genuine titles and zero encumbrances." },
+    { num: "03", title: "Rigorous Verification", desc: "Our legal and title team conducts deep registry searches and boundary audits before commitment." },
+    { num: "04", title: "Secured Handover", desc: "You receive your verified deeds, beacons, and documentation with complete peace of mind." }
   ],
   leadership: LEADERSHIP_MEMBERS
 };
@@ -110,6 +158,74 @@ export const MOCK_PROPERTIES = [
     ]
   },
   {
+    id: "ez-prop-delta",
+    title: "Asaba Grand Crest Luxury Plots",
+    category: "Luxury Lands",
+    status: "For Sale",
+    price: 45000000,
+    priceFormatted: "₦45,000,000",
+    location: "Okpanam Road, Asaba, Delta State",
+    address: "Okpanam Road Corridor, Asaba, Delta State",
+    beds: 0,
+    baths: 0,
+    sqft: 0,
+    acres: 0.25,
+    image: "/images/hero-villa.jpg",
+    gallery: [
+      "/images/hero-villa.jpg",
+      "/images/mansion.jpg"
+    ],
+    description: "Strategically positioned luxury residential plots along the booming Okpanam Road corridor in Asaba, Delta State. 100% genuine title, beaconed corner pins, direct access to tarred dual-carriageway, and verified high capital growth. Tailored for young generations, couples, and diaspora investors seeking guaranteed zero-risk land ownership.",
+    surveyStatus: "Delta State Ministry Approved C of O",
+    surveyDetails: "Full cadastral beacon survey lodged with Delta State Ministry of Lands & Surveys. Zero encumbrances.",
+    constructionStatus: "Beaconed & Instant Allocation Ready",
+    builder: "Ezeani Land Advisory Team",
+    lat: 6.2059,
+    lng: 6.6959,
+    featured: true,
+    features: [
+      "100% Verified C of O Title Deed",
+      "Cleared, Beaconed & Numbered Pins",
+      "Direct Access to Okpanam Dual Road",
+      "Instant Physical Allocation & Survey Plan",
+      "5 Mins to Asaba International Airport"
+    ]
+  },
+  {
+    id: "ez-prop-anambra",
+    title: "Awka Millennium Heritage Estate",
+    category: "Luxury Lands",
+    status: "For Sale",
+    price: 65000000,
+    priceFormatted: "₦65,000,000",
+    location: "Millennium City, Awka, Anambra State",
+    address: "Enugu-Onitsha Expressway Corridor, Awka, Anambra State",
+    beds: 0,
+    baths: 0,
+    sqft: 0,
+    acres: 0.35,
+    image: "/images/mansion.jpg",
+    gallery: [
+      "/images/mansion.jpg",
+      "/images/hero-commercial.jpg"
+    ],
+    description: "Prestigious residential and commercial plots in Anambra State's most ambitious master-planned luxury city. Designed with underground electricity, modern asphalt drainage, automated security gates, and guaranteed capital appreciation.",
+    surveyStatus: "Registered Governor's Consent",
+    surveyDetails: "Full cadastral coordinates logged with Anambra State Geographic Information System (ANSGIS).",
+    constructionStatus: "Master-Planned & Handover Ready",
+    builder: "Ezeani Luxury Estates",
+    lat: 6.2209,
+    lng: 7.0734,
+    featured: true,
+    features: [
+      "Registered Governor's Consent Title",
+      "Master-Planned Underground Utilities",
+      "Tarred Boulevard & Concrete Drainage",
+      "Zero Boundary Dispute Guarantee",
+      "High Appreciation Wealth Corridor"
+    ]
+  },
+  {
     id: "ez-prop-3",
     title: "Guzape Luxury Crest Plot",
     category: "Luxury Lands",
@@ -122,12 +238,10 @@ export const MOCK_PROPERTIES = [
     baths: 0,
     sqft: 0,
     acres: 2.1,
-    /* image: "/images/hero-surveyor.jpg", */
     image: "/images/hero-villa.jpg",
     gallery: [
       "/images/hero-villa.jpg",
       "/images/mansion.jpg"
-      /* COMMENTED OUT: "/images/hero-surveyor.jpg" */
     ],
     description: "Prime elevated 2.1-acre residential plot offering breathtaking vistas over Abuja central area. Cleared, fully beaconed with FCDA Certificate of Occupancy, and ready for immediate luxury development.",
     surveyStatus: "FCDA Registered Title & Cadastral Beacons",

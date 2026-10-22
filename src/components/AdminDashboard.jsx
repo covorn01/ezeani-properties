@@ -279,22 +279,22 @@ export default function AdminDashboard({
   const [copyForm, setCopyForm] = useState({
     // Hero Section
     heroPill: companyInfo.heroPill || "CHRISTIAN EZEANI • MD/CEO",
-    headline: companyInfo.headline || "Every kind of property, one trusted partner.",
-    subheadline: companyInfo.subheadline || "Residential, commercial and industrial real estate, luxury lands and expert consultation, delivered nationwide.",
+    headline: companyInfo.headline || "Luxury Through Positioning — Where Tomorrow’s Wealth Is Being Created.",
+    subheadline: companyInfo.subheadline || "Specializing in verified luxury lands, generational wealth, and strategic commercial properties across Delta State, Anambra State, and nationwide.",
     heroMedia: companyInfo.heroMedia || "/images/hero-villa.jpg",
     heroMediaType: companyInfo.heroMediaType || "image",
 
     // Why Choose Ezeani
-    whyBadge: companyInfo.whyBadge || "THE EZEANI ADVANTAGE",
-    whyTitle: companyInfo.whyTitle || "A property company built on trust, quality and reach.",
-    whySubtitle: companyInfo.whySubtitle || "Ezeani Properties Ltd is a real estate company and a subsidiary of Ezeani Group. We help individuals, families, businesses and investors buy, own and develop property with confidence, delivered nationwide.",
+    whyBadge: companyInfo.whyBadge || "THE EZEANI PHILOSOPHY & FOUNDATION",
+    whyTitle: companyInfo.whyTitle || "Luxury Through Positioning: Creating Legacies, Building Trust.",
+    whySubtitle: companyInfo.whySubtitle || "Real estate is not just what we do; it is a responsibility we understand. Built on firsthand experience, professional diligence, and an uncompromising commitment to protecting buyers, couples, diaspora clients, and investors.",
     whyMedia: companyInfo.whyMedia || "/images/hero-villa.jpg",
     whyMediaType: companyInfo.whyMediaType || "image",
 
     // Land Surveying Services
-    surveyBadge: companyInfo.surveyBadge || "CERTIFIED GEOSPATIAL SERVICES",
-    surveyTitle: companyInfo.surveyTitle || "Land Surveying & Title Clearance Services",
-    surveySubtitle: companyInfo.surveySubtitle || "Eliminate boundary disputes and title risks with RTK GPS total stations, 3D LiDAR drone mapping, and official registry title search verification.",
+    surveyBadge: companyInfo.surveyBadge || "CERTIFIED TITLE VERIFICATION & MAPPING",
+    surveyTitle: companyInfo.surveyTitle || "Title Clearance & Cadastral Diligence Services",
+    surveySubtitle: companyInfo.surveySubtitle || "Eliminate boundary disputes and title risks with certified registry searches, beacon coordinate verification, and zero-encumbrance legal clearances.",
     surveyMedia: companyInfo.surveyMedia || "/images/hero-surveyor.jpg",
     surveyMediaType: companyInfo.surveyMediaType || "image",
 
@@ -305,9 +305,9 @@ export default function AdminDashboard({
     hqOffice: companyInfo.offices?.[0]?.address || "Ezeani Group, ECI Plaza, Okpanam Road, Asaba, Delta State, Nigeria",
 
     // Footer CTA Block
-    footerCtaBadge: companyInfo.footerCtaBadge || "EZEANI PROPERTIES LTD • NATIONWIDE DELIVERY",
-    footerCtaTitle: companyInfo.footerCtaTitle || "Ready to find, secure, or build your next property?",
-    footerCtaSubtitle: companyInfo.footerCtaSubtitle || "Call, chat or visit. Our team of certified survey experts and real estate advisors is ready to guide you from initial enquiry to final title handover.",
+    footerCtaBadge: companyInfo.footerCtaBadge || "LUXURY THROUGH POSITIONING • NATIONWIDE DELIVERY",
+    footerCtaTitle: companyInfo.footerCtaTitle || "Creating Legacies, Building Trust, Securing Properties.",
+    footerCtaSubtitle: companyInfo.footerCtaSubtitle || "Whether you are a young professional building first-time wealth, a couple securing family peace of mind, or a diaspora investor seeking genuine land, we guide you with uncompromising integrity from inquiry to title deed handover.",
 
     // Leadership & Executive Profiles
     leadership: companyInfo.leadership || EZEANI_COMPANY_INFO.leadership || []

@@ -37,28 +37,22 @@ export default function Footer({ onOpenBooking, onOpenMyBookings, onOpenAdmin, c
           {/* CTA Left Content */}
           <div className="space-y-4 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#34073E] text-[#8DC63F] dark:bg-purple-950 dark:text-[#8DC63F] text-xs font-mono font-bold uppercase tracking-wider">
-              <span>{companyInfo?.footerCtaBadge || "EZEANI PROPERTIES LTD • NATIONWIDE DELIVERY"}</span>
+              <span>{companyInfo?.footerCtaBadge || "LUXURY THROUGH POSITIONING • NATIONWIDE DELIVERY"}</span>
             </div>
 
-            {/* <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-heading text-[#34073E] dark:text-white tracking-tight leading-tight">
-              {companyInfo?.footerCtaTitle || "Ready to find, secure, or build your next property?"}
-            </h3> */}
             <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-heading text-[#34073E] dark:text-white tracking-tight leading-tight">
-              {companyInfo?.footerCtaTitle || "Ready to acquire or invest in your next luxury property?"}
+              {companyInfo?.footerCtaTitle || "Creating Legacies, Building Trust, Securing Properties."}
             </h3>
 
-            {/* <p className="text-xs sm:text-sm text-[#52525B] dark:text-purple-200 leading-relaxed font-sans">
-              {companyInfo?.footerCtaSubtitle || "Call, chat or visit. Our team of certified survey experts and real estate advisors is ready to guide you from initial enquiry to final title handover."}
-            </p> */}
             <p className="text-xs sm:text-sm text-[#52525B] dark:text-purple-200 leading-relaxed font-sans">
-              {companyInfo?.footerCtaSubtitle || "Call, chat or visit. Our team of luxury real estate advisors and property portfolio specialists is ready to guide you from initial enquiry to final deed handover."}
+              {companyInfo?.footerCtaSubtitle || "Whether you are a young professional building first-time wealth, a couple securing family peace of mind, or a diaspora investor seeking genuine land, we guide you with uncompromising integrity from inquiry to title deed handover."}
             </p>
           </div>
 
           {/* CTA Right Conversion Buttons */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 shrink-0">
             <a
-              href={`https://wa.me/${EZEANI_COMPANY_INFO.whatsapp.replace(/\+/g, '')}?text=Hello%20Ezeani%20Properties,%20I%20want%20to%20inquire%20about%20a%20property.`}
+              href={`https://wa.me/${EZEANI_COMPANY_INFO.whatsapp.replace(/\+/g, '')}?text=Hello%20Ezeani%20Properties,%20I%20want%20to%20inquire%20about%20verified%20properties.`}
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-4 rounded-2xl bg-[#34073E] hover:bg-[#4A0A58] text-white text-xs sm:text-sm font-bold transition-all shadow-md flex items-center justify-center gap-2.5 active:scale-98 cursor-pointer"
@@ -92,48 +86,58 @@ export default function Footer({ onOpenBooking, onOpenMyBookings, onOpenAdmin, c
             </div>
 
             <p className="text-xs sm:text-sm text-purple-200 leading-relaxed max-w-sm">
-              {EZEANI_COMPANY_INFO.group}. Residential, commercial and industrial real estate, luxury lands and expert consultation.
+              {EZEANI_COMPANY_INFO.group}. Luxury land specialist in Delta State, Anambra State and nationwide. Creating legacies through strategic positioning.
             </p>
 
-            <div className="inline-flex items-center gap-2 text-xs font-mono text-[#8DC63F] font-bold bg-[#1E0424] px-3.5 py-1.5 rounded-full border border-purple-900">
-              <ShieldCheck className="w-4 h-4 text-[#8DC63F]" />
-              <span>Verified Titles & Honest Advice</span>
+            <div className="space-y-2">
+              <div className="inline-flex items-center gap-2 text-xs font-mono text-[#8DC63F] font-bold bg-[#1E0424] px-3.5 py-1.5 rounded-full border border-purple-900">
+                <ShieldCheck className="w-4 h-4 text-[#8DC63F]" />
+                <span>Verified Titles & Honest Advice</span>
+              </div>
+
+              <div>
+                <a 
+                  href="#founder-story"
+                  className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[#8DC63F] hover:underline"
+                >
+                  <span>Read Founder's Story & Journey</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </a>
+              </div>
             </div>
           </div>
 
           {/* Column 2: What We Do (2 Cols on LG) */}
           <div className="lg:col-span-2 space-y-4">
             <h4 className="text-xs font-mono uppercase text-[#8DC63F] tracking-wider font-bold">
-              What We Do
+              Explore
             </h4>
             <ul className="space-y-3 text-xs sm:text-sm text-purple-200">
-              <li>
-                <a href="#properties" className="hover:text-[#8DC63F] transition-colors flex items-center gap-1.5">
-                  <span>Residential Real Estate</span>
-                </a>
-              </li>
-              <li>
-                <a href="#properties" className="hover:text-[#8DC63F] transition-colors flex items-center gap-1.5">
-                  <span>Commercial Real Estate</span>
-                </a>
-              </li>
-              <li>
-                <a href="#properties" className="hover:text-[#8DC63F] transition-colors flex items-center gap-1.5">
-                  <span>Industrial Real Estate</span>
-                </a>
-              </li>
               <li>
                 <a href="#properties" className="hover:text-[#8DC63F] transition-colors flex items-center gap-1.5">
                   <span>Luxury Lands</span>
                 </a>
               </li>
-              {/* COMMENTED OUT FOR REAL ESTATE & LUXURY FOCUS:
               <li>
-                <a href="#surveying" className="hover:text-[#8DC63F] transition-colors flex items-center gap-1.5">
-                  <span>Land Surveying & Title Search</span>
+                <a href="#properties" className="hover:text-[#8DC63F] transition-colors flex items-center gap-1.5">
+                  <span>Residential Estates</span>
                 </a>
               </li>
-              */}
+              <li>
+                <a href="#properties" className="hover:text-[#8DC63F] transition-colors flex items-center gap-1.5">
+                  <span>Commercial Corridors</span>
+                </a>
+              </li>
+              <li>
+                <a href="#founder-story" className="hover:text-[#8DC63F] transition-colors flex items-center gap-1.5 text-[#8DC63F] font-semibold">
+                  <span>Founder's Story</span>
+                </a>
+              </li>
+              <li>
+                <a href="#about" className="hover:text-[#8DC63F] transition-colors flex items-center gap-1.5">
+                  <span>Vision & Core Values</span>
+                </a>
+              </li>
             </ul>
           </div>
 

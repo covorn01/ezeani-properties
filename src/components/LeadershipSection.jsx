@@ -176,9 +176,19 @@ export default function LeadershipSection({
                     <h3 className="text-base sm:text-lg font-bold font-heading text-[#171717] dark:text-white group-hover:text-[#7A2FB0] dark:group-hover:text-[#8DC63F] transition-colors leading-snug">
                       {leader.name}
                     </h3>
+                    {leader.titleAlias && (
+                      <div className="mt-1 inline-block px-2 py-0.5 rounded-md bg-purple-100 dark:bg-purple-900/60 text-[#7A2FB0] dark:text-[#8DC63F] text-[10px] font-mono font-bold">
+                        “{leader.titleAlias}”
+                      </div>
+                    )}
                     <p className="text-[11px] font-mono font-bold text-[#8DC63F] dark:text-[#8DC63F] mt-1 leading-snug">
                       {leader.credentials}
                     </p>
+                    {leader.quote && (
+                      <p className="text-[11px] italic text-[#7A2FB0] dark:text-purple-300 mt-1 font-medium">
+                        "{leader.quote}"
+                      </p>
+                    )}
                   </div>
 
                   {/* Short Bio */}

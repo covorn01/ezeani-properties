@@ -185,6 +185,18 @@ export default function Navbar({
               About
             </button>
 
+            {/* 3. Founder Story */}
+            <button
+              onClick={() => scrollToSection('founder-story')}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+                activeSection === 'founder-story'
+                  ? 'text-[#7A2FB0] dark:text-[#B462E8] bg-purple-50 dark:bg-purple-950/60'
+                  : 'text-[#34073E] dark:text-purple-100 hover:text-[#7A2FB0] dark:hover:text-[#B462E8]'
+              }`}
+            >
+              Founder Story
+            </button>
+
             {/* 3. Services (Land Surveying & GIS) - Commented out for Real Estate & Luxury Focus
             <button
               onClick={() => scrollToSection('surveying')}
@@ -347,6 +359,12 @@ export default function Navbar({
               className="w-full text-left px-4 py-3 rounded-lg text-sm font-bold text-[#34073E] dark:text-purple-100 hover:bg-purple-100 dark:hover:bg-purple-900"
             >
               About Ezeani
+            </button>
+            <button
+              onClick={() => scrollToSection('founder-story')}
+              className="w-full text-left px-4 py-3 rounded-lg text-sm font-bold text-[#34073E] dark:text-purple-100 hover:bg-purple-100 dark:hover:bg-purple-900"
+            >
+              Founder Story & Identity
             </button>
             {/* COMMENTED OUT FOR REAL ESTATE & LUXURY FOCUS:
             <button

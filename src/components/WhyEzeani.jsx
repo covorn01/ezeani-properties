@@ -8,13 +8,19 @@ import {
   ArrowRight,
   Sparkles,
   MapPin,
-  Users
+  Users,
+  Compass,
+  FileCheck,
+  TrendingUp,
+  HeartHandshake,
+  Heart,
+  Scale
 } from 'lucide-react';
 import { EZEANI_COMPANY_INFO } from '../data/mockData';
 import LeadershipSection from './LeadershipSection';
 
 export default function WhyEzeani({ onOpenBooking, companyInfo }) {
-  const iconMap = [ShieldCheck, Award, Eye, UserCheck];
+  const valueIcons = [ShieldCheck, Eye, TrendingUp, Scale, HeartHandshake];
   const whyImage = companyInfo?.whyMedia || "/images/hero-villa.jpg";
   const isWhyVideo = Boolean(
     whyImage && (
@@ -25,6 +31,9 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
     )
   );
 
+  const activeValues = companyInfo?.coreValues || EZEANI_COMPANY_INFO.coreValues;
+  const activeSegments = EZEANI_COMPANY_INFO.clientSegments;
+
   return (
     <section id="about" className="py-20 bg-[#FAF7FC] dark:bg-[#1E0424] border-t border-b border-purple-200/50 dark:border-purple-900/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
@@ -33,20 +42,44 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-100 dark:bg-purple-950 text-[#7A2FB0] dark:text-[#B462E8] text-xs font-mono uppercase tracking-wider font-bold">
             <Sparkles className="w-3.5 h-3.5 text-[#8DC63F]" />
-            <span>{companyInfo?.whyBadge || "About Ezeani Properties Ltd"}</span>
+            <span>{companyInfo?.whyBadge || "THE EZEANI PHILOSOPHY & FOUNDATION"}</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold font-heading text-[#171717] dark:text-white tracking-tight">
-            {companyInfo?.whyTitle || "A property company built on trust, quality and reach."}
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-[#171717] dark:text-white tracking-tight">
+            {companyInfo?.whyTitle || "Luxury Through Positioning: Creating Legacies, Building Trust."}
           </h2>
-          <p className="text-sm text-[#3F3F46] dark:text-purple-200 leading-relaxed">
-            {companyInfo?.whySubtitle || "Ezeani Properties Ltd is a real estate company and a subsidiary of Ezeani Group. We help individuals, families, businesses and investors buy, own and develop property with confidence, delivered nationwide."}
+          <p className="text-sm sm:text-base text-[#3F3F46] dark:text-purple-200 leading-relaxed">
+            {companyInfo?.whySubtitle || "Real estate is not just what we do; it is a responsibility we understand. Built on firsthand experience, professional diligence, and an uncompromising commitment to protecting buyers, couples, diaspora clients, and investors."}
           </p>
         </div>
 
-        {/* Vision & Mission Cards - Taller, Richer, Fuller with Imagery */}
+        {/* Brand Promise Banner */}
+        <div className="rounded-2xl bg-gradient-to-r from-[#34073E] via-[#2A0631] to-[#1E0424] p-6 sm:p-8 text-white border border-purple-800 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="space-y-2 max-w-2xl">
+            <div className="text-xs font-mono uppercase text-[#8DC63F] font-bold tracking-widest flex items-center gap-2">
+              <Award className="w-4 h-4" />
+              <span>OUR BRAND PROMISE</span>
+            </div>
+            <p className="text-base sm:text-lg font-heading font-medium text-purple-100 leading-snug">
+              “{EZEANI_COMPANY_INFO.brandPromise}”
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 text-xs font-mono">
+            <div className="px-4 py-2.5 rounded-xl bg-white/10 border border-white/15 text-center">
+              <span className="text-purple-300 block text-[10px] uppercase">Tagline</span>
+              <span className="font-bold text-white text-xs sm:text-sm">Luxury Through Positioning</span>
+            </div>
+            <div className="px-4 py-2.5 rounded-xl bg-[#8DC63F]/20 border border-[#8DC63F]/30 text-center">
+              <span className="text-[#8DC63F] block text-[10px] uppercase">Motto</span>
+              <span className="font-bold text-[#8DC63F] text-xs sm:text-sm">Creating Legacies • Securing Land</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Vision & Mission Cards - Exact Content from Founder Story Document */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
           
-          {/* Vision Card (Plum background + High Quality Architectural Image Banner) */}
+          {/* Vision Card */}
           <div className="bg-[#34073E] text-white rounded-[2rem] overflow-hidden shadow-2xl border border-purple-900 flex flex-col justify-between group transition-all duration-300 hover:shadow-purple-900/30 hover:-translate-y-1">
             
             {/* Image/Video Banner Container */}
@@ -77,12 +110,12 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
                   </span>
                 </div>
 
-                <h3 className="text-2xl sm:text-3xl font-bold font-heading text-white leading-snug tracking-tight">
-                  To be the most trusted name in Nigerian real estate, the first call for every kind of home.
+                <h3 className="text-xl sm:text-2xl font-bold font-heading text-white leading-snug tracking-tight">
+                  {EZEANI_COMPANY_INFO.vision}
                 </h3>
 
-                <p className="text-sm text-purple-200 leading-relaxed font-sans pt-1">
-                  Setting nationwide benchmarks for verified land title documentation, zero boundary encumbrance, and seamless client handover across every region of Nigeria.
+                <p className="text-xs sm:text-sm text-purple-200 leading-relaxed font-sans pt-1">
+                  Setting high benchmarks across Delta State, Anambra State, and nationwide for certified land documentation, strategic wealth creation, and zero boundary encumbrance.
                 </p>
               </div>
 
@@ -90,18 +123,18 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
               <div className="pt-6 border-t border-purple-800/80 grid grid-cols-2 gap-4 text-xs font-mono text-purple-200">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#8DC63F] shrink-0" />
-                  <span>100% C of O Verification</span>
+                  <span>Generational Wealth</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#8DC63F] shrink-0" />
-                  <span>Zero Boundary Encumbrance</span>
+                  <span>Strategic Positioning</span>
                 </div>
               </div>
             </div>
 
           </div>
 
-          {/* Mission Card (Elevated Surface + High Quality Commercial Image Banner) */}
+          {/* Mission Card */}
           <div className="bg-white dark:bg-[#34073E] text-[#171717] dark:text-white rounded-[2rem] overflow-hidden shadow-xl border border-purple-200 dark:border-purple-800 flex flex-col justify-between group transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
             
             {/* Image Banner Container */}
@@ -124,15 +157,12 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
                   </span>
                 </div>
 
-                <h3 className="text-2xl sm:text-3xl font-bold font-heading text-[#171717] dark:text-white leading-snug tracking-tight">
-                  To connect our clients with genuine, well-located property through honest advice and seamless delivery.
+                <h3 className="text-xl sm:text-2xl font-bold font-heading text-[#171717] dark:text-white leading-snug tracking-tight">
+                  {EZEANI_COMPANY_INFO.mission}
                 </h3>
 
-                {/* <p className="text-sm text-[#3F3F46] dark:text-purple-200 leading-relaxed font-sans pt-1">
-                  Providing transparent property valuation, certified land survey plans, and expert real estate advisory across every region of Nigeria.
-                </p> */}
-                <p className="text-sm text-[#3F3F46] dark:text-purple-200 leading-relaxed font-sans pt-1">
-                  Providing transparent property valuation, verified title deeds, and expert luxury real estate advisory across every region of Nigeria.
+                <p className="text-xs sm:text-sm text-[#3F3F46] dark:text-purple-200 leading-relaxed font-sans pt-1">
+                  We approach every real estate consultation with deep diligence, providing transparent property valuation, verified title deeds, and honest advisory that protects our clients from avoidable loss.
                 </p>
               </div>
 
@@ -140,11 +170,11 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
               <div className="pt-6 border-t border-purple-200/80 dark:border-purple-800/80 grid grid-cols-2 gap-4 text-xs font-mono text-[#52525B] dark:text-purple-200">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#7A2FB0] dark:text-[#B462E8] shrink-0" />
-                  <span>Transparent Valuation</span>
+                  <span>Rigorous Verification</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#7A2FB0] dark:text-[#B462E8] shrink-0" />
-                  <span>Certified Title Documentation</span>
+                  <span>Responsible Diligence</span>
                 </div>
               </div>
             </div>
@@ -153,29 +183,35 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
 
         </div>
 
-        {/* Core Values 4-Grid */}
+        {/* 5 Core Values from the Founder Story Document */}
         <div className="space-y-6">
-          <div className="text-center">
-            <h3 className="text-xl font-bold font-heading text-[#171717] dark:text-white">
-              Our Core Principles
+          <div className="text-center space-y-2">
+            <span className="text-xs font-mono uppercase text-[#7A2FB0] dark:text-[#B462E8] font-bold tracking-widest">
+              UNCOMPROMISING PILLARS
+            </span>
+            <h3 className="text-2xl sm:text-3xl font-bold font-heading text-[#171717] dark:text-white">
+              Our 5 Core Values
             </h3>
+            <p className="text-xs sm:text-sm text-[#52525B] dark:text-purple-200 max-w-xl mx-auto">
+              These principles were not created in a boardroom; they were forged through years of ground-level experience in Nigeria's real estate terrain.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {EZEANI_COMPANY_INFO.coreValues.map((val, idx) => {
-              const Icon = iconMap[idx] || ShieldCheck;
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            {activeValues.map((val, idx) => {
+              const Icon = valueIcons[idx] || ShieldCheck;
               return (
                 <div
                   key={val.title}
-                  className="bg-white dark:bg-[#34073E] p-6 rounded-2xl border border-purple-200/80 dark:border-purple-900 shadow-xs space-y-3 hover:shadow-md transition-all"
+                  className="bg-white dark:bg-[#34073E] p-6 rounded-2xl border border-purple-200/80 dark:border-purple-900 shadow-xs space-y-3 hover:shadow-md hover:-translate-y-1 transition-all"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950 text-[#7A2FB0] dark:text-[#B462E8] flex items-center justify-center font-bold">
+                  <div className="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950 text-[#7A2FB0] dark:text-[#8DC63F] flex items-center justify-center font-bold">
                     <Icon className="w-5 h-5" />
                   </div>
                   <h4 className="text-base font-bold font-heading text-[#171717] dark:text-white">
                     {val.title}
                   </h4>
-                  <p className="text-xs text-[#3F3F46] dark:text-purple-200 leading-relaxed">
+                  <p className="text-xs text-[#3F3F46] dark:text-purple-200 leading-relaxed font-sans">
                     {val.desc}
                   </p>
                 </div>
@@ -183,6 +219,54 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
             })}
           </div>
         </div>
+
+        {/* Who We Protect & Empower (New Section Directly Addressing Founder's Mission) */}
+        <div className="space-y-6 pt-4">
+          <div className="text-center space-y-2">
+            <span className="text-xs font-mono uppercase text-[#7A2FB0] dark:text-[#B462E8] font-bold tracking-widest">
+              WHO WE SERVE & SAFEGUARD
+            </span>
+            <h3 className="text-2xl sm:text-3xl font-bold font-heading text-[#171717] dark:text-white">
+              Why We Operate Differently
+            </h3>
+            <p className="text-xs sm:text-sm text-[#52525B] dark:text-purple-200 max-w-xl mx-auto">
+              Having seen people lose life savings, couples torn apart by disputes, and diaspora buyers exploited by fake agents, our services are structured to provide total sanctuary.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {activeSegments.map((seg, idx) => (
+              <div 
+                key={seg.title}
+                className="bg-white dark:bg-[#34073E] p-6 sm:p-7 rounded-[2rem] border border-purple-200/80 dark:border-purple-800 shadow-sm hover:shadow-lg transition-all space-y-3 flex flex-col justify-between"
+              >
+                <div className="space-y-2">
+                  <span className="px-2.5 py-0.5 rounded-full bg-purple-50 dark:bg-purple-950 text-[#7A2FB0] dark:text-[#8DC63F] text-[10px] font-mono font-bold uppercase">
+                    {seg.tagline}
+                  </span>
+                  <h4 className="text-lg font-bold font-heading text-[#171717] dark:text-white">
+                    {seg.title}
+                  </h4>
+                  <p className="text-xs text-[#52525B] dark:text-purple-200 leading-relaxed font-sans">
+                    {seg.desc}
+                  </p>
+                </div>
+
+                <div className="pt-3 border-t border-purple-100 dark:border-purple-800/50 flex items-center justify-between text-xs">
+                  <span className="text-[10px] font-mono text-[#8DC63F] font-bold">100% Protected</span>
+                  <button
+                    onClick={() => onOpenBooking({ category: 'Property Acquisition', notes: `Consultation regarding ${seg.title}` })}
+                    className="text-[#7A2FB0] dark:text-[#8DC63F] font-bold text-xs hover:underline flex items-center gap-1 cursor-pointer"
+                  >
+                    <span>Inquire</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Dedicated Executive Leadership Team Section */}
         <LeadershipSection 
           variant="full" 
@@ -190,7 +274,7 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
           onOpenBooking={onOpenBooking} 
         />
 
-        {/* How We Work - 4 Simple Steps */}
+        {/* How We Work - 4 Simple Steps to Property Ownership */}
         <div className="bg-[#34073E] text-white p-8 sm:p-10 rounded-3xl space-y-8 shadow-2xl border border-purple-900 relative overflow-hidden">
           
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-purple-900 pb-6">
@@ -199,13 +283,13 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
                 HOW WE WORK
               </div>
               <h3 className="text-2xl sm:text-3xl font-bold font-heading">
-                Four Simple Steps to Property Ownership
+                Four Steps to Verified Property Ownership
               </h3>
             </div>
 
             <button
               onClick={() => onOpenBooking(null)}
-              className="px-5 py-2.5 rounded-xl bg-[#8DC63F] hover:bg-[#9ECF52] text-[#34073E] text-xs font-bold transition-all shadow-md flex items-center gap-2"
+              className="px-5 py-2.5 rounded-xl bg-[#8DC63F] hover:bg-[#9ECF52] text-[#34073E] text-xs font-bold transition-all shadow-md flex items-center gap-2 cursor-pointer"
             >
               <span>Start Step 01: Consult</span>
               <ArrowRight className="w-4 h-4" />
@@ -221,7 +305,7 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
                 <h4 className="text-lg font-bold font-heading text-white">
                   {step.title}
                 </h4>
-                <p className="text-xs text-purple-200 leading-relaxed">
+                <p className="text-xs text-purple-200 leading-relaxed font-sans">
                   {step.desc}
                 </p>
               </div>
@@ -234,4 +318,3 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
     </section>
   );
 }
-
