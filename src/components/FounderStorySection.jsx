@@ -68,7 +68,7 @@ export default function FounderStorySection({ onOpenFullStory, onOpenBooking }) 
               <span className="text-[#7A2FB0] dark:text-[#B462E8] italic">it is who I am.</span>"
             </h2>
 
-            <p className="text-sm sm:text-base text-[#3F3F46] dark:text-purple-200 leading-relaxed font-sans">
+            <p className="text-base sm:text-lg text-[#3F3F46] dark:text-purple-200 leading-relaxed font-sans">
               Some people choose a career, others grow into one. And then, there are those whose lives are shaped deliberately, painfully and purposefully into what they are called to become.
             </p>
           </div>
@@ -99,76 +99,105 @@ export default function FounderStorySection({ onOpenFullStory, onOpenBooking }) 
           </div>
         </div>
 
-        {/* Identity Spotlight Banner ("Ezeani na-eme ife ani") */}
-        <div className="rounded-[2.25rem] bg-[#34073E] text-white p-8 sm:p-10 lg:p-12 shadow-2xl border border-purple-900/80 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#8DC63F]/10 rounded-full blur-3xl pointer-events-none" />
+        {/* Identity Spotlight Banner ("Ezeani na-eme ife ani") - Cinematic Architectural Showcase */}
+        <div className="rounded-[2.5rem] relative overflow-hidden shadow-2xl border border-purple-800/80 min-h-[580px] lg:min-h-[640px] flex items-center py-14 sm:py-18 lg:py-20 px-6 sm:px-10 lg:px-14">
+          
+          {/* Background Architectural Image */}
+          <img 
+            src="/images/mansion.jpg" 
+            alt="Ezeani Prime Architectural Estate" 
+            className="absolute inset-0 w-full h-full object-cover object-center transform scale-105" 
+          />
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+          {/* Deep Luxury Brand Gradient Overlays */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1E0424]/95 via-[#34073E]/90 to-[#18021F]/94" />
+          <div className="absolute inset-0 bg-radial at-bottom-left from-[#8DC63F]/15 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#8DC63F]/10 rounded-full blur-3xl pointer-events-none" />
+
+          {/* Foreground Content Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-16 items-center relative z-10 w-full">
             
-            {/* Left: Name and Cultural Identity */}
-            <div className="lg:col-span-7 space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#8DC63F]/20 text-[#8DC63F] text-xs font-mono font-bold uppercase tracking-wider">
+            {/* Left: Name, Cultural Identity & Story Narrative */}
+            <div className="lg:col-span-7 space-y-6 sm:space-y-7">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#8DC63F]/20 text-[#8DC63F] text-xs font-mono font-bold uppercase tracking-wider border border-[#8DC63F]/30 backdrop-blur-xs">
+                <Sparkles className="w-3.5 h-3.5 text-[#8DC63F]" />
                 <span>HONORARY TITLE & REVERED IDENTITY</span>
               </div>
 
-              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-white tracking-tight">
-                “Ezeani na-eme ife ani”
-              </h3>
+              <div className="space-y-3">
+                <h3 className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.25rem] font-bold font-heading text-white tracking-tight leading-[1.12]">
+                  “Ezeani na-eme ife ani”
+                </h3>
 
-              <div className="text-base sm:text-lg font-mono text-[#8DC63F] font-semibold">
-                Meaning: <span className="underline decoration-purple-400">“The King of the Land who deals in Lands”</span>
+                <div className="text-base sm:text-lg lg:text-xl font-mono text-[#8DC63F] font-semibold flex flex-wrap items-center gap-2">
+                  <span>Meaning:</span>
+                  <span className="underline decoration-purple-400 decoration-2 underline-offset-4 text-white">
+                    “The King of the Land who deals in Lands”
+                  </span>
+                </div>
               </div>
 
-              <p className="text-xs sm:text-sm text-purple-200 leading-relaxed font-sans max-w-xl">
+              <p className="text-base sm:text-lg text-purple-100/90 leading-relaxed font-sans max-w-2xl">
                 Bestowed during his university days after navigating and mastering complex land transactions, this title was never just a nickname. It became an identity, a personal standard, and the foundation upon which <span className="text-white font-bold">Ezeani Properties Limited</span> was built.
               </p>
 
-              <div className="pt-2 flex flex-wrap items-center gap-4 text-xs font-mono text-purple-300">
-                <span className="flex items-center gap-1.5">
+              <div className="pt-2 flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm font-mono text-purple-200">
+                <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-xs">
                   <ShieldCheck className="w-4 h-4 text-[#8DC63F]" />
                   <span>14+ Years Field Mastery (Since 2010)</span>
                 </span>
-                <span className="flex items-center gap-1.5">
+                <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-xs">
                   <MapPin className="w-4 h-4 text-[#8DC63F]" />
                   <span>Delta State & Anambra Specialist</span>
                 </span>
               </div>
             </div>
 
-            {/* Right: Key Brand Pillars from the Document */}
-            <div className="lg:col-span-5 bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 space-y-4">
-              <div className="text-xs font-mono uppercase tracking-wider text-[#8DC63F] font-bold">
-                THE FOUNDER'S STANDARD
+            {/* Right: Key Brand Pillars Glassmorphic Card */}
+            <div className="lg:col-span-5 bg-white/10 dark:bg-[#1E0424]/75 backdrop-blur-xl rounded-3xl p-7 sm:p-9 lg:p-10 border border-white/15 dark:border-purple-500/25 shadow-2xl space-y-6">
+              <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                <span className="text-xs font-mono uppercase tracking-widest text-[#8DC63F] font-bold">
+                  THE FOUNDER'S STANDARD
+                </span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#8DC63F]/20 text-[#8DC63F] font-bold">
+                  Core Pillar
+                </span>
               </div>
 
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-lg bg-[#8DC63F] text-[#34073E] flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">
+              <div className="space-y-4">
+                <div className="flex items-start gap-3.5">
+                  <div className="w-6 h-6 rounded-lg bg-[#8DC63F] text-[#34073E] flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs shadow-xs">
                     ✓
                   </div>
-                  <div>
-                    <div className="text-sm font-bold text-white">Luxury Through Positioning</div>
-                    <div className="text-xs text-purple-200">Placing investments where tomorrow's economic expansion and infrastructural wealth are being created.</div>
+                  <div className="space-y-1">
+                    <div className="text-base sm:text-lg font-bold text-white">Luxury Through Positioning</div>
+                    <div className="text-sm text-purple-200/90 leading-relaxed">
+                      Placing investments where tomorrow's economic expansion and infrastructural wealth are being created.
+                    </div>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-lg bg-[#8DC63F] text-[#34073E] flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">
+                <div className="flex items-start gap-3.5">
+                  <div className="w-6 h-6 rounded-lg bg-[#8DC63F] text-[#34073E] flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs shadow-xs">
                     ✓
                   </div>
-                  <div>
-                    <div className="text-sm font-bold text-white">Creating Legacies & Securing Land</div>
-                    <div className="text-xs text-purple-200">Land is not merely property; it is the ultimate financial legacy for your family and heirs.</div>
+                  <div className="space-y-1">
+                    <div className="text-base sm:text-lg font-bold text-white">Creating Legacies & Securing Land</div>
+                    <div className="text-sm text-purple-200/90 leading-relaxed">
+                      Land is not merely property; it is the ultimate financial legacy for your family and heirs.
+                    </div>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-lg bg-[#8DC63F] text-[#34073E] flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">
+                <div className="flex items-start gap-3.5">
+                  <div className="w-6 h-6 rounded-lg bg-[#8DC63F] text-[#34073E] flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs shadow-xs">
                     ✓
                   </div>
-                  <div>
-                    <div className="text-sm font-bold text-white">Protecting What You Love</div>
-                    <div className="text-xs text-purple-200">Eliminating fraud, family disputes, and exploitation through rigorous title verification.</div>
+                  <div className="space-y-1">
+                    <div className="text-base sm:text-lg font-bold text-white">Protecting What You Love</div>
+                    <div className="text-sm text-purple-200/90 leading-relaxed">
+                      Eliminating fraud, family disputes, and exploitation through rigorous title verification.
+                    </div>
                   </div>
                 </div>
               </div>
@@ -176,10 +205,10 @@ export default function FounderStorySection({ onOpenFullStory, onOpenBooking }) 
               <div className="pt-2">
                 <button
                   onClick={onOpenFullStory}
-                  className="w-full py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold font-mono transition-all text-center flex items-center justify-center gap-2 cursor-pointer border border-white/10"
+                  className="w-full py-3.5 px-5 rounded-2xl bg-white/15 hover:bg-white/25 text-white text-xs sm:text-sm font-bold font-mono transition-all text-center flex items-center justify-center gap-2 cursor-pointer border border-white/20 hover:border-white/40 shadow-sm group"
                 >
                   <span>Explore The Full Narrative</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[#8DC63F]" />
+                  <ArrowRight className="w-4 h-4 text-[#8DC63F] group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
             </div>
@@ -214,15 +243,15 @@ export default function FounderStorySection({ onOpenFullStory, onOpenBooking }) 
                     </span>
                   </div>
 
-                  <h4 className="text-lg font-bold font-heading text-[#171717] dark:text-white group-hover:text-[#7A2FB0] dark:group-hover:text-[#8DC63F] transition-colors leading-snug">
+                  <h4 className="text-xl font-bold font-heading text-[#171717] dark:text-white group-hover:text-[#7A2FB0] dark:group-hover:text-[#8DC63F] transition-colors leading-snug">
                     {m.title}
                   </h4>
 
-                  <div className="text-xs font-mono font-semibold text-[#8DC63F] dark:text-[#8DC63F]">
+                  <div className="text-sm font-mono font-semibold text-[#8DC63F] dark:text-[#8DC63F]">
                     {m.subtitle}
                   </div>
 
-                  <p className="text-xs text-[#52525B] dark:text-purple-200 leading-relaxed font-sans">
+                  <p className="text-sm sm:text-[15px] text-[#52525B] dark:text-purple-200 leading-relaxed font-sans">
                     {m.desc}
                   </p>
                 </div>
@@ -252,11 +281,11 @@ export default function FounderStorySection({ onOpenFullStory, onOpenBooking }) 
               <span>THE PHILOSOPHY THAT BUILT ME</span>
             </div>
             
-            <p className="text-lg sm:text-xl font-heading font-bold text-[#171717] dark:text-white leading-snug">
+            <p className="text-xl sm:text-2xl font-heading font-bold text-[#171717] dark:text-white leading-snug">
               "Nothing is truly bad — if you have the mindset to learn from it. Every setback was not an obstacle; it was alignment with purpose, calling, and who I am."
             </p>
 
-            <p className="text-xs sm:text-sm text-[#52525B] dark:text-purple-200">
+            <p className="text-sm sm:text-base text-[#52525B] dark:text-purple-200 font-medium">
               — Christian Ezeani, MD Ezeani Properties Ltd & CEO Ezeani Group
             </p>
           </div>

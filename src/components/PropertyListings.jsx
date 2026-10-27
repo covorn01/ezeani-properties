@@ -60,10 +60,10 @@ export default function PropertyListings({
               <Building2 className="w-3.5 h-3.5 text-[#8DC63F]" />
               <span>Verified Portfolio</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold font-heading text-[#171717] dark:text-white tracking-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-[#171717] dark:text-white tracking-tight">
               Featured Properties & Luxury Lands
             </h2>
-            <p className="text-sm text-[#3F3F46] dark:text-purple-200 mt-2 max-w-xl">
+            <p className="text-base sm:text-lg text-[#3F3F46] dark:text-purple-200 mt-2 max-w-2xl leading-relaxed">
               Homes and spaces we’re proud of. Every property comes with verified titles, clear paperwork, and honest advice.
             </p>
           </div>
@@ -215,7 +215,7 @@ export default function PropertyListings({
 
                     {/* Bottom Image Overlay Details */}
                     <div className="absolute bottom-3 left-3 right-3">
-                      <div className="text-xl font-bold font-heading text-white tracking-tight">
+                      <div className="text-2xl font-bold font-heading text-white tracking-tight drop-shadow-md">
                         {displayPrice}
                       </div>
                     </div>
@@ -223,41 +223,41 @@ export default function PropertyListings({
 
 
                   {/* Details Body */}
-                  <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                  <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-4">
                     <div className="space-y-2">
-                      <div className="flex items-center gap-1.5 text-xs text-[#7A2FB0] dark:text-[#B462E8] font-semibold">
-                        <MapPin className="w-3.5 h-3.5 shrink-0" />
+                      <div className="flex items-center gap-1.5 text-sm text-[#7A2FB0] dark:text-[#B462E8] font-semibold">
+                        <MapPin className="w-4 h-4 shrink-0" />
                         <span className="truncate">{property.location}</span>
                       </div>
 
                       <h3 
                         onClick={() => onSelectProperty(property)}
-                        className="text-lg font-bold font-heading text-[#171717] dark:text-white group-hover:text-[#7A2FB0] dark:group-hover:text-[#B462E8] transition-colors cursor-pointer"
+                        className="text-xl sm:text-2xl font-bold font-heading text-[#171717] dark:text-white group-hover:text-[#7A2FB0] dark:group-hover:text-[#B462E8] transition-colors cursor-pointer leading-snug"
                       >
                         {property.title}
                       </h3>
 
-                      <p className="text-xs text-[#3F3F46] dark:text-purple-200 line-clamp-2 leading-relaxed">
+                      <p className="text-sm sm:text-[15px] text-[#3F3F46] dark:text-purple-200 line-clamp-2 leading-relaxed">
                         {property.description}
                       </p>
                     </div>
 
                     {/* Specs Bar */}
-                    <div className="grid grid-cols-3 gap-2 py-2.5 border-t border-b border-purple-200/80 dark:border-purple-800 text-xs font-semibold text-[#34073E] dark:text-purple-100">
+                    <div className="grid grid-cols-3 gap-2 py-3 border-t border-b border-purple-200/80 dark:border-purple-800 text-sm font-semibold text-[#34073E] dark:text-purple-100">
                       {property.beds > 0 && (
-                        <div className="flex items-center gap-1">
-                          <Bed className="w-3.5 h-3.5 text-[#7A2FB0] dark:text-[#B462E8]" />
+                        <div className="flex items-center gap-1.5">
+                          <Bed className="w-4 h-4 text-[#7A2FB0] dark:text-[#B462E8]" />
                           <span>{property.beds} Beds</span>
                         </div>
                       )}
                       {property.baths > 0 && (
-                        <div className="flex items-center gap-1">
-                          <Bath className="w-3.5 h-3.5 text-[#7A2FB0] dark:text-[#B462E8]" />
+                        <div className="flex items-center gap-1.5">
+                          <Bath className="w-4 h-4 text-[#7A2FB0] dark:text-[#B462E8]" />
                           <span>{property.baths} Baths</span>
                         </div>
                       )}
-                      <div className="flex items-center gap-1">
-                        <Square className="w-3.5 h-3.5 text-[#7A2FB0] dark:text-[#B462E8]" />
+                      <div className="flex items-center gap-1.5">
+                        <Square className="w-4 h-4 text-[#7A2FB0] dark:text-[#B462E8]" />
                         <span>{property.sqft > 0 ? `${property.sqft.toLocaleString()} sqft` : `${property.acres} Acres`}</span>
                       </div>
                     </div>

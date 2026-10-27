@@ -173,7 +173,7 @@ END:VCALENDAR`;
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-base sm:text-lg font-bold font-heading text-[#34073E] dark:text-white">
+                <h3 className="text-lg sm:text-xl font-bold font-heading text-[#34073E] dark:text-white">
                   Schedule Consultation
                 </h3>
                 {step <= 4 && (
@@ -182,7 +182,7 @@ END:VCALENDAR`;
                   </span>
                 )}
               </div>
-              <p className="text-xs text-[#52525B] dark:text-purple-300/80 font-medium">
+              <p className="text-sm text-[#52525B] dark:text-purple-200 font-medium">
                 {step <= 4 ? 'Ezeani Properties Advisory & Technical Booking Desk' : 'Consultation Confirmed'}
               </p>
             </div>
@@ -238,7 +238,7 @@ END:VCALENDAR`;
                 <h4 className="text-xl font-bold font-heading text-[#34073E] dark:text-white">
                   What domain requires expert consultation?
                 </h4>
-                <p className="text-xs text-[#52525B] dark:text-purple-300/80">
+                <p className="text-sm sm:text-base text-[#52525B] dark:text-purple-200 leading-relaxed">
                   Select the core service track to ensure you are matched with the right cadastral surveyor or property specialist.
                 </p>
               </div>
@@ -268,7 +268,7 @@ END:VCALENDAR`;
 
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between">
-                          <div className="text-sm font-bold text-[#34073E] dark:text-white">
+                          <div className="text-base font-bold text-[#34073E] dark:text-white">
                             {cat.label}
                           </div>
                           <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${
@@ -279,7 +279,7 @@ END:VCALENDAR`;
                             {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                           </div>
                         </div>
-                        <p className="text-xs text-[#52525B] dark:text-purple-300/80 mt-1 leading-relaxed">
+                        <p className="text-sm text-[#52525B] dark:text-purple-200 mt-1 leading-relaxed">
                           {cat.desc}
                         </p>
                       </div>

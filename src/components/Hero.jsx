@@ -215,7 +215,7 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
               {currentSlide === 0 && companyInfo?.headline ? companyInfo.headline : slide.title}
             </h1>
 
-            <p className="text-sm sm:text-base lg:text-lg text-purple-100 font-normal leading-relaxed mt-4 drop-shadow-xs max-w-xl">
+            <p className="text-base sm:text-lg lg:text-xl text-purple-100 font-normal leading-relaxed mt-4 drop-shadow-xs max-w-2xl">
               {currentSlide === 0 && companyInfo?.subheadline ? companyInfo.subheadline : slide.subtitle}
             </p>
 
@@ -223,11 +223,11 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
             <div className="mt-5">
               <a
                 href="#founder-story"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs font-mono font-semibold backdrop-blur-md border border-white/20 transition-all group"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs sm:text-sm font-mono font-semibold backdrop-blur-md border border-white/20 transition-all group"
               >
                 <span className="text-[#8DC63F] font-bold">Founder's Journey:</span>
                 <span className="italic">"Real Estate is not what I do, it is who I am"</span>
-                <ArrowRight className="w-3.5 h-3.5 text-[#8DC63F] group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 text-[#8DC63F] group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
           </div>
@@ -297,7 +297,7 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder="Search location or title (e.g. Ikoyi, Lekki Phase 1, Guzape, Epe)..."
-                        className="w-full pl-10 pr-4 py-3 bg-[#FAF7FC] dark:bg-[#2A0633] border border-purple-200 dark:border-purple-800 rounded-xl text-xs font-semibold text-[#171717] dark:text-white placeholder-purple-400 focus:outline-hidden focus:ring-2 focus:ring-[#8DC63F]"
+                        className="w-full pl-10 pr-4 py-3 bg-[#FAF7FC] dark:bg-[#2A0633] border border-purple-200 dark:border-purple-800 rounded-xl text-sm sm:text-base font-medium text-[#171717] dark:text-white placeholder-purple-400 focus:outline-hidden focus:ring-2 focus:ring-[#8DC63F]"
                       />
                     </div>
                   </div>
@@ -309,7 +309,7 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
                     <select
                       value={propertyType}
                       onChange={(e) => setPropertyType(e.target.value)}
-                      className="w-full py-3 px-4 bg-[#FAF7FC] dark:bg-[#2A0633] border border-purple-200 dark:border-purple-800 rounded-xl text-xs font-bold text-[#171717] dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#8DC63F] cursor-pointer"
+                      className="w-full py-3 px-4 bg-[#FAF7FC] dark:bg-[#2A0633] border border-purple-200 dark:border-purple-800 rounded-xl text-sm sm:text-base font-semibold text-[#171717] dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#8DC63F] cursor-pointer"
                     >
                       <option value="All">All Categories</option>
                       <option value="Residential">Residential Real Estate</option>
@@ -322,7 +322,7 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
                   <div className="flex items-end">
                     <button
                       type="submit"
-                      className="w-full md:w-auto flex items-center justify-center gap-2 bg-[#8DC63F] hover:bg-[#9ECF52] text-[#34073E] px-7 py-3 rounded-xl text-xs font-bold transition-all shadow-md shrink-0 h-[42px]"
+                      className="w-full md:w-auto flex items-center justify-center gap-2 bg-[#8DC63F] hover:bg-[#9ECF52] text-[#34073E] px-7 py-3 rounded-xl text-sm font-bold transition-all shadow-md shrink-0 h-[46px]"
                     >
                       <Search className="w-4 h-4" />
                       <span>Search</span>
@@ -422,8 +422,7 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
               <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#7A2FB0] dark:text-[#B462E8] mb-1">
                 Verified Title Security
               </div>
-              <p className="text-xs text-[#3F3F46] dark:text-purple-200 font-normal">
-                {/* Cadastral RTK GPS surveys & C of O guarantees across Nigeria. */}
+              <p className="text-sm sm:text-[15px] text-[#3F3F46] dark:text-purple-200 font-normal leading-relaxed">
                 100% C of O & Governor's Consent verification on all luxury properties.
               </p>
             </div>
@@ -443,7 +442,7 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
               <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#7A2FB0] dark:text-[#B462E8] mb-1">
                 Headquarters & Regional Corridors
               </div>
-              <p className="text-xs text-[#3F3F46] dark:text-purple-200 font-normal">
+              <p className="text-sm sm:text-[15px] text-[#3F3F46] dark:text-purple-200 font-normal leading-relaxed">
                 ECI Plaza, Okpanam Road, Asaba (HQ) and Awka commercial hub, delivering nationwide.
               </p>
             </div>
@@ -464,7 +463,7 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
               <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#8DC63F] mb-1">
                 14+ Years Field Mastery
               </div>
-              <p className="text-xs text-purple-100 font-normal">
+              <p className="text-sm sm:text-[15px] text-purple-100 font-normal leading-relaxed">
                 "Real estate is not what I do, it is who I am." Built on integrity, security & positioning.
               </p>
             </div>

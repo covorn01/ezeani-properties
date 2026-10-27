@@ -543,12 +543,29 @@ export const CAREERS_LIST = [
   }
 ];
 
+export const CURRENCY_CONFIG = [
+  { code: 'NGN', symbol: '₦', name: 'Nigerian Naira', shortLabel: 'NGN ₦', rate: 1, locale: 'en-NG' },
+  { code: 'USD', symbol: '$', name: 'US Dollar', shortLabel: 'USD $', rate: 1500, locale: 'en-US' },
+  { code: 'GBP', symbol: '£', name: 'British Pound', shortLabel: 'GBP £', rate: 1950, locale: 'en-GB' },
+  { code: 'EUR', symbol: '€', name: 'Euro', shortLabel: 'EUR €', rate: 1650, locale: 'de-DE' },
+  { code: 'CNY', symbol: '¥', name: 'Chinese Yuan (RMB)', shortLabel: 'CNY ¥', rate: 210, locale: 'zh-CN' },
+];
+
 export function formatCurrencyPrice(amount, currency = 'NGN', isRental = false) {
-  if (currency === 'USD') {
-    const usdAmount = Math.round(amount / 1500);
-    const formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(usdAmount);
+  if (!amount || isNaN(amount)) return isRental ? '₦0 / yr' : '₦0';
+  const conf = CURRENCY_CONFIG.find(c => c.code === currency) || CURRENCY_CONFIG[0];
+  
+  if (conf.code === 'NGN') {
+    const formatted = `₦${Number(amount).toLocaleString()}`;
     return isRental ? `${formatted} / yr` : formatted;
   }
-  const formatted = `₦${amount.toLocaleString()}`;
+  
+  const converted = Math.round(Number(amount) / conf.rate);
+  const formatted = new Intl.NumberFormat(conf.locale, {
+    style: 'currency',
+    currency: conf.code,
+    maximumFractionDigits: 0
+  }).format(converted);
   return isRental ? `${formatted} / yr` : formatted;
 }
+

@@ -18,8 +18,9 @@ import {
   Download,
   Building
 } from 'lucide-react';
+import { formatCurrencyPrice } from '../data/mockData';
 
-export default function PropertyModal({ property, onClose, onOpenBooking, isFavorite, onToggleFavorite }) {
+export default function PropertyModal({ property, currency = 'NGN', onClose, onOpenBooking, isFavorite, onToggleFavorite }) {
   const [activeImageIdx, setActiveImageIdx] = useState(0);
   const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'survey' | 'mortgage'
 
@@ -141,7 +142,7 @@ export default function PropertyModal({ property, onClose, onOpenBooking, isFavo
 
             <div className="text-left md:text-right">
               <div className="text-3xl font-bold font-heading text-[#34073E] dark:text-white">
-                {property.priceFormatted}
+                {formatCurrencyPrice(property.price, currency, property.status === 'For Rent')}
               </div>
               <div className="text-xs text-[#52525B] dark:text-purple-300 font-mono">
                 {/* Survey & Title Clearance Included */}
@@ -226,8 +227,8 @@ export default function PropertyModal({ property, onClose, onOpenBooking, isFavo
 
           {/* Tab Content 1: Overview */}
           {activeTab === 'overview' && (
-            <div className="space-y-5 text-sm text-[#3F3F46] dark:text-purple-200 leading-relaxed">
-              <p>{property.description}</p>
+            <div className="space-y-6 text-base sm:text-[17px] text-[#27272A] dark:text-purple-100 leading-relaxed font-sans">
+              <p className="leading-relaxed">{property.description}</p>
 
               <div>
                 <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#34073E] dark:text-white mb-3">
@@ -235,7 +236,7 @@ export default function PropertyModal({ property, onClose, onOpenBooking, isFavo
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {property.features.map((feat, idx) => (
-                    <div key={idx} className="flex items-center gap-2 text-xs font-medium text-[#34073E] dark:text-purple-200">
+                    <div key={idx} className="flex items-center gap-2.5 text-sm font-medium text-[#1E0424] dark:text-purple-100">
                       <div className="w-4 h-4 rounded-full bg-[#8DC63F]/20 text-[#8DC63F] flex items-center justify-center shrink-0">
                         <Check className="w-3 h-3 stroke-[3]" />
                       </div>
@@ -285,7 +286,7 @@ export default function PropertyModal({ property, onClose, onOpenBooking, isFavo
                 <div>
                   <div className="text-xs font-mono text-[#52525B] uppercase">Estimated Monthly Payment</div>
                   <div className="text-3xl font-bold font-heading text-[#34073E] dark:text-white">
-                    ${monthlyPayment.toLocaleString()} <span className="text-xs text-[#52525B] font-sans">/ mo</span>
+                    {formatCurrencyPrice(monthlyPayment, currency)} <span className="text-xs text-[#52525B] font-sans">/ mo</span>
                   </div>
                 </div>
 
@@ -302,7 +303,7 @@ export default function PropertyModal({ property, onClose, onOpenBooking, isFavo
                 <div>
                   <label className="flex justify-between text-[#34073E] dark:text-purple-200 mb-1">
                     <span>Down Payment ({downPaymentPct}%)</span>
-                    <span>${(price * (downPaymentPct / 100)).toLocaleString()}</span>
+                    <span>{formatCurrencyPrice(price * (downPaymentPct / 100), currency)}</span>
                   </label>
                   <input
                     type="range"

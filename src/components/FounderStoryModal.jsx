@@ -69,7 +69,7 @@ export default function FounderStoryModal({ isOpen, onClose, onOpenBooking }) {
         </div>
 
         {/* Scrollable Story Body */}
-        <div className="overflow-y-auto px-6 sm:px-10 lg:px-12 py-8 space-y-10 font-sans text-sm sm:text-base leading-relaxed text-[#3F3F46] dark:text-purple-100">
+        <div className="overflow-y-auto px-6 sm:px-10 lg:px-12 py-8 space-y-10 font-sans text-base sm:text-[18px] leading-[1.8] text-[#27272A] dark:text-purple-100">
           
           {/* Hero Banner Quote */}
           <div className="relative rounded-3xl bg-gradient-to-br from-[#34073E] via-[#2A0631] to-[#1E0424] text-white p-6 sm:p-8 md:p-10 border border-purple-800 shadow-xl overflow-hidden">

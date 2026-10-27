@@ -44,7 +44,7 @@ export default function Footer({ onOpenBooking, onOpenMyBookings, onOpenAdmin, c
               {companyInfo?.footerCtaTitle || "Creating Legacies, Building Trust, Securing Properties."}
             </h3>
 
-            <p className="text-xs sm:text-sm text-[#52525B] dark:text-purple-200 leading-relaxed font-sans">
+            <p className="text-sm sm:text-base text-[#52525B] dark:text-purple-200 leading-relaxed font-sans">
               {companyInfo?.footerCtaSubtitle || "Whether you are a young professional building first-time wealth, a couple securing family peace of mind, or a diaspora investor seeking genuine land, we guide you with uncompromising integrity from inquiry to title deed handover."}
             </p>
           </div>
@@ -55,7 +55,7 @@ export default function Footer({ onOpenBooking, onOpenMyBookings, onOpenAdmin, c
               href={`https://wa.me/${EZEANI_COMPANY_INFO.whatsapp.replace(/\+/g, '')}?text=Hello%20Ezeani%20Properties,%20I%20want%20to%20inquire%20about%20verified%20properties.`}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-4 rounded-2xl bg-[#34073E] hover:bg-[#4A0A58] text-white text-xs sm:text-sm font-bold transition-all shadow-md flex items-center justify-center gap-2.5 active:scale-98 cursor-pointer"
+              className="px-6 py-4 rounded-2xl bg-[#34073E] hover:bg-[#4A0A58] text-white text-sm font-bold transition-all shadow-md flex items-center justify-center gap-2.5 active:scale-98 cursor-pointer"
             >
               <MessageSquare className="w-4 h-4 text-[#8DC63F]" />
               <span>WhatsApp Us</span>
@@ -63,7 +63,7 @@ export default function Footer({ onOpenBooking, onOpenMyBookings, onOpenAdmin, c
 
             <button
               onClick={() => onOpenBooking(null)}
-              className="px-7 py-4 rounded-2xl bg-[#8DC63F] hover:bg-[#9ECF52] text-[#34073E] text-xs sm:text-sm font-bold transition-all shadow-md flex items-center justify-center gap-2.5 active:scale-98 cursor-pointer"
+              className="px-7 py-4 rounded-2xl bg-[#8DC63F] hover:bg-[#9ECF52] text-[#34073E] text-sm font-bold transition-all shadow-md flex items-center justify-center gap-2.5 active:scale-98 cursor-pointer"
             >
               <Calendar className="w-4 h-4 stroke-[2.5]" />
               <span>Book Consultation</span>
@@ -85,7 +85,7 @@ export default function Footer({ onOpenBooking, onOpenMyBookings, onOpenAdmin, c
               />
             </div>
 
-            <p className="text-xs sm:text-sm text-purple-200 leading-relaxed max-w-sm">
+            <p className="text-sm sm:text-base text-purple-200 leading-relaxed max-w-sm">
               {EZEANI_COMPANY_INFO.group}. Luxury land specialist in Delta State, Anambra State and nationwide. Creating legacies through strategic positioning.
             </p>
 

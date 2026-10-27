@@ -317,6 +317,7 @@ export default function App() {
       {selectedProperty && (
         <PropertyModal
           property={selectedProperty}
+          currency={currency}
           onClose={() => setSelectedProperty(null)}
           onOpenBooking={handleOpenBooking}
           isFavorite={favorites.includes(selectedProperty.id)}

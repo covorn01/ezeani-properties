@@ -173,7 +173,7 @@ export default function LeadershipSection({
 
                   {/* Name & Credentials */}
                   <div>
-                    <h3 className="text-base sm:text-lg font-bold font-heading text-[#171717] dark:text-white group-hover:text-[#7A2FB0] dark:group-hover:text-[#8DC63F] transition-colors leading-snug">
+                    <h3 className="text-lg sm:text-xl font-bold font-heading text-[#171717] dark:text-white group-hover:text-[#7A2FB0] dark:group-hover:text-[#8DC63F] transition-colors leading-snug">
                       {leader.name}
                     </h3>
                     {leader.titleAlias && (
@@ -185,14 +185,14 @@ export default function LeadershipSection({
                       {leader.credentials}
                     </p>
                     {leader.quote && (
-                      <p className="text-[11px] italic text-[#7A2FB0] dark:text-purple-300 mt-1 font-medium">
+                      <p className="text-xs sm:text-sm italic text-[#7A2FB0] dark:text-purple-300 mt-1 font-medium">
                         "{leader.quote}"
                       </p>
                     )}
                   </div>
 
                   {/* Short Bio */}
-                  <p className={`text-xs text-[#3F3F46] dark:text-purple-200 leading-relaxed font-sans ${
+                  <p className={`text-sm sm:text-[15px] text-[#3F3F46] dark:text-purple-200 leading-relaxed font-sans ${
                     isPreview ? "line-clamp-3" : ""
                   }`}>
                     {leader.bio}

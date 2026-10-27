@@ -31,7 +31,7 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
     )
   );
 
-  const activeValues = companyInfo?.coreValues || EZEANI_COMPANY_INFO.coreValues;
+  const activeValues = (companyInfo?.coreValues || EZEANI_COMPANY_INFO.coreValues).slice(0, 4);
   const activeSegments = EZEANI_COMPANY_INFO.clientSegments;
 
   return (
@@ -47,7 +47,7 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-[#171717] dark:text-white tracking-tight">
             {companyInfo?.whyTitle || "Luxury Through Positioning: Creating Legacies, Building Trust."}
           </h2>
-          <p className="text-sm sm:text-base text-[#3F3F46] dark:text-purple-200 leading-relaxed">
+          <p className="text-base sm:text-lg text-[#3F3F46] dark:text-purple-200 leading-relaxed max-w-3xl mx-auto">
             {companyInfo?.whySubtitle || "Real estate is not just what we do; it is a responsibility we understand. Built on firsthand experience, professional diligence, and an uncompromising commitment to protecting buyers, couples, diaspora clients, and investors."}
           </p>
         </div>
@@ -59,7 +59,7 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
               <Award className="w-4 h-4" />
               <span>OUR BRAND PROMISE</span>
             </div>
-            <p className="text-base sm:text-lg font-heading font-medium text-purple-100 leading-snug">
+            <p className="text-lg sm:text-xl font-heading font-semibold text-purple-100 leading-snug">
               “{EZEANI_COMPANY_INFO.brandPromise}”
             </p>
           </div>
@@ -114,7 +114,7 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
                   {EZEANI_COMPANY_INFO.vision}
                 </h3>
 
-                <p className="text-xs sm:text-sm text-purple-200 leading-relaxed font-sans pt-1">
+                <p className="text-sm sm:text-base text-purple-100 leading-relaxed font-sans pt-1">
                   Setting high benchmarks across Delta State, Anambra State, and nationwide for certified land documentation, strategic wealth creation, and zero boundary encumbrance.
                 </p>
               </div>
@@ -161,7 +161,7 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
                   {EZEANI_COMPANY_INFO.mission}
                 </h3>
 
-                <p className="text-xs sm:text-sm text-[#3F3F46] dark:text-purple-200 leading-relaxed font-sans pt-1">
+                <p className="text-sm sm:text-base text-[#3F3F46] dark:text-purple-200 leading-relaxed font-sans pt-1">
                   We approach every real estate consultation with deep diligence, providing transparent property valuation, verified title deeds, and honest advisory that protects our clients from avoidable loss.
                 </p>
               </div>
@@ -183,41 +183,121 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
 
         </div>
 
-        {/* 5 Core Values from the Founder Story Document */}
-        <div className="space-y-6">
-          <div className="text-center space-y-2">
-            <span className="text-xs font-mono uppercase text-[#7A2FB0] dark:text-[#B462E8] font-bold tracking-widest">
-              UNCOMPROMISING PILLARS
-            </span>
-            <h3 className="text-2xl sm:text-3xl font-bold font-heading text-[#171717] dark:text-white">
+        {/* 5 Core Values - 2-Column Bento Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start pt-4">
+          
+          {/* Left Column: Section Copy */}
+          <div className="lg:col-span-5 lg:sticky lg:top-28 space-y-4">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-100 dark:bg-purple-950/80 text-[#7A2FB0] dark:text-[#B462E8] text-xs font-mono uppercase tracking-wider font-bold border border-purple-200/80 dark:border-purple-800/60 shadow-2xs">
+              <span className="w-2 h-2 rounded-full bg-[#8DC63F] animate-pulse"></span>
+              <span>UNCOMPROMISING PILLARS</span>
+            </div>
+            <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-[#171717] dark:text-white tracking-tight leading-tight">
               Our 5 Core Values
             </h3>
-            <p className="text-xs sm:text-sm text-[#52525B] dark:text-purple-200 max-w-xl mx-auto">
+            <p className="text-base sm:text-lg text-[#3F3F46] dark:text-purple-200 leading-relaxed font-sans">
               These principles were not created in a boardroom; they were forged through years of ground-level experience in Nigeria's real estate terrain.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {activeValues.map((val, idx) => {
-              const Icon = valueIcons[idx] || ShieldCheck;
-              return (
-                <div
-                  key={val.title}
-                  className="bg-white dark:bg-[#34073E] p-6 rounded-2xl border border-purple-200/80 dark:border-purple-900 shadow-xs space-y-3 hover:shadow-md hover:-translate-y-1 transition-all"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950 text-[#7A2FB0] dark:text-[#8DC63F] flex items-center justify-center font-bold">
-                    <Icon className="w-5 h-5" />
+          {/* Right Column: Bento Grid of Cards */}
+          <div className="lg:col-span-7">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-4.5">
+              {activeValues.map((val, idx) => {
+                const Icon = valueIcons[idx] || ShieldCheck;
+                const isHero = idx === 0;
+
+                return (
+                  <div
+                    key={val.title}
+                    className={`group relative p-6 rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl flex flex-col justify-between h-full ${
+                      isHero
+                        ? 'sm:col-span-2 bg-gradient-to-br from-white via-purple-50/60 to-white dark:from-[#34073E] dark:via-[#2A0633] dark:to-[#1E0424] border-purple-300/90 dark:border-purple-700/80 shadow-md ring-1 ring-purple-500/10'
+                        : 'bg-white dark:bg-[#34073E] border-purple-200/80 dark:border-purple-900/80 shadow-xs hover:border-[#8DC63F]/60 dark:hover:border-[#8DC63F]/60'
+                    }`}
+                  >
+                    <div>
+                      <div className="flex items-start justify-between gap-4 mb-4">
+                        <div
+                          className={`rounded-xl flex items-center justify-center font-bold transition-transform duration-300 group-hover:scale-105 ${
+                            isHero
+                              ? 'w-12 h-12 bg-gradient-to-tr from-[#34073E] to-[#7A2FB0] text-[#8DC63F] shadow-sm'
+                              : 'w-10 h-10 bg-purple-100 dark:bg-purple-950 text-[#7A2FB0] dark:text-[#8DC63F]'
+                          }`}
+                        >
+                          <Icon className={isHero ? 'w-6 h-6' : 'w-5 h-5'} />
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          {isHero && (
+                            <span className="text-[10px] font-mono uppercase tracking-wider font-bold px-2.5 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/60 text-[#7A2FB0] dark:text-[#8DC63F] border border-purple-200 dark:border-purple-800">
+                              Foundational Pillar
+                            </span>
+                          )}
+                          <span className="text-xs font-mono font-bold text-purple-400/70 dark:text-purple-400/50">
+                            0{idx + 1}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <h4
+                          className={`font-bold font-heading text-[#171717] dark:text-white transition-colors group-hover:text-[#7A2FB0] dark:group-hover:text-[#8DC63F] ${
+                            isHero ? 'text-lg sm:text-xl' : 'text-base sm:text-lg'
+                          }`}
+                        >
+                          {val.title}
+                        </h4>
+                        <p
+                          className={`text-[#3F3F46] dark:text-purple-200 leading-relaxed font-sans ${
+                            isHero ? 'text-sm sm:text-base' : 'text-sm'
+                          }`}
+                        >
+                          {val.desc || val.description}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <h4 className="text-base font-bold font-heading text-[#171717] dark:text-white">
-                    {val.title}
-                  </h4>
-                  <p className="text-xs text-[#3F3F46] dark:text-purple-200 leading-relaxed font-sans">
-                    {val.desc}
-                  </p>
+                );
+              })}
+
+              {/* The Ezeani Standard - Outline Bento Tile Aligned at Bottom Right */}
+              <div className="group relative p-6 rounded-2xl border border-purple-200/80 dark:border-purple-800/60 bg-transparent transition-all duration-300 hover:border-[#8DC63F]/60 dark:hover:border-[#8DC63F]/60 flex flex-col justify-between h-full">
+                <div>
+                  <div className="flex items-start justify-between gap-4 mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-purple-100/50 dark:bg-purple-950/40 text-[#7A2FB0] dark:text-[#8DC63F] flex items-center justify-center font-bold transition-transform duration-300 group-hover:scale-105">
+                      <ShieldCheck className="w-5 h-5 text-[#8DC63F]" />
+                    </div>
+                    <span className="text-xs font-mono font-bold text-purple-400/70 dark:text-purple-400/50">
+                      05
+                    </span>
+                  </div>
+
+                  <div className="space-y-2">
+                    <h4 className="font-bold font-heading text-base sm:text-lg text-[#171717] dark:text-white transition-colors group-hover:text-[#7A2FB0] dark:group-hover:text-[#8DC63F]">
+                      The Ezeani Standard
+                    </h4>
+                    <p className="text-sm text-[#52525B] dark:text-purple-200/90 leading-relaxed font-sans">
+                      Every acquisition is held to uncompromising ethical due diligence, authentic registered survey coordinates, and verified legal documentation.
+                    </p>
+                  </div>
                 </div>
-              );
-            })}
+
+                <div className="pt-3 flex flex-wrap items-center gap-4 text-xs font-mono text-[#71717A] dark:text-purple-300/70 border-t border-purple-200/50 dark:border-purple-900/40 mt-4">
+                  <span className="flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#8DC63F]" />
+                    Zero Fraud
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#8DC63F]" />
+                    100% Title Sanity
+                  </span>
+                </div>
+              </div>
+
+            </div>
           </div>
+
         </div>
 
         {/* Who We Protect & Empower (New Section Directly Addressing Founder's Mission) */}
@@ -244,10 +324,10 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
                   <span className="px-2.5 py-0.5 rounded-full bg-purple-50 dark:bg-purple-950 text-[#7A2FB0] dark:text-[#8DC63F] text-[10px] font-mono font-bold uppercase">
                     {seg.tagline}
                   </span>
-                  <h4 className="text-lg font-bold font-heading text-[#171717] dark:text-white">
+                  <h4 className="text-xl font-bold font-heading text-[#171717] dark:text-white leading-snug">
                     {seg.title}
                   </h4>
-                  <p className="text-xs text-[#52525B] dark:text-purple-200 leading-relaxed font-sans">
+                  <p className="text-sm text-[#52525B] dark:text-purple-200 leading-relaxed font-sans">
                     {seg.desc}
                   </p>
                 </div>
@@ -305,7 +385,7 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
                 <h4 className="text-lg font-bold font-heading text-white">
                   {step.title}
                 </h4>
-                <p className="text-xs text-purple-200 leading-relaxed font-sans">
+                <p className="text-sm text-purple-200 leading-relaxed font-sans">
                   {step.desc}
                 </p>
               </div>
