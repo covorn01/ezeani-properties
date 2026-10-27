@@ -28,7 +28,7 @@ export default function Footer({ onOpenBooking, onOpenMyBookings, onOpenAdmin, c
   };
 
   return (
-    <footer className="bg-[#34073E] dark:bg-[#1E0424] text-white pt-16 pb-12 border-t border-purple-900/60 relative overflow-hidden">
+    <footer id="contact" className="bg-[#34073E] dark:bg-[#1E0424] text-white pt-16 pb-12 border-t border-purple-900/60 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* TOP: Warm Light CTA Conversion Block (High Contrast & Deliberate Brand Surface) */}

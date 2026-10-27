@@ -261,6 +261,7 @@ export default function App() {
         {/* Hero */}
         <Hero
           onOpenBooking={handleOpenBooking}
+          onOpenContacts={() => setContactsModalOpen(true)}
           onSearchProperties={() => setActiveSection('properties')}
           onQuickSurvey={() => setActiveSection('surveying')}
           onQuickBuild={() => setActiveSection('construction')}

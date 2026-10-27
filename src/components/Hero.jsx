@@ -12,11 +12,12 @@ import {
   ChevronLeft,
   ChevronRight,
   MapPin,
-  CheckCircle2
+  CheckCircle2,
+  PhoneCall
 } from 'lucide-react';
 import { EZEANI_COMPANY_INFO } from '../data/mockData';
 
-export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey, onQuickBuild, currency, companyInfo }) {
+export default function Hero({ onOpenBooking, onOpenContacts, onSearchProperties, onQuickSurvey, onQuickBuild, currency, companyInfo }) {
   const [activeTab, setActiveTab] = useState('properties');
   const [searchQuery, setSearchQuery] = useState('');
   const [propertyType, setPropertyType] = useState('All');
@@ -219,16 +220,24 @@ export default function Hero({ onOpenBooking, onSearchProperties, onQuickSurvey,
               {currentSlide === 0 && companyInfo?.subheadline ? companyInfo.subheadline : slide.subtitle}
             </p>
 
-            {/* Founder Story Quick Link Pill */}
+            {/* Contact Us Call To Action (CTA) */}
             <div className="mt-5">
-              <a
-                href="#founder-story"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs sm:text-sm font-mono font-semibold backdrop-blur-md border border-white/20 transition-all group"
+              <button
+                type="button"
+                onClick={() => {
+                  if (onOpenContacts) {
+                    onOpenContacts();
+                  } else {
+                    const el = document.getElementById('contact');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-[#8DC63F] hover:bg-[#9de047] text-[#1E0424] font-bold text-sm sm:text-base shadow-lg shadow-[#8DC63F]/25 hover:shadow-xl hover:shadow-[#8DC63F]/35 transition-all duration-200 active:scale-95 group cursor-pointer"
               >
-                <span className="text-[#8DC63F] font-bold">Founder's Journey:</span>
-                <span className="italic">"Real Estate is not what I do, it is who I am"</span>
-                <ArrowRight className="w-4 h-4 text-[#8DC63F] group-hover:translate-x-1 transition-transform" />
-              </a>
+                <PhoneCall className="w-4 h-4 text-[#1E0424]" />
+                <span>Contact Us</span>
+                <ArrowRight className="w-4 h-4 text-[#1E0424] group-hover:translate-x-1 transition-transform" />
+              </button>
             </div>
           </div>
 
