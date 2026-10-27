@@ -23,7 +23,9 @@ export default function PropertyListings({
   comparedIds,
   onToggleCompare,
   onOpenCompare,
-  currency = 'NGN'
+  currency = 'NGN',
+  selectedStateFilter = 'All',
+  onSelectStateFilter
 }) {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedStatus, setSelectedStatus] = useState('All');
@@ -35,14 +37,17 @@ export default function PropertyListings({
       const matchCat = selectedCategory === 'All' || prop.category === selectedCategory;
       const matchStatus = selectedStatus === 'All' || prop.status === selectedStatus;
       const matchPrice = prop.price <= maxPrice;
-      return matchCat && matchStatus && matchPrice;
+      const matchState = !selectedStateFilter || selectedStateFilter === 'All' ||
+        prop.location.toLowerCase().includes(selectedStateFilter.toLowerCase()) ||
+        prop.address.toLowerCase().includes(selectedStateFilter.toLowerCase());
+      return matchCat && matchStatus && matchPrice && matchState;
     }).sort((a, b) => {
       if (sortBy === 'price-asc') return a.price - b.price;
       if (sortBy === 'price-desc') return b.price - a.price;
       if (sortBy === 'size-desc') return b.sqft - a.sqft;
       return 0;
     });
-  }, [properties, selectedCategory, selectedStatus, maxPrice, sortBy]);
+  }, [properties, selectedCategory, selectedStatus, maxPrice, sortBy, selectedStateFilter]);
 
   return (
     <section id="properties" className="py-20 bg-white dark:bg-[#1E0424] border-t border-b border-purple-200/50 dark:border-purple-900/50">
@@ -79,7 +84,48 @@ export default function PropertyListings({
 
         {/* Filter Controls Bar */}
         <div className="bg-[#FAF7FC] dark:bg-[#34073E] rounded-2xl p-4 mb-8 space-y-4 border border-purple-200 dark:border-purple-900/60 shadow-xs">
-          <div className="flex flex-wrap items-center justify-between gap-4">
+          
+          {/* Active State Filter Notice */}
+          {selectedStateFilter && selectedStateFilter !== 'All' && (
+            <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-[#8DC63F]/15 dark:bg-[#8DC63F]/10 border border-[#8DC63F]/40 text-xs font-semibold text-[#1E0424] dark:text-purple-100 animate-fade-in">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-[#8DC63F] shrink-0" />
+                <span>
+                  Showing verified listings in <strong className="text-[#34073E] dark:text-[#8DC63F] font-bold">{selectedStateFilter} State</strong> ({filteredProperties.length} found)
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => onSelectStateFilter && onSelectStateFilter('All')}
+                className="px-3 py-1 rounded-lg bg-[#34073E] hover:bg-[#4A0A58] dark:bg-purple-900 dark:hover:bg-purple-800 text-white text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap"
+              >
+                Clear State Filter
+              </button>
+            </div>
+          )}
+
+          {/* State Quick Pills */}
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 text-xs">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700 dark:text-purple-300 shrink-0 mr-1">
+              States:
+            </span>
+            {['All', 'Lagos', 'Abuja', 'Delta', 'Anambra', 'Ebonyi', 'Enugu', 'Imo', 'Abia'].map((st) => (
+              <button
+                key={st}
+                type="button"
+                onClick={() => onSelectStateFilter && onSelectStateFilter(st)}
+                className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all whitespace-nowrap cursor-pointer ${
+                  selectedStateFilter === st
+                    ? 'bg-[#8DC63F] text-[#1E0424] font-bold shadow-xs'
+                    : 'text-[#3F3F46] dark:text-purple-200 hover:bg-purple-100 dark:hover:bg-purple-900/40'
+                }`}
+              >
+                {st}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap items-center justify-between gap-4 pt-1 border-t border-purple-200/60 dark:border-purple-800/60">
             
             {/* Category Pills */}
             <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">

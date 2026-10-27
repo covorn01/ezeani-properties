@@ -40,6 +40,9 @@ export default function App() {
       const saved = localStorage.getItem('ezeani_properties');
       if (saved) {
         const parsed = JSON.parse(saved);
+        if (parsed.length < MOCK_PROPERTIES.length) {
+          return MOCK_PROPERTIES;
+        }
         return parsed.map((p) => {
           const match = MOCK_PROPERTIES.find(m => m.id === p.id);
           if (match) {
@@ -53,6 +56,8 @@ export default function App() {
       return MOCK_PROPERTIES;
     }
   });
+
+  const [selectedStateFilter, setSelectedStateFilter] = useState('All');
 
   useEffect(() => {
     localStorage.setItem('ezeani_properties', JSON.stringify(properties));
@@ -262,6 +267,11 @@ export default function App() {
         <Hero
           onOpenBooking={handleOpenBooking}
           onOpenContacts={() => setContactsModalOpen(true)}
+          onFilterByState={(stateName) => {
+            setSelectedStateFilter(stateName);
+            const el = document.getElementById('properties');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }}
           onSearchProperties={() => setActiveSection('properties')}
           onQuickSurvey={() => setActiveSection('surveying')}
           onQuickBuild={() => setActiveSection('construction')}
@@ -280,6 +290,8 @@ export default function App() {
           onToggleCompare={handleToggleCompare}
           onOpenCompare={() => setCompareModalOpen(true)}
           currency={currency}
+          selectedStateFilter={selectedStateFilter}
+          onSelectStateFilter={setSelectedStateFilter}
         />
 
         {/* The Founder's Journey & Identity Section */}

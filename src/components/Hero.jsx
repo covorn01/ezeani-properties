@@ -18,9 +18,9 @@ import {
   Mail,
   MessageSquare
 } from 'lucide-react';
-import { EZEANI_COMPANY_INFO } from '../data/mockData';
+import { COVERED_STATES, EZEANI_COMPANY_INFO } from '../data/mockData';
 
-export default function Hero({ onOpenBooking, onOpenContacts, onSearchProperties, onQuickSurvey, onQuickBuild, currency, companyInfo }) {
+export default function Hero({ onOpenBooking, onOpenContacts, onFilterByState, onSearchProperties, onQuickSurvey, onQuickBuild, currency, companyInfo }) {
   const [activeTab, setActiveTab] = useState('properties');
   const [searchQuery, setSearchQuery] = useState('');
   const [propertyType, setPropertyType] = useState('All');
@@ -505,80 +505,121 @@ export default function Hero({ onOpenBooking, onOpenContacts, onSearchProperties
           </div>
         </section>
 
-        {/* 3 Metric Cards Grid Below Hero (Directly Inspired by Reference Structure) */}
-        <div className="max-w-5xl mx-auto mt-10 grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
-          
-          {/* Card 1: Customer & Title Guarantee */}
-          <div className="bg-[#FAF7FC] dark:bg-[#1E0424] rounded-[2rem] p-6 border border-purple-100/90 dark:border-purple-800/60 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
-            <div className="flex items-center justify-between mb-4">
-              <div className="text-3xl sm:text-4xl font-bold font-heading text-[#171717] dark:text-white tracking-tight">
-                100%
-              </div>
-              <div className="flex -space-x-2">
-                <div className="w-8 h-8 rounded-full bg-purple-200 border-2 border-white dark:border-[#1E0424] overflow-hidden">
-                  {/* <img src="/images/hero-surveyor.jpg" alt="Verified Title Specialist" className="w-full h-full object-cover" /> */}
-                  <img src="/images/mansion.jpg" alt="Luxury Estate" className="w-full h-full object-cover" />
-                </div>
-                <div className="w-8 h-8 rounded-full bg-purple-300 border-2 border-white dark:border-[#1E0424] overflow-hidden">
-                  <img src="/images/hero-villa.jpg" alt="Happy Property Owner" className="w-full h-full object-cover" />
-                </div>
-                <div className="w-8 h-8 rounded-full bg-[#8DC63F] border-2 border-white dark:border-[#1E0424] flex items-center justify-center text-[10px] font-bold text-[#34073E]">
-                  +5k
-                </div>
-              </div>
-            </div>
+        {/* Nationwide State Coverage Automated Infinite Loop (Replaces Old Metric Cards) */}
+        <section id="state-coverage" aria-label="Coverage Across Nigerian States" className="max-w-7xl mx-auto mt-12 px-2 sm:px-4">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6 px-2">
             <div>
-              <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#7A2FB0] dark:text-[#B462E8] mb-1">
-                Verified Title Security
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-purple-100 dark:bg-purple-950 text-[#7A2FB0] dark:text-[#B462E8] text-xs font-mono uppercase tracking-wider font-bold mb-2">
+                <MapPin className="w-3.5 h-3.5 text-[#8DC63F]" />
+                <span>NATIONWIDE COVERAGE • STRATEGIC REGIONS</span>
               </div>
-              <p className="text-base sm:text-[17px] text-[#3F3F46] dark:text-purple-200 font-normal leading-relaxed">
-                100% C of O & Governor's Consent verification on all luxury properties.
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-heading text-[#171717] dark:text-white tracking-tight">
+                Explore Properties By State
+              </h2>
+              <p className="text-sm sm:text-base text-[#52525B] dark:text-purple-200 mt-1 max-w-2xl font-sans">
+                Active coverage in Lagos, Abuja, Delta, Ebonyi, Anambra, and across the South-East. Click any card to view available verified listings.
               </p>
             </div>
-          </div>
 
-          {/* Card 2: Property Scale & Regional Coverage */}
-          <div className="bg-[#FAF7FC] dark:bg-[#1E0424] rounded-[2rem] p-6 border border-purple-100/90 dark:border-purple-800/60 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
-            <div className="flex items-center justify-between mb-4">
-              <div className="text-3xl sm:text-4xl font-bold font-heading text-[#171717] dark:text-white tracking-tight">
-                Delta & Anambra
-              </div>
-              <div className="p-2.5 rounded-xl bg-purple-100 dark:bg-purple-900/40 text-[#7A2FB0] dark:text-[#B462E8]">
-                <MapPin className="w-5 h-5" />
-              </div>
-            </div>
-            <div>
-              <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#7A2FB0] dark:text-[#B462E8] mb-1">
-                Headquarters & Regional Corridors
-              </div>
-              <p className="text-base sm:text-[17px] text-[#3F3F46] dark:text-purple-200 font-normal leading-relaxed">
-                ECI Plaza, Okpanam Road, Asaba (HQ) and Awka commercial hub, delivering nationwide.
-              </p>
-            </div>
-          </div>
-
-          {/* Active Card 3: Founder Identity & Philosophy */}
-          <div className="bg-[#34073E] text-white rounded-[2rem] p-6 border border-purple-800 shadow-xl hover:shadow-2xl transition-all flex flex-col justify-between relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#8DC63F]/10 rounded-full blur-2xl pointer-events-none" />
-            <div className="flex items-center justify-between mb-4 relative z-10">
-              <div className="text-2xl sm:text-3xl font-bold font-heading text-[#8DC63F] tracking-tight">
-                “Ezeani na-eme ife ani”
-              </div>
-              <span className="px-2.5 py-1 rounded-full bg-[#8DC63F] text-[#34073E] text-[10px] font-mono font-bold uppercase">
-                Founder Identity
+            <div className="text-xs font-mono text-[#8DC63F] flex items-center gap-1.5 shrink-0 self-start sm:self-end bg-purple-950/40 dark:bg-purple-900/40 px-3 py-1.5 rounded-full border border-purple-800/40">
+              <span className="flex h-2 w-2 relative">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8DC63F] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#8DC63F]"></span>
               </span>
-            </div>
-            <div className="relative z-10">
-              <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#8DC63F] mb-1">
-                14+ Years Field Mastery
-              </div>
-              <p className="text-base sm:text-[17px] text-purple-100 font-normal leading-relaxed">
-                "Real estate is not what I do, it is who I am." Built on integrity, security & positioning.
-              </p>
+              <span>Automated Loop • Hover to Pause</span>
             </div>
           </div>
 
-        </div>
+          {/* Infinite Smooth Scrolling Track (Soft sliding from right to left) */}
+          <div className="relative overflow-hidden w-full py-2 group/marquee">
+            {/* Edge fade gradients */}
+            <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-r from-white dark:from-[#120216] to-transparent z-20" />
+            <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-l from-white dark:from-[#120216] to-transparent z-20" />
+
+            {/* Continuous Marquee Sliding Cards */}
+            <div className="animate-marquee-slow flex items-stretch gap-5 sm:gap-6">
+              {[...COVERED_STATES, ...COVERED_STATES].map((state, idx) => (
+                <div
+                  key={`${state.id}-${idx}`}
+                  onClick={() => {
+                    if (onFilterByState) {
+                      onFilterByState(state.name);
+                    } else {
+                      const el = document.getElementById('properties');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                  className="w-[300px] sm:w-[340px] shrink-0 bg-white dark:bg-[#1E0424] rounded-[2rem] p-5 border border-purple-100/90 dark:border-purple-800/80 shadow-md hover:shadow-2xl hover:border-[#8DC63F] dark:hover:border-[#8DC63F] transition-all duration-300 flex flex-col justify-between cursor-pointer group/card select-none"
+                >
+                  {/* Top Image Preview with Gradient & Badges */}
+                  <div className="relative aspect-16/9 rounded-2xl overflow-hidden mb-4 bg-purple-950">
+                    <img
+                      src={state.image}
+                      alt={state.fullName}
+                      className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1E0424]/90 via-[#1E0424]/40 to-transparent" />
+                    
+                    <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between">
+                      <span className="px-2.5 py-1 rounded-lg bg-[#34073E]/90 text-white backdrop-blur-md text-[10px] font-mono font-bold uppercase tracking-wider">
+                        {state.name}
+                      </span>
+                      <span className="px-2.5 py-1 rounded-lg bg-[#8DC63F] text-[#1E0424] text-[10px] font-mono font-bold uppercase tracking-wider shadow-sm">
+                        Available
+                      </span>
+                    </div>
+
+                    <div className="absolute bottom-2.5 left-2.5 right-2.5">
+                      <div className="text-white text-lg font-bold font-heading drop-shadow-md truncate">
+                        {state.fullName}
+                      </div>
+                      <div className="text-purple-200 text-xs truncate">
+                        {state.region}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Body Content */}
+                  <div className="space-y-2.5 flex-1 flex flex-col justify-between">
+                    <div>
+                      <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#7A2FB0] dark:text-[#B462E8] mb-1">
+                        Key Corridors & Enclaves
+                      </div>
+                      <p className="text-xs sm:text-sm text-[#3F3F46] dark:text-purple-200 line-clamp-2 leading-relaxed">
+                        {state.locations}
+                      </p>
+                    </div>
+
+                    <div className="pt-2 border-t border-purple-100 dark:border-purple-800/60">
+                      <div className="flex items-center gap-1.5 text-[11px] font-mono font-semibold text-[#8DC63F]">
+                        <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
+                        <span className="truncate">{state.titleStatus}</span>
+                      </div>
+                    </div>
+
+                    {/* CTA Button */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (onFilterByState) {
+                          onFilterByState(state.name);
+                        } else {
+                          const el = document.getElementById('properties');
+                          if (el) el.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }}
+                      className="w-full mt-2 py-2.5 px-4 rounded-xl bg-purple-50 hover:bg-[#8DC63F] dark:bg-purple-900/40 dark:hover:bg-[#8DC63F] text-[#34073E] dark:text-purple-100 hover:text-[#1E0424] dark:hover:text-[#1E0424] text-xs font-bold transition-all flex items-center justify-center gap-1.5 group/btn border border-purple-200/80 dark:border-purple-800/80 cursor-pointer"
+                    >
+                      <span>Explore {state.name} Listings</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
       </div>
     </section>
