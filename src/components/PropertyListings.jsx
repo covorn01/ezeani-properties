@@ -7,9 +7,6 @@ import {
   Square, 
   Heart, 
   ShieldCheck, 
-  Compass, 
-  Grid, 
-  Map, 
   Check, 
   ExternalLink,
   Layers,
@@ -32,8 +29,6 @@ export default function PropertyListings({
   const [selectedStatus, setSelectedStatus] = useState('All');
   const [maxPrice, setMaxPrice] = useState(2000000000);
   const [sortBy, setSortBy] = useState('default');
-  const [viewMode, setViewMode] = useState('grid');
-  const [activeMapPin, setActiveMapPin] = useState(null);
 
   const filteredProperties = useMemo(() => {
     return properties.filter((prop) => {
@@ -69,8 +64,8 @@ export default function PropertyListings({
           </div>
 
           {/* Action Bar */}
-          <div className="flex flex-wrap items-center gap-3">
-            {comparedIds.length > 0 && (
+          {comparedIds.length > 0 && (
+            <div className="flex flex-wrap items-center gap-3">
               <button
                 onClick={onOpenCompare}
                 className="flex items-center gap-2 bg-[#8DC63F]/20 text-[#34073E] dark:text-[#8DC63F] border border-[#8DC63F] px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-[#8DC63F]/30 transition-all"
@@ -78,33 +73,8 @@ export default function PropertyListings({
                 <Layers className="w-4 h-4" />
                 <span>Compare ({comparedIds.length})</span>
               </button>
-            )}
-
-            <div className="flex items-center bg-purple-100 dark:bg-purple-950 p-1 rounded-xl border border-purple-200 dark:border-purple-900">
-              <button
-                onClick={() => setViewMode('grid')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                  viewMode === 'grid'
-                    ? 'bg-[#34073E] text-white dark:bg-[#B462E8] dark:text-[#1E0424] shadow-xs'
-                    : 'text-purple-700 dark:text-purple-300'
-                }`}
-              >
-                <Grid className="w-3.5 h-3.5" />
-                <span>Grid View</span>
-              </button>
-              <button
-                onClick={() => setViewMode('map')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                  viewMode === 'map'
-                    ? 'bg-[#34073E] text-white dark:bg-[#B462E8] dark:text-[#1E0424] shadow-xs'
-                    : 'text-purple-700 dark:text-purple-300'
-                }`}
-              >
-                <Map className="w-3.5 h-3.5" />
-                <span>GIS Map</span>
-              </button>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Filter Controls Bar */}
@@ -154,9 +124,8 @@ export default function PropertyListings({
           </div>
         </div>
 
-        {/* View Modes */}
-        {viewMode === 'grid' ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Properties Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProperties.map((property) => {
               const isFavorite = favorites.includes(property.id);
               const isCompared = comparedIds.includes(property.id);
@@ -232,12 +201,12 @@ export default function PropertyListings({
 
                       <h3 
                         onClick={() => onSelectProperty(property)}
-                        className="text-xl sm:text-2xl font-bold font-heading text-[#171717] dark:text-white group-hover:text-[#7A2FB0] dark:group-hover:text-[#B462E8] transition-colors cursor-pointer leading-snug"
+                        className="text-2xl sm:text-3xl font-bold font-heading text-[#171717] dark:text-white group-hover:text-[#7A2FB0] dark:group-hover:text-[#B462E8] transition-colors cursor-pointer leading-snug"
                       >
                         {property.title}
                       </h3>
 
-                      <p className="text-sm sm:text-[15px] text-[#3F3F46] dark:text-purple-200 line-clamp-2 leading-relaxed">
+                      <p className="text-base sm:text-[17px] text-[#3F3F46] dark:text-purple-200 line-clamp-2 leading-relaxed">
                         {property.description}
                       </p>
                     </div>
@@ -292,111 +261,9 @@ export default function PropertyListings({
 
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        ) : (
-          /* Map Canvas */
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-1 space-y-3 max-h-[600px] overflow-y-auto pr-1">
-              {filteredProperties.map((prop) => (
-                <div
-                  key={prop.id}
-                  onClick={() => setActiveMapPin(prop)}
-                  className={`p-4 rounded-2xl border transition-all cursor-pointer ${
-                    activeMapPin?.id === prop.id
-                      ? 'bg-[#34073E] text-white border-[#B462E8] shadow-md'
-                      : 'bg-[#FAF7FC] dark:bg-[#34073E] text-[#1F0A26] dark:text-white border-purple-200 dark:border-purple-900 hover:border-purple-400'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-mono font-bold text-[#8DC63F]">{prop.priceFormatted}</span>
-                    <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-md bg-purple-200/50 dark:bg-purple-900 text-[#34073E] dark:text-purple-200 font-bold">
-                      {prop.category}
-                    </span>
-                  </div>
-                  <h4 className="text-sm font-bold truncate">{prop.title}</h4>
-                  <p className="text-xs opacity-75 truncate">{prop.location}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="lg:col-span-2 relative h-[550px] rounded-3xl overflow-hidden border border-purple-900 bg-[#1E0424] text-white p-6 flex flex-col justify-between">
-              <div className="relative z-10 flex items-center justify-between glass-card p-3 rounded-xl border border-purple-800">
-                <div className="flex items-center gap-2">
-                  <Compass className="w-4 h-4 text-[#8DC63F]" />
-                  <span className="text-xs font-mono text-purple-200">
-                    Ezeani GIS Verified Map • {filteredProperties.length} Properties
-                  </span>
-                </div>
-                <div className="text-[10px] font-mono text-[#8DC63F] bg-[#2A3E12] px-2.5 py-1 rounded-md border border-[#578021]">
-                  Titles Verified
-                </div>
-              </div>
-
-              {/* Pins scatter */}
-              <div className="relative z-10 flex-1 my-6 min-h-[300px]">
-                {filteredProperties.map((prop, idx) => {
-                  const topOffsets = ['20%', '50%', '70%', '35%', '80%'];
-                  const leftOffsets = ['25%', '65%', '45%', '80%', '85%'];
-                  const isSelected = activeMapPin?.id === prop.id;
-
-                  return (
-                    <div
-                      key={prop.id}
-                      style={{ top: topOffsets[idx % 5], left: leftOffsets[idx % 5] }}
-                      className="absolute -translate-x-1/2 -translate-y-1/2 z-20"
-                    >
-                      <button
-                        onClick={() => setActiveMapPin(prop)}
-                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-lg ${
-                          isSelected
-                            ? 'bg-[#8DC63F] text-[#34073E] scale-110 ring-4 ring-[#8DC63F]/40'
-                            : 'bg-[#34073E] border border-purple-700 text-white hover:bg-purple-900'
-                        }`}
-                      >
-                        <MapPin className="w-3.5 h-3.5 text-[#8DC63F]" />
-                        <span>{prop.priceFormatted}</span>
-                      </button>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {activeMapPin && (
-                <div className="relative z-10 glass-card p-4 rounded-2xl border border-purple-700 bg-[#34073E]/95 text-white flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in">
-                  <div className="flex items-center gap-3">
-                    <img
-                      src={activeMapPin.image}
-                      alt={activeMapPin.title}
-                      className="w-16 h-16 rounded-xl object-cover shrink-0"
-                    />
-                    <div>
-                      <div className="text-xs text-[#8DC63F] font-mono font-bold">{activeMapPin.priceFormatted}</div>
-                      <h4 className="text-sm font-bold">{activeMapPin.title}</h4>
-                      <div className="text-xs text-purple-200">{activeMapPin.location}</div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2 w-full sm:w-auto">
-                    <button
-                      onClick={() => onSelectProperty(activeMapPin)}
-                      className="px-4 py-2 bg-purple-900 hover:bg-purple-800 text-white text-xs font-semibold rounded-xl"
-                    >
-                      View Details
-                    </button>
-                    <button
-                      onClick={() => onOpenBooking({ category: 'Property Acquisition', propertyTitle: activeMapPin.title })}
-                      className="px-4 py-2 bg-[#8DC63F] text-[#34073E] text-xs font-bold rounded-xl"
-                    >
-                      Book Inspection
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
+            );
+          })}
+        </div>
 
       </div>
     </section>

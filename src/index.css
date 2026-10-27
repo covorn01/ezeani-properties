@@ -74,15 +74,15 @@
 
 @layer base {
   html {
-    font-size: 16.5px;
+    font-size: 17.5px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   body {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.05rem;
-    line-height: 1.7;
+    font-size: 1.125rem;
+    line-height: 1.75;
     background-color: var(--bg);
     color: var(--text);
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -94,26 +94,26 @@
   }
 
   h1 {
-    font-size: clamp(2.4rem, 5vw, 4.25rem);
+    font-size: clamp(2.65rem, 5.5vw, 4.6rem);
     line-height: 1.15;
   }
 
   h2 {
-    font-size: clamp(1.85rem, 3.5vw, 2.75rem);
+    font-size: clamp(2rem, 3.8vw, 3.1rem);
     line-height: 1.22;
   }
 
   h3 {
-    font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+    font-size: clamp(1.45rem, 2.4vw, 2.1rem);
     line-height: 1.3;
   }
 
   p {
-    line-height: 1.72;
+    line-height: 1.75;
   }
 
-  /* Keep input labels and technical tags crisp */
-  label {
+  /* Keep input labels, pill badges, and technical tags crisp */
+  label, .font-mono, [class*="tracking-wider"], [class*="tracking-widest"] {
     letter-spacing: 0.05em;
   }
 }

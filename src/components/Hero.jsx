@@ -214,11 +214,11 @@ export default function Hero({ onOpenBooking, onOpenContacts, onSearchProperties
               </div>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold font-heading text-white tracking-tight leading-[1.12] drop-shadow-md transition-all duration-500">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold font-heading text-white tracking-tight leading-[1.1] drop-shadow-md transition-all duration-500">
               {currentSlide === 0 && companyInfo?.headline ? companyInfo.headline : slide.title}
             </h1>
 
-            <p className="text-base sm:text-lg lg:text-xl text-purple-100 font-normal leading-relaxed mt-4 drop-shadow-xs max-w-2xl">
+            <p className="text-lg sm:text-xl lg:text-2xl text-purple-100 font-normal leading-relaxed mt-5 drop-shadow-xs max-w-3xl">
               {currentSlide === 0 && companyInfo?.subheadline ? companyInfo.subheadline : slide.subtitle}
             </p>
 
@@ -426,11 +426,11 @@ export default function Hero({ onOpenBooking, onOpenContacts, onSearchProperties
                   <span>Direct Advisory Desk • Fast Response</span>
                 </div>
 
-                <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold font-heading text-[#171717] dark:text-white tracking-tight leading-tight">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-heading text-[#171717] dark:text-white tracking-tight leading-tight">
                   Contact Us For Immediate Property Guidance
                 </h2>
 
-                <p className="text-sm text-[#52525B] dark:text-purple-200 font-sans leading-relaxed">
+                <p className="text-base sm:text-lg text-[#52525B] dark:text-purple-200 font-sans leading-relaxed">
                   Have questions about verified titles, strategic land allocations, or booking an on-site inspection? Connect directly via WhatsApp, direct phone call, or our advisory form.
                 </p>
 
@@ -511,7 +511,7 @@ export default function Hero({ onOpenBooking, onOpenContacts, onSearchProperties
           {/* Card 1: Customer & Title Guarantee */}
           <div className="bg-[#FAF7FC] dark:bg-[#1E0424] rounded-[2rem] p-6 border border-purple-100/90 dark:border-purple-800/60 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
             <div className="flex items-center justify-between mb-4">
-              <div className="text-3xl font-bold font-heading text-[#171717] dark:text-white tracking-tight">
+              <div className="text-3xl sm:text-4xl font-bold font-heading text-[#171717] dark:text-white tracking-tight">
                 100%
               </div>
               <div className="flex -space-x-2">
@@ -531,7 +531,7 @@ export default function Hero({ onOpenBooking, onOpenContacts, onSearchProperties
               <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#7A2FB0] dark:text-[#B462E8] mb-1">
                 Verified Title Security
               </div>
-              <p className="text-sm sm:text-[15px] text-[#3F3F46] dark:text-purple-200 font-normal leading-relaxed">
+              <p className="text-base sm:text-[17px] text-[#3F3F46] dark:text-purple-200 font-normal leading-relaxed">
                 100% C of O & Governor's Consent verification on all luxury properties.
               </p>
             </div>
@@ -540,7 +540,7 @@ export default function Hero({ onOpenBooking, onOpenContacts, onSearchProperties
           {/* Card 2: Property Scale & Regional Coverage */}
           <div className="bg-[#FAF7FC] dark:bg-[#1E0424] rounded-[2rem] p-6 border border-purple-100/90 dark:border-purple-800/60 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
             <div className="flex items-center justify-between mb-4">
-              <div className="text-2xl sm:text-3xl font-bold font-heading text-[#171717] dark:text-white tracking-tight">
+              <div className="text-3xl sm:text-4xl font-bold font-heading text-[#171717] dark:text-white tracking-tight">
                 Delta & Anambra
               </div>
               <div className="p-2.5 rounded-xl bg-purple-100 dark:bg-purple-900/40 text-[#7A2FB0] dark:text-[#B462E8]">
@@ -551,7 +551,7 @@ export default function Hero({ onOpenBooking, onOpenContacts, onSearchProperties
               <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#7A2FB0] dark:text-[#B462E8] mb-1">
                 Headquarters & Regional Corridors
               </div>
-              <p className="text-sm sm:text-[15px] text-[#3F3F46] dark:text-purple-200 font-normal leading-relaxed">
+              <p className="text-base sm:text-[17px] text-[#3F3F46] dark:text-purple-200 font-normal leading-relaxed">
                 ECI Plaza, Okpanam Road, Asaba (HQ) and Awka commercial hub, delivering nationwide.
               </p>
             </div>
@@ -561,7 +561,7 @@ export default function Hero({ onOpenBooking, onOpenContacts, onSearchProperties
           <div className="bg-[#34073E] text-white rounded-[2rem] p-6 border border-purple-800 shadow-xl hover:shadow-2xl transition-all flex flex-col justify-between relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#8DC63F]/10 rounded-full blur-2xl pointer-events-none" />
             <div className="flex items-center justify-between mb-4 relative z-10">
-              <div className="text-xl sm:text-2xl font-bold font-heading text-[#8DC63F] tracking-tight">
+              <div className="text-2xl sm:text-3xl font-bold font-heading text-[#8DC63F] tracking-tight">
                 “Ezeani na-eme ife ani”
               </div>
               <span className="px-2.5 py-1 rounded-full bg-[#8DC63F] text-[#34073E] text-[10px] font-mono font-bold uppercase">
@@ -572,7 +572,7 @@ export default function Hero({ onOpenBooking, onOpenContacts, onSearchProperties
               <div className="text-xs font-mono font-bold uppercase tracking-wider text-[#8DC63F] mb-1">
                 14+ Years Field Mastery
               </div>
-              <p className="text-sm sm:text-[15px] text-purple-100 font-normal leading-relaxed">
+              <p className="text-base sm:text-[17px] text-purple-100 font-normal leading-relaxed">
                 "Real estate is not what I do, it is who I am." Built on integrity, security & positioning.
               </p>
             </div>
