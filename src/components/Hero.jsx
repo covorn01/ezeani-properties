@@ -30,7 +30,6 @@ export default function Hero({ onOpenBooking, onOpenContacts, onSearchProperties
       id: 'slide-1',
       title: 'Luxury Through Positioning: Where Tomorrow’s Wealth Is Created',
       subtitle: 'Specializing in verified luxury lands, generational estates & strategic commercial corridors across Delta State, Anambra State & nationwide.',
-      badge: 'LUXURY THROUGH POSITIONING',
       image: '/images/hero-villa.jpg',
       ctaText: 'Browse Verified Lands & Homes',
       category: 'properties'
@@ -39,7 +38,6 @@ export default function Hero({ onOpenBooking, onOpenContacts, onSearchProperties
       id: 'slide-2',
       title: 'Prime Asaba, Okpanam Road & Awka Strategic Plots',
       subtitle: 'Position your portfolio in high-growth commercial and residential corridors with verified titles and zero boundary encumbrances.',
-      badge: 'DELTA & ANAMBRA SPECIALIST',
       image: '/images/hero-commercial.jpg',
       ctaText: 'Explore Strategic Plots',
       category: 'properties'
@@ -48,7 +46,6 @@ export default function Hero({ onOpenBooking, onOpenContacts, onSearchProperties
       id: 'slide-luxury',
       title: 'Generational Estates & Ultra-Luxury Sanctuaries',
       subtitle: 'Exclusive private sanctuaries, master-planned layouts & architectural developments built to preserve and grow lasting family wealth.',
-      badge: 'CREATING LEGACIES',
       image: '/images/mansion.jpg',
       ctaText: 'View Elite Estates',
       category: 'properties'
@@ -204,10 +201,12 @@ export default function Hero({ onOpenBooking, onOpenContacts, onSearchProperties
           {/* Top-Left Headline Block */}
           <div className="relative z-20 max-w-2xl mb-16 sm:mb-24 lg:mb-28">
             <div className="flex flex-wrap items-center gap-2 mb-4">
-              <div className="inline-block px-3 py-1 rounded-md bg-[#8DC63F] text-[#34073E] text-[11px] font-mono font-bold uppercase tracking-wider shadow-sm">
-                {currentSlide === 0 && companyInfo?.heroPill ? companyInfo.heroPill : slide.badge}
-              </div>
-              <div className="inline-block px-3 py-1 rounded-md bg-white/20 backdrop-blur-md text-white text-[11px] font-mono font-semibold tracking-wider">
+              {companyInfo?.heroPill && (
+                <div className="inline-block px-3 py-1 rounded-md bg-[#8DC63F] text-[#34073E] text-[11px] font-mono font-bold uppercase tracking-wider shadow-sm">
+                  {companyInfo.heroPill}
+                </div>
+              )}
+              <div className="inline-block px-3.5 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white text-[11px] sm:text-xs font-mono font-semibold tracking-wider border border-white/20 shadow-sm">
                 Creating Legacies • Building Trust
               </div>
             </div>
