@@ -94,6 +94,12 @@ export default function App() {
         if (parsed.leadership) {
           parsed.leadership = EZEANI_COMPANY_INFO.leadership;
         }
+        if (parsed.headline) {
+          parsed.headline = parsed.headline.replace(/\s*—\s*|\s*--\s*/g, ': ');
+        }
+        if (parsed.founderStorySnippet?.philosophy) {
+          parsed.founderStorySnippet.philosophy = parsed.founderStorySnippet.philosophy.replace(/\s*—\s*|\s*--\s*/g, '; ');
+        }
         return parsed;
       }
       return EZEANI_COMPANY_INFO;

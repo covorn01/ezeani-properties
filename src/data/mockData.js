@@ -7,7 +7,7 @@ export const EZEANI_COMPANY_INFO = {
   motto: "Creating Legacies, Building Trust, Securing Properties",
   identity: "Real Estate is not what I do, it is who I am.",
   brandPromise: "We are committed to helping you position your investment where tomorrow’s wealth is being created and to help you make property decisions with greater clarity and confidence.",
-  headline: "Luxury Through Positioning — Where Tomorrow’s Wealth Is Being Created.",
+  headline: "Luxury Through Positioning: Where Tomorrow’s Wealth Is Being Created.",
   subheadline: "Specializing in verified luxury lands, generational wealth, and strategic commercial properties across Delta State, Anambra State, and nationwide.",
   vision: "To become one of Africa’s most trusted Real Estate brands, recognized for transforming the property/land acquisition experience through transparency, positioning and commitment to helping young generations, couples and investors secure properties that creates lasting wealth.",
   mission: "To simplify and improve property acquisition process by providing reliable property information, professional guidance and transparent services that help younger generations, couples and investors make informed Real Estate decisions. We are committed to helping our clients avoid risks through proper verification, professional diligence and responsible services.",
@@ -15,7 +15,7 @@ export const EZEANI_COMPANY_INFO = {
     title: "Ezeani na-eme ife ani",
     meaning: "The King of the Land who deals in Lands",
     quote: "Real Estate is not what I do, it is who I am.",
-    philosophy: "Nothing is truly bad if you have the mindset to learn from it. Every setback, challenge, and disappointment was not an obstacle — it was alignment with purpose, alignment with calling, alignment with who I am."
+    philosophy: "Nothing is truly bad if you have the mindset to learn from it. Every setback, challenge, and disappointment was not an obstacle; it was alignment with purpose, alignment with calling, alignment with who I am."
   },
   phone: "0902 171 0933",
   whatsapp: "+2349021710933",

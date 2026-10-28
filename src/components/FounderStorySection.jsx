@@ -282,11 +282,11 @@ export default function FounderStorySection({ onOpenFullStory, onOpenBooking }) 
             </div>
             
             <p className="text-xl sm:text-2xl font-heading font-bold text-[#171717] dark:text-white leading-snug">
-              "Nothing is truly bad — if you have the mindset to learn from it. Every setback was not an obstacle; it was alignment with purpose, calling, and who I am."
+              "Nothing is truly bad if you have the mindset to learn from it. Every setback was not an obstacle; it was alignment with purpose, calling, and who I am."
             </p>
 
             <p className="text-sm sm:text-base text-[#52525B] dark:text-purple-200 font-medium">
-              — Christian Ezeani, MD Ezeani Properties Ltd & CEO Ezeani Group
+              Christian Ezeani, MD Ezeani Properties Ltd & CEO Ezeani Group
             </p>
           </div>
 

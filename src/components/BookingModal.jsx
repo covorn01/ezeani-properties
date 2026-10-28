@@ -232,7 +232,7 @@ END:VCALENDAR`;
             <div className="space-y-6 animate-fade-in">
               <div className="space-y-1">
                 <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#7A2FB0] dark:text-[#B462E8]">
-                  Step 01 — Service Category
+                  Step 01: Service Category
                 </span>
                 <h4 className="text-xl font-bold font-heading text-[#34073E] dark:text-white">
                   What domain requires expert consultation?
@@ -294,7 +294,7 @@ END:VCALENDAR`;
             <div className="space-y-6 animate-fade-in">
               <div className="space-y-1">
                 <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#7A2FB0] dark:text-[#B462E8]">
-                  Step 02 — Consultation Format
+                  Step 02: Consultation Format
                 </span>
                 <h4 className="text-xl font-bold font-heading text-[#34073E] dark:text-white">
                   Choose your preferred consultation mode
@@ -352,7 +352,7 @@ END:VCALENDAR`;
             <div className="space-y-6 animate-fade-in">
               <div className="space-y-1">
                 <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#7A2FB0] dark:text-[#B462E8]">
-                  Step 03 — Date & Time
+                  Step 03: Date & Time
                 </span>
                 <h4 className="text-xl font-bold font-heading text-[#34073E] dark:text-white">
                   Select your preferred appointment window
@@ -424,7 +424,7 @@ END:VCALENDAR`;
             <div className="space-y-6 animate-fade-in">
               <div className="space-y-1">
                 <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#7A2FB0] dark:text-[#B462E8]">
-                  Step 04 — Contact & Project Information
+                  Step 04: Contact & Project Information
                 </span>
                 <h4 className="text-xl font-bold font-heading text-[#34073E] dark:text-white">
                   Tell us about your project or enquiry

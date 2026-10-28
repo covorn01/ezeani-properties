@@ -306,7 +306,7 @@ export default function AdminDashboard({
   const [copyForm, setCopyForm] = useState({
     // Hero Section
     heroPill: companyInfo.heroPill || "CHRISTIAN EZEANI • MD/CEO",
-    headline: companyInfo.headline || "Luxury Through Positioning — Where Tomorrow’s Wealth Is Being Created.",
+    headline: companyInfo.headline?.replace(/—|--/g, ':') || "Luxury Through Positioning: Where Tomorrow’s Wealth Is Being Created.",
     subheadline: companyInfo.subheadline || "Specializing in verified luxury lands, generational wealth, and strategic commercial properties across Delta State, Anambra State, and nationwide.",
     heroMedia: companyInfo.heroMedia || "/images/hero-villa.jpg",
     heroMediaType: companyInfo.heroMediaType || "image",

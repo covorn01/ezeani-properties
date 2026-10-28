@@ -122,7 +122,7 @@ export default function PropertyManagementSection({
               </h2>
 
               <p className="text-base sm:text-lg text-[#52525B] dark:text-purple-200 leading-relaxed font-sans">
-                Whether you are an individual landlord, diaspora owner living abroad, or corporate asset investor, Ezeani Properties takes on the complete operational burden. We handle <strong className="text-[#34073E] dark:text-white">100% of the on-ground physical management, routine repairs, strict tenant vetting, and rent remittance from our end</strong>—so you enjoy passive returns and complete peace of mind without having to manage anything yourself.
+                Whether you are an individual landlord, diaspora owner living abroad, or corporate asset investor, Ezeani Properties takes on the complete operational burden. We handle <strong className="text-[#34073E] dark:text-white">100% of the on-ground physical management, routine repairs, strict tenant vetting, and rent remittance from our end</strong>, so you enjoy passive returns and complete peace of mind without having to manage anything yourself.
               </p>
             </div>
 

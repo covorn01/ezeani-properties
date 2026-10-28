@@ -214,7 +214,7 @@ export default function Hero({ onOpenBooking, onOpenContacts, onFilterByState, o
             </div>
 
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold font-heading text-white tracking-tight leading-[1.1] drop-shadow-md transition-all duration-500">
-              {currentSlide === 0 && companyInfo?.headline ? companyInfo.headline : slide.title}
+              {(currentSlide === 0 && companyInfo?.headline ? companyInfo.headline : slide.title).replace(/\s*—\s*|\s*--\s*/g, ': ')}
             </h1>
 
             <p className="text-lg sm:text-xl lg:text-2xl text-purple-100 font-normal leading-relaxed mt-5 drop-shadow-xs max-w-3xl">

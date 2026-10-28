@@ -121,7 +121,7 @@ export default function FounderStoryModal({ isOpen, onClose, onOpenBooking }) {
                   <span>The King of the Land</span>
                 </div>
                 <p className="text-xs text-purple-100 leading-relaxed font-sans">
-                  "The King of the Land who deals in Lands" — bestowed during university days and transformed into a national brand of trust, verified land titles, and strategic positioning.
+                  "The King of the Land who deals in Lands", bestowed during university days and transformed into a national brand of trust, verified land titles, and strategic positioning.
                 </p>
                 <div className="pt-1 flex flex-wrap items-center gap-2 text-[11px] font-mono text-purple-200">
                   <span className="inline-flex items-center gap-1">
@@ -213,7 +213,7 @@ export default function FounderStoryModal({ isOpen, onClose, onOpenBooking }) {
                 </p>
 
                 <div className="pt-2 flex flex-wrap items-center gap-3 text-xs font-mono text-[#8DC63F]">
-                  <span>— Christian Ezeani</span>
+                  <span>Christian Ezeani</span>
                   <span className="opacity-40">•</span>
                   <span className="italic font-bold">"Ezeani na-eme ife ani" (The King of the Land who deals in Lands)</span>
                 </div>
@@ -240,7 +240,7 @@ export default function FounderStoryModal({ isOpen, onClose, onOpenBooking }) {
               </p>
             </section>
 
-            {/* Chapter 2: June 21st – The Day Everything Changed */}
+            {/* Chapter 2: June 21st: The Day Everything Changed */}
             <section className="space-y-4 bg-purple-50/70 dark:bg-purple-950/40 p-6 sm:p-8 rounded-3xl border border-purple-200/80 dark:border-purple-800/60">
               <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#7A2FB0] dark:text-[#B462E8] uppercase tracking-wider">
                 <span className="w-6 h-px bg-[#8DC63F]" />
@@ -256,7 +256,7 @@ export default function FounderStoryModal({ isOpen, onClose, onOpenBooking }) {
                 Those words didn’t just bring pain; they brought silence. The kind of silence that rearranged my reality. In an instant, the dreams I was building collapsed into uncertainty. The man I looked up to, my hero, was gone.
               </p>
               <p>
-                I was broken, lost, and directionless, until August 20th, 2010—the very day we laid him to rest. And then, life began, but differently.
+                I was broken, lost, and directionless, until August 20th, 2010, the very day we laid him to rest. And then, life began, but differently.
               </p>
             </section>
 
@@ -277,7 +277,7 @@ export default function FounderStoryModal({ isOpen, onClose, onOpenBooking }) {
               </p>
             </section>
 
-            {/* Chapter 4: Where It Really Began – The Foundation (2010) */}
+            {/* Chapter 4: Where It Really Began: The Foundation (2010) */}
             <section className="space-y-4">
               <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#7A2FB0] dark:text-[#B462E8] uppercase tracking-wider">
                 <span className="w-6 h-px bg-[#8DC63F]" />
@@ -310,7 +310,7 @@ export default function FounderStoryModal({ isOpen, onClose, onOpenBooking }) {
               </p>
             </section>
 
-            {/* Chapter 5: The Turning Point – My First Deal at FUNAI (2015) */}
+            {/* Chapter 5: The Turning Point: My First Deal at FUNAI (2015) */}
             <section className="space-y-4 bg-gradient-to-br from-purple-100/70 via-purple-50/50 to-white dark:from-[#2A0631] dark:via-[#1E0424] dark:to-[#17031C] p-6 sm:p-8 rounded-3xl border border-purple-200 dark:border-purple-800">
               <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#7A2FB0] dark:text-[#B462E8] uppercase tracking-wider">
                 <span className="w-6 h-px bg-[#8DC63F]" />
@@ -320,7 +320,7 @@ export default function FounderStoryModal({ isOpen, onClose, onOpenBooking }) {
                 The Turning Point: My First Deal (2015)
               </h4>
               <p>
-                During my university days at <span className="font-bold text-[#171717] dark:text-white">Ebonyi State University</span>, something happened that would forever define my path. In my second year, I facilitated my first land transaction—a deal in FUNAI.
+                During my university days at <span className="font-bold text-[#171717] dark:text-white">Ebonyi State University</span>, something happened that would forever define my path. In my second year, I facilitated my first land transaction, a deal in FUNAI.
               </p>
               <p>
                 That single move earned me <span className="font-bold font-mono text-[#34073E] dark:text-[#8DC63F]">₦400,000</span>. But more importantly, it gave me clarity.
@@ -347,7 +347,7 @@ export default function FounderStoryModal({ isOpen, onClose, onOpenBooking }) {
               </p>
             </section>
 
-            {/* Chapter 6: From Experience to Identity – Ezeani na-eme ife ani */}
+            {/* Chapter 6: From Experience to Identity: Ezeani na-eme ife ani */}
             <section className="space-y-4">
               <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#7A2FB0] dark:text-[#B462E8] uppercase tracking-wider">
                 <span className="w-6 h-px bg-[#8DC63F]" />
@@ -430,10 +430,10 @@ export default function FounderStoryModal({ isOpen, onClose, onOpenBooking }) {
                 <span>THE PHILOSOPHY THAT BUILT ME</span>
               </div>
               <h4 className="text-xl sm:text-2xl font-bold font-heading">
-                "Nothing is truly bad — if you have the mindset to learn from it."
+                "Nothing is truly bad if you have the mindset to learn from it."
               </h4>
               <p className="text-xs sm:text-sm text-purple-200 leading-relaxed">
-                Every setback, every challenge, every disappointment—they were not obstacles. They were alignment:
+                Every setback, every challenge, every disappointment, they were not obstacles. They were alignment:
               </p>
               <div className="flex flex-wrap gap-2 text-xs font-mono pt-1">
                 <span className="px-3 py-1 rounded-full bg-white/10 border border-white/20 text-[#8DC63F]">Alignment with purpose</span>
