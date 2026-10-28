@@ -32,6 +32,21 @@ export default function PropertyListings({
   const [maxPrice, setMaxPrice] = useState(2000000000);
   const [sortBy, setSortBy] = useState('default');
 
+  const statusCounts = useMemo(() => {
+    const stateBase = properties.filter((prop) => {
+      const matchState = !selectedStateFilter || selectedStateFilter === 'All' ||
+        prop.location.toLowerCase().includes(selectedStateFilter.toLowerCase()) ||
+        prop.address.toLowerCase().includes(selectedStateFilter.toLowerCase());
+      return matchState;
+    });
+
+    return {
+      all: stateBase.length,
+      forSale: stateBase.filter(p => p.status === 'For Sale').length,
+      forRent: stateBase.filter(p => p.status === 'For Rent').length
+    };
+  }, [properties, selectedStateFilter]);
+
   const filteredProperties = useMemo(() => {
     return properties.filter((prop) => {
       const matchCat = selectedCategory === 'All' || prop.category === selectedCategory;
@@ -83,11 +98,11 @@ export default function PropertyListings({
         </div>
 
         {/* Filter Controls Bar */}
-        <div className="bg-[#FAF7FC] dark:bg-[#34073E] rounded-2xl p-4 mb-8 space-y-4 border border-purple-200 dark:border-purple-900/60 shadow-xs">
+        <div className="bg-[#FAF7FC] dark:bg-[#34073E] rounded-3xl p-4 sm:p-5 mb-8 space-y-4 border border-purple-200/80 dark:border-purple-900/60 shadow-xs">
           
           {/* Active State Filter Notice */}
           {selectedStateFilter && selectedStateFilter !== 'All' && (
-            <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-[#8DC63F]/15 dark:bg-[#8DC63F]/10 border border-[#8DC63F]/40 text-xs font-semibold text-[#1E0424] dark:text-purple-100 animate-fade-in">
+            <div className="flex items-center justify-between gap-3 p-3 rounded-2xl bg-[#8DC63F]/15 dark:bg-[#8DC63F]/10 border border-[#8DC63F]/40 text-xs font-semibold text-[#1E0424] dark:text-purple-100 animate-fade-in">
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-[#8DC63F] shrink-0" />
                 <span>
@@ -104,6 +119,54 @@ export default function PropertyListings({
             </div>
           )}
 
+          {/* Primary Status Filter Tabs (For Sale / For Rent / All Listings) */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-purple-200/70 dark:border-purple-800/60">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#7A2FB0] dark:text-purple-300 shrink-0 mr-1">
+                Listing Type:
+              </span>
+              <div className="inline-flex p-1 bg-white dark:bg-[#1E0424] rounded-2xl border border-purple-200 dark:border-purple-800/80 shadow-xs gap-1">
+                {[
+                  { id: 'All', label: 'All Listings', count: statusCounts.all },
+                  { id: 'For Sale', label: 'For Sale', count: statusCounts.forSale },
+                  { id: 'For Rent', label: 'For Rent', count: statusCounts.forRent }
+                ].map((tab) => {
+                  const isActive = selectedStatus === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      onClick={() => setSelectedStatus(tab.id)}
+                      className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                        isActive
+                          ? 'bg-[#34073E] text-white dark:bg-[#8DC63F] dark:text-[#1E0424] shadow-sm ring-1 ring-purple-300 dark:ring-[#8DC63F]'
+                          : 'text-[#52525B] dark:text-purple-300 hover:text-[#34073E] dark:hover:text-white hover:bg-purple-50 dark:hover:bg-purple-900/40'
+                      }`}
+                    >
+                      <span>{tab.label}</span>
+                      <span
+                        className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono font-bold ${
+                          isActive
+                            ? 'bg-white/20 dark:bg-[#1E0424]/20'
+                            : 'bg-purple-100 dark:bg-purple-900/60 text-[#7A2FB0] dark:text-purple-300'
+                        }`}
+                      >
+                        {tab.count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 text-xs text-[#71717A] dark:text-purple-300">
+              <span className="inline-block w-2 h-2 rounded-full bg-[#8DC63F] animate-pulse"></span>
+              <span>
+                Showing <strong className="text-[#34073E] dark:text-white font-bold">{filteredProperties.length}</strong> {selectedStatus === 'All' ? 'verified properties' : `${selectedStatus} listings`}
+              </span>
+            </div>
+          </div>
+
           {/* State Quick Pills */}
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 text-xs">
             <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700 dark:text-purple-300 shrink-0 mr-1">
@@ -114,7 +177,7 @@ export default function PropertyListings({
                 key={st}
                 type="button"
                 onClick={() => onSelectStateFilter && onSelectStateFilter(st)}
-                className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all whitespace-nowrap cursor-pointer ${
+                className={`px-3 py-1 rounded-xl text-xs font-semibold transition-all whitespace-nowrap cursor-pointer ${
                   selectedStateFilter === st
                     ? 'bg-[#8DC63F] text-[#1E0424] font-bold shadow-xs'
                     : 'text-[#3F3F46] dark:text-purple-200 hover:bg-purple-100 dark:hover:bg-purple-900/40'
@@ -125,6 +188,7 @@ export default function PropertyListings({
             ))}
           </div>
 
+          {/* Category Pills & Sort Controls */}
           <div className="flex flex-wrap items-center justify-between gap-4 pt-1 border-t border-purple-200/60 dark:border-purple-800/60">
             
             {/* Category Pills */}
@@ -133,9 +197,9 @@ export default function PropertyListings({
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all whitespace-nowrap cursor-pointer ${
                     selectedCategory === cat
-                      ? 'bg-[#34073E] text-white dark:bg-[#B462E8] dark:text-[#1E0424] shadow-xs'
+                      ? 'bg-[#7A2FB0] text-white dark:bg-[#B462E8] dark:text-[#1E0424] shadow-xs'
                       : 'text-[#3F3F46] dark:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-900/40'
                   }`}
                 >
@@ -146,20 +210,24 @@ export default function PropertyListings({
 
             {/* Right filter controls */}
             <div className="flex items-center gap-3 w-full md:w-auto overflow-x-auto">
-              <select
-                value={selectedStatus}
-                onChange={(e) => setSelectedStatus(e.target.value)}
-                className="py-1.5 px-3 bg-white dark:bg-[#1E0424] border border-purple-200 dark:border-purple-800 rounded-lg text-xs font-semibold text-[#171717] dark:text-purple-100 cursor-pointer"
-              >
-                <option value="All">All Statuses</option>
-                <option value="For Sale">For Sale</option>
-                <option value="For Rent">For Rent</option>
-              </select>
+              {(selectedCategory !== 'All' || selectedStatus !== 'All' || (selectedStateFilter && selectedStateFilter !== 'All')) && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedCategory('All');
+                    setSelectedStatus('All');
+                    if (onSelectStateFilter) onSelectStateFilter('All');
+                  }}
+                  className="px-3 py-1.5 rounded-xl text-xs font-bold text-[#7A2FB0] dark:text-[#B462E8] hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors whitespace-nowrap cursor-pointer"
+                >
+                  Reset Filters
+                </button>
+              )}
 
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="py-1.5 px-3 bg-white dark:bg-[#1E0424] border border-purple-200 dark:border-purple-800 rounded-lg text-xs font-semibold text-[#171717] dark:text-purple-100 cursor-pointer"
+                className="py-1.5 px-3 bg-white dark:bg-[#1E0424] border border-purple-200 dark:border-purple-800 rounded-xl text-xs font-semibold text-[#171717] dark:text-purple-100 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#7A2FB0]"
               >
                 <option value="default">Sort by: Default</option>
                 <option value="price-asc">Price: Low to High</option>
@@ -193,7 +261,11 @@ export default function PropertyListings({
 
                     {/* Top Badges */}
                     <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-                      <span className="px-3 py-1 rounded-md bg-[#34073E]/90 text-white backdrop-blur-md text-[11px] font-bold uppercase tracking-wider">
+                      <span className={`px-3 py-1 rounded-lg text-[11px] font-bold uppercase tracking-wider backdrop-blur-md shadow-xs ${
+                        property.status === 'For Rent'
+                          ? 'bg-[#8DC63F] text-[#1E0424]'
+                          : 'bg-[#34073E]/90 text-white border border-purple-400/30'
+                      }`}>
                         {property.status}
                       </span>
 
@@ -307,9 +379,37 @@ export default function PropertyListings({
 
                   </div>
                 </div>
-            );
-          })}
+              );
+            })}
         </div>
+
+        {/* Empty State */}
+        {filteredProperties.length === 0 && (
+          <div className="rounded-3xl bg-[#FAF7FC] dark:bg-[#34073E] border border-purple-200/80 dark:border-purple-800/80 p-8 sm:p-12 text-center max-w-xl mx-auto shadow-sm my-6">
+            <div className="w-14 h-14 rounded-2xl bg-purple-100 dark:bg-purple-950 flex items-center justify-center mx-auto text-[#7A2FB0] dark:text-[#B462E8] mb-4">
+              <Building2 className="w-7 h-7" />
+            </div>
+            <h3 className="text-xl font-bold font-heading text-[#171717] dark:text-white">
+              No {selectedStatus !== 'All' ? selectedStatus : ''} Properties Found
+            </h3>
+            <p className="text-sm text-[#71717A] dark:text-purple-300 mt-2 leading-relaxed">
+              No listings currently match your criteria for {selectedCategory !== 'All' ? `${selectedCategory} • ` : ''}{selectedStatus}{selectedStateFilter && selectedStateFilter !== 'All' ? ` in ${selectedStateFilter}` : ''}. Switch tabs or reset filters to explore our full verified portfolio.
+            </p>
+            <div className="mt-5 flex items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedCategory('All');
+                  setSelectedStatus('All');
+                  if (onSelectStateFilter) onSelectStateFilter('All');
+                }}
+                className="px-5 py-2.5 rounded-xl bg-[#34073E] hover:bg-[#4A0A58] dark:bg-[#8DC63F] dark:hover:bg-[#9dd84a] text-white dark:text-[#1E0424] text-xs font-bold transition-all shadow-md cursor-pointer"
+              >
+                Reset All Filters
+              </button>
+            </div>
+          </div>
+        )}
 
       </div>
     </section>

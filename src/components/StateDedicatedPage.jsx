@@ -38,6 +38,7 @@ export default function StateDedicatedPage({
   companyInfo = EZEANI_COMPANY_INFO
 }) {
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedStatus, setSelectedStatus] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('default');
 
@@ -59,6 +60,22 @@ export default function StateDedicatedPage({
     };
   }, [stateName, allStates]);
 
+  // Status counts within this specific state
+  const statusCounts = useMemo(() => {
+    const sName = (stateName || '').toLowerCase();
+    const baseInState = properties.filter((prop) => {
+      const loc = (prop.location || '').toLowerCase();
+      const addr = (prop.address || '').toLowerCase();
+      const desc = (prop.description || '').toLowerCase();
+      return loc.includes(sName) || addr.includes(sName) || desc.includes(sName);
+    });
+    return {
+      all: baseInState.length,
+      forSale: baseInState.filter(p => p.status === 'For Sale').length,
+      forRent: baseInState.filter(p => p.status === 'For Rent').length
+    };
+  }, [properties, stateName]);
+
   // Filter properties matching this state
   const stateProperties = useMemo(() => {
     const sName = (stateName || '').toLowerCase();
@@ -68,20 +85,21 @@ export default function StateDedicatedPage({
       const desc = (prop.description || '').toLowerCase();
       const matchState = loc.includes(sName) || addr.includes(sName) || desc.includes(sName);
 
+      const matchStatus = selectedStatus === 'All' || prop.status === selectedStatus;
       const matchCat = selectedCategory === 'All' || prop.category === selectedCategory;
       const matchSearch = !searchQuery || 
         (prop.title || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
         loc.includes(searchQuery.toLowerCase()) ||
         addr.includes(searchQuery.toLowerCase());
 
-      return matchState && matchCat && matchSearch;
+      return matchState && matchStatus && matchCat && matchSearch;
     }).sort((a, b) => {
       if (sortBy === 'price-asc') return a.price - b.price;
       if (sortBy === 'price-desc') return b.price - a.price;
       if (sortBy === 'size-desc') return (b.sqft || 0) - (a.sqft || 0);
       return 0;
     });
-  }, [properties, stateName, selectedCategory, searchQuery, sortBy]);
+  }, [properties, stateName, selectedStatus, selectedCategory, searchQuery, sortBy]);
 
   // Categories available in this state
   const categories = ['All', 'Residential', 'Commercial', 'Luxury Lands', 'Industrial'];
@@ -230,51 +248,110 @@ export default function StateDedicatedPage({
 
       {/* 4. Filter & Search Controls Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-        <div className="bg-[#FAF7FC] dark:bg-[#1E0424] rounded-2xl p-4 border border-purple-200 dark:border-purple-900/60 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="bg-[#FAF7FC] dark:bg-[#1E0424] rounded-3xl p-4 sm:p-5 border border-purple-200/90 dark:border-purple-900/60 shadow-xs space-y-4">
           
-          {/* Category Tabs */}
-          <div className="flex flex-wrap items-center gap-1.5">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  selectedCategory === cat
-                    ? 'bg-[#7A2FB0] text-white dark:bg-[#B462E8] dark:text-[#1E0424] shadow-xs'
-                    : 'bg-white dark:bg-purple-950/40 text-[#52525B] dark:text-purple-200 hover:bg-purple-100 dark:hover:bg-purple-900 border border-purple-200/60 dark:border-purple-800/60'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          {/* Search & Sort Controls */}
-          <div className="flex flex-wrap items-center gap-3">
-            {/* Search Input */}
-            <div className="relative min-w-[220px] flex-1 sm:flex-initial">
-              <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-purple-400" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={`Search in ${stateData.name}...`}
-                className="w-full pl-9 pr-3 py-1.5 rounded-xl bg-white dark:bg-purple-950/60 border border-purple-200 dark:border-purple-800/80 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-[#7A2FB0] dark:text-white"
-              />
+          {/* Top Row: Primary Status Tabs & Search/Sort */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-3 border-b border-purple-200/70 dark:border-purple-800/60">
+            {/* Status Tabs Switcher */}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#7A2FB0] dark:text-purple-300 shrink-0 mr-1">
+                Listing Type:
+              </span>
+              <div className="inline-flex p-1 bg-white dark:bg-purple-950/70 rounded-2xl border border-purple-200 dark:border-purple-800/80 shadow-xs gap-1">
+                {[
+                  { id: 'All', label: `All in ${stateData.name}`, count: statusCounts.all },
+                  { id: 'For Sale', label: 'For Sale', count: statusCounts.forSale },
+                  { id: 'For Rent', label: 'For Rent', count: statusCounts.forRent }
+                ].map((tab) => {
+                  const isActive = selectedStatus === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      onClick={() => setSelectedStatus(tab.id)}
+                      className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                        isActive
+                          ? 'bg-[#34073E] text-white dark:bg-[#8DC63F] dark:text-[#1E0424] shadow-sm ring-1 ring-purple-300 dark:ring-[#8DC63F]'
+                          : 'text-[#52525B] dark:text-purple-300 hover:text-[#34073E] dark:hover:text-white hover:bg-purple-50 dark:hover:bg-purple-900/40'
+                      }`}
+                    >
+                      <span>{tab.label}</span>
+                      <span
+                        className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono font-bold ${
+                          isActive
+                            ? 'bg-white/20 dark:bg-[#1E0424]/20'
+                            : 'bg-purple-100 dark:bg-purple-900/60 text-[#7A2FB0] dark:text-purple-300'
+                        }`}
+                      >
+                        {tab.count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
-            {/* Sort Select */}
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="px-3 py-1.5 rounded-xl bg-white dark:bg-purple-950/60 border border-purple-200 dark:border-purple-800/80 text-xs font-semibold text-[#34073E] dark:text-purple-200 focus:outline-none focus:ring-2 focus:ring-[#7A2FB0] cursor-pointer"
-            >
-              <option value="default">Default Order</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-              <option value="size-desc">Largest Space</option>
-            </select>
+            {/* Search Input & Sort Select */}
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="relative min-w-[220px] flex-1 sm:flex-initial">
+                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-purple-400" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder={`Search in ${stateData.name}...`}
+                  className="w-full pl-9 pr-3 py-1.5 rounded-xl bg-white dark:bg-purple-950/60 border border-purple-200 dark:border-purple-800/80 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-[#7A2FB0] dark:text-white"
+                />
+              </div>
+
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="px-3 py-1.5 rounded-xl bg-white dark:bg-purple-950/60 border border-purple-200 dark:border-purple-800/80 text-xs font-semibold text-[#34073E] dark:text-purple-200 focus:outline-none focus:ring-2 focus:ring-[#7A2FB0] cursor-pointer"
+              >
+                <option value="default">Default Order</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="size-desc">Largest Space</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Bottom Row: Property Category Tabs & Reset Controls */}
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700 dark:text-purple-300 shrink-0 mr-1">
+                Property Class:
+              </span>
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    selectedCategory === cat
+                      ? 'bg-[#7A2FB0] text-white dark:bg-[#B462E8] dark:text-[#1E0424] shadow-xs'
+                      : 'bg-white dark:bg-purple-950/40 text-[#52525B] dark:text-purple-200 hover:bg-purple-100 dark:hover:bg-purple-900 border border-purple-200/60 dark:border-purple-800/60'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+
+            {(selectedCategory !== 'All' || selectedStatus !== 'All' || searchQuery) && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedCategory('All');
+                  setSelectedStatus('All');
+                  setSearchQuery('');
+                }}
+                className="px-3 py-1 rounded-xl text-xs font-bold text-[#7A2FB0] dark:text-[#B462E8] hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors whitespace-nowrap cursor-pointer"
+              >
+                Reset Filters
+              </button>
+            )}
           </div>
 
         </div>
@@ -303,9 +380,18 @@ export default function StateDedicatedPage({
 
                   {/* Top Badges */}
                   <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-                    <span className="px-3 py-1 rounded-full bg-[#34073E]/90 text-white backdrop-blur-md text-xs font-mono font-bold uppercase tracking-wider">
-                      {prop.category}
-                    </span>
+                    <div className="flex items-center gap-1.5">
+                      <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider backdrop-blur-md shadow-xs ${
+                        prop.status === 'For Rent'
+                          ? 'bg-[#8DC63F] text-[#1E0424]'
+                          : 'bg-[#34073E]/90 text-white border border-purple-400/30'
+                      }`}>
+                        {prop.status}
+                      </span>
+                      <span className="px-2.5 py-1 rounded-full bg-black/40 text-purple-200 backdrop-blur-md text-[11px] font-mono font-medium">
+                        {prop.category}
+                      </span>
+                    </div>
 
                     <div className="flex items-center gap-2">
                       <button
@@ -346,7 +432,7 @@ export default function StateDedicatedPage({
                   <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between text-white">
                     <div>
                       <p className="text-xl sm:text-2xl font-bold font-mono tracking-tight drop-shadow-md">
-                        {formatCurrencyPrice(prop.price, currency)}
+                        {formatCurrencyPrice(prop.price, currency, prop.status === 'For Rent')}
                       </p>
                       <p className="text-xs text-purple-200 font-medium flex items-center gap-1 drop-shadow-sm">
                         <MapPin className="w-3 h-3 text-[#8DC63F]" />
@@ -436,26 +522,27 @@ export default function StateDedicatedPage({
             </div>
             
             <h3 className="text-xl sm:text-2xl font-bold font-heading text-[#171717] dark:text-white">
-              No Listings Currently Displayed in {stateData.name}
+              No {selectedStatus !== 'All' ? selectedStatus : ''} Listings Found in {stateData.name}
             </h3>
 
             <p className="text-sm sm:text-base text-[#71717A] dark:text-purple-300 mt-2 max-w-lg mx-auto leading-relaxed">
-              {searchQuery || selectedCategory !== 'All' 
-                ? 'Try adjusting your search criteria or clearing filters to see all available properties.'
+              {searchQuery || selectedCategory !== 'All' || selectedStatus !== 'All'
+                ? `No properties matched your current criteria for ${selectedStatus !== 'All' ? `${selectedStatus} • ` : ''}${selectedCategory !== 'All' ? `${selectedCategory} ` : ''}in ${stateData.name}. Try toggling between "For Sale" and "For Rent", or clearing filters.`
                 : `Our ${stateData.name} desk handles exclusive off-market and pre-allocation developments along ${stateData.locations}. Speak with our regional advisory team for private listings.`}
             </p>
 
             <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-              {(searchQuery || selectedCategory !== 'All') && (
+              {(searchQuery || selectedCategory !== 'All' || selectedStatus !== 'All') && (
                 <button
                   type="button"
                   onClick={() => {
                     setSelectedCategory('All');
+                    setSelectedStatus('All');
                     setSearchQuery('');
                   }}
                   className="px-5 py-2.5 rounded-xl bg-purple-100 dark:bg-purple-900 text-[#34073E] dark:text-white text-xs font-bold hover:bg-purple-200 transition-all cursor-pointer"
                 >
-                  Clear Filters
+                  Clear All Filters
                 </button>
               )}
 
