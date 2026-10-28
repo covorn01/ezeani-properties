@@ -204,19 +204,9 @@ export default function App() {
     window.addEventListener('popstate', handleLocationChange);
     window.addEventListener('hashchange', handleLocationChange);
 
-    // Keyboard shortcut for staff: Ctrl + Shift + A
-    const handleKeyDown = (e) => {
-      if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
-        e.preventDefault();
-        window.location.hash = '#internal-admin';
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-
     return () => {
       window.removeEventListener('popstate', handleLocationChange);
       window.removeEventListener('hashchange', handleLocationChange);
-      window.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
 
@@ -370,7 +360,6 @@ export default function App() {
         onOpenNews={() => setNewsModalOpen(true)}
         onOpenCareers={() => setCareersModalOpen(true)}
         onOpenContacts={() => setContactsModalOpen(true)}
-        onOpenAdmin={() => setAdminDashboardOpen(true)}
         onNavigateHome={handleNavigateHome}
       />
 
@@ -470,7 +459,6 @@ export default function App() {
       <Footer
         onOpenBooking={handleOpenBooking}
         onOpenMyBookings={() => setMyBookingsModalOpen(true)}
-        onOpenAdmin={() => setAdminDashboardOpen(true)}
         companyInfo={companyInfo}
       />
 

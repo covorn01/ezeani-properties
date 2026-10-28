@@ -40,7 +40,6 @@ export default function Navbar({
   onOpenNews,
   onOpenCareers,
   onOpenContacts,
-  onOpenAdmin,
   onNavigateHome
 }) {
   const [scrolled, setScrolled] = useState(false);

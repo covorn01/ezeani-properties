@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { EZEANI_COMPANY_INFO } from '../data/mockData';
 
-export default function Footer({ onOpenBooking, onOpenMyBookings, onOpenAdmin, companyInfo }) {
+export default function Footer({ onOpenBooking, onOpenMyBookings, companyInfo }) {
   const [subscribedEmail, setSubscribedEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
 
@@ -225,19 +225,6 @@ export default function Footer({ onOpenBooking, onOpenMyBookings, onOpenAdmin, c
             <span>Verified Titles Guaranteed</span>
             <span>•</span>
             <span>Nationwide Delivery</span>
-            {onOpenAdmin && (
-              <>
-                <span>•</span>
-                <button
-                  type="button"
-                  onClick={onOpenAdmin}
-                  className="hover:text-[#8DC63F] text-purple-400/80 transition-colors cursor-pointer"
-                  title="Staff & Admin Command Center"
-                >
-                  Staff Portal
-                </button>
-              </>
-            )}
           </div>
         </div>
 
