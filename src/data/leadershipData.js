@@ -14,7 +14,7 @@ export const LEADERSHIP_MEMBERS = [
     credentials: "Luxury Land Specialist & Positioning Strategist",
     bio: "Shaped by real-world field experience since 2010—from working as a survey labourer at Ubajekwe Survey Services to closing his first deal at Ebonyi State University—Christian Ezeani earned the respected title 'Ezeani na-eme ife ani'. Driven by the philosophy that real estate is who he is, he leads Ezeani Properties Ltd with a mission to eliminate land disputes, protect diaspora and young investors, and position clients where tomorrow's wealth is created.",
     quote: "Real Estate is not what I do, it is who I am.",
-    image: null, // Empty frame for photo drop-in
+    image: "/images/christian-ezeani.jpg",
     initials: "CE",
     featured: true
   },
