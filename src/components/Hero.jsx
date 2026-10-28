@@ -408,8 +408,8 @@ export default function Hero({ onOpenBooking, onOpenContacts, onFilterByState, o
         </div>
 
         {/* Contact Us Section */}
-        <section id="contact-advisory" aria-label="Contact Ezeani Properties" className="relative z-20 max-w-7xl mx-auto py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <section id="contact-advisory" aria-label="Contact Ezeani Properties" className="relative z-20 w-full py-12 sm:py-16 lg:py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center w-full">
             
             {/* Left Column: Heading, Direct Info & Action Buttons */}
             <div className="lg:col-span-6 flex flex-col justify-center space-y-6 lg:space-y-8">
