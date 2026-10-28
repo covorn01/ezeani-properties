@@ -21,7 +21,13 @@ import StateDedicatedPage from './components/StateDedicatedPage';
 import PropertyManagementSection from './components/PropertyManagementSection';
 import PaymentOptionsSection from './components/PaymentOptionsSection';
 
-import { MOCK_PROPERTIES, SAMPLE_BOOKINGS, EZEANI_COMPANY_INFO, COVERED_STATES } from './data/mockData';
+import { 
+  MOCK_PROPERTIES, 
+  SAMPLE_BOOKINGS, 
+  SAMPLE_MANAGEMENT_RECORDS, 
+  EZEANI_COMPANY_INFO, 
+  COVERED_STATES 
+} from './data/mockData';
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -134,6 +140,20 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('ezeani_bookings', JSON.stringify(bookings));
   }, [bookings]);
+
+  // Dedicated Property Management Records (Tracked Exclusively on Admin Portal)
+  const [managementRecords, setManagementRecords] = useState(() => {
+    try {
+      const saved = localStorage.getItem('ezeani_management_records');
+      return saved ? JSON.parse(saved) : SAMPLE_MANAGEMENT_RECORDS;
+    } catch (e) {
+      return SAMPLE_MANAGEMENT_RECORDS;
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem('ezeani_management_records', JSON.stringify(managementRecords));
+  }, [managementRecords]);
 
   // Modal States
   const [selectedProperty, setSelectedProperty] = useState(null);
@@ -266,6 +286,42 @@ export default function App() {
     }
   };
 
+  // Property Management Mandate handlers (Exclusive to Internal Admin)
+  const handleSaveManagementInquiry = (newRecord) => {
+    setManagementRecords((prev) => [newRecord, ...prev]);
+  };
+
+  const handleUpdateManagementStatus = (id, newStatus, staffLogText = '') => {
+    setManagementRecords((prev) => prev.map((rec) => {
+      if (rec.id !== id) return rec;
+      const updatedLogs = staffLogText ? [
+        {
+          id: `log-${Date.now()}`,
+          date: new Date().toISOString().split('T')[0],
+          author: 'Admin Operations',
+          text: staffLogText
+        },
+        ...(rec.staffLogs || [])
+      ] : (rec.staffLogs || []);
+
+      return {
+        ...rec,
+        status: newStatus,
+        staffLogs: updatedLogs
+      };
+    }));
+  };
+
+  const handleAddManagementRecord = (newRecord) => {
+    setManagementRecords((prev) => [newRecord, ...prev]);
+  };
+
+  const handleDeleteManagementRecord = (id) => {
+    if (confirm('Are you sure you want to remove this property management mandate record?')) {
+      setManagementRecords((prev) => prev.filter((r) => r.id !== id));
+    }
+  };
+
   const handleOpenStatePage = (stateName) => {
     setDedicatedState(stateName);
     setSelectedStateFilter(stateName);
@@ -370,6 +426,7 @@ export default function App() {
             {/* Official Property Management & Asset Stewardship Section */}
             <PropertyManagementSection
               onOpenBooking={handleOpenBooking}
+              onSaveManagementInquiry={handleSaveManagementInquiry}
               companyInfo={companyInfo}
             />
 
@@ -509,6 +566,10 @@ export default function App() {
         bookings={bookings}
         onUpdateBookingStatus={handleUpdateBookingStatus}
         onDeleteBooking={handleDeleteBooking}
+        managementRecords={managementRecords}
+        onUpdateManagementStatus={handleUpdateManagementStatus}
+        onAddManagementRecord={handleAddManagementRecord}
+        onDeleteManagementRecord={handleDeleteManagementRecord}
         companyInfo={companyInfo}
         onUpdateCompanyInfo={(newInfo) => setCompanyInfo(newInfo)}
         onOpenLiveSite={() => {

@@ -44,7 +44,9 @@ import {
   MessageSquare,
   HelpCircle,
   Download,
-  CheckSquare
+  CheckSquare,
+  Wrench,
+  Phone
 } from 'lucide-react';
 import { formatCurrencyPrice, EZEANI_COMPANY_INFO } from '../data/mockData';
 
@@ -58,6 +60,10 @@ export default function AdminDashboard({
   bookings = [], 
   onUpdateBookingStatus,
   onDeleteBooking,
+  managementRecords = [],
+  onUpdateManagementStatus,
+  onAddManagementRecord,
+  onDeleteManagementRecord,
   companyInfo = {},
   onUpdateCompanyInfo,
   onOpenLiveSite
@@ -198,6 +204,28 @@ export default function AdminDashboard({
   // Search & Filters
   const [bookingSearch, setBookingSearch] = useState('');
   const [bookingFilterStatus, setBookingFilterStatus] = useState('All');
+
+  // Property Management Mandates State (Admin Exclusive)
+  const [managementSearch, setManagementSearch] = useState('');
+  const [managementFilterStatus, setManagementFilterStatus] = useState('All');
+  const [selectedManagementRecord, setSelectedManagementRecord] = useState(null);
+  const [isAddManagementModalOpen, setIsAddManagementModalOpen] = useState(false);
+  const [newStaffNote, setNewStaffNote] = useState('');
+  const [newManagementForm, setNewManagementForm] = useState({
+    ownerName: '',
+    ownerPhone: '',
+    ownerEmail: '',
+    ownerLocation: '',
+    propertyTitle: '',
+    propertyType: 'Residential Villa/Mansion',
+    stateLocation: 'Lagos State',
+    address: '',
+    unitsCount: '1-4 Units',
+    mandateType: 'Full In-Person Facility & Tenancy Management',
+    assignedManager: 'Engr. Christian Ezeani (Lead Steward)',
+    monthlyRentYield: '',
+    notes: ''
+  });
 
   // Confirmation Modals State (Destructive Actions)
   const [deleteConfirmModal, setDeleteConfirmModal] = useState({ open: false, type: '', id: null, title: '' });
@@ -820,6 +848,12 @@ export default function AdminDashboard({
               { id: 'overview', label: 'Overview & Analytics', icon: BarChart3 },
               { id: 'consultations', label: 'Booked Schedules', icon: Calendar, badge: bookings.length },
               { id: 'properties', label: 'Land & Property Assets', icon: Building2, badge: properties.length },
+              { 
+                id: 'management', 
+                label: 'Property Management', 
+                icon: ShieldCheck, 
+                badge: managementRecords.filter(r => r.status === 'Pending Evaluation' || r.status === 'Maintenance Active').length 
+              },
               { id: 'careers', label: 'Career Applications', icon: Briefcase, badge: careerApplications.length },
               { id: 'messages', label: 'Contact Enquiries', icon: MessageSquare, badge: contactMessages.filter(m => m.status === 'Unread').length },
               { id: 'content', label: 'Website Copy Editor', icon: Edit3 },
@@ -926,6 +960,7 @@ export default function AdminDashboard({
               {activeTab === 'overview' && 'Executive Performance & Audit Stream'}
               {activeTab === 'consultations' && 'Consultation Operations & Schedule Tracker'}
               {activeTab === 'properties' && 'Real Estate & Land Asset Portfolio'}
+              {activeTab === 'management' && 'Property Management Mandates & In-Person Stewardship'}
               {activeTab === 'careers' && 'Career Candidates & Job Submissions'}
               {activeTab === 'messages' && 'Client Enquiries & Contact Logs'}
               {activeTab === 'content' && 'Live Website Copy & Brand Configuration'}
@@ -1340,6 +1375,255 @@ export default function AdminDashboard({
                     </div>
                   </div>
                 ))}
+              </div>
+
+            </div>
+          )}
+
+          {/* TAB 3.5: PROPERTY MANAGEMENT MANDATES & ON-GROUND CARE (EXCLUSIVE TO INTERNAL ADMIN) */}
+          {activeTab === 'management' && (
+            <div className="space-y-6 animate-fade-in">
+              
+              {/* Top Search, Status Filter & Registration Action */}
+              <div className={`${bgCard} p-6 rounded-[2.25rem] border shadow-md flex flex-col lg:flex-row items-center justify-between gap-4`}>
+                <div className="relative w-full lg:w-96">
+                  <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-purple-400" />
+                  <input
+                    type="text"
+                    value={managementSearch}
+                    onChange={(e) => setManagementSearch(e.target.value)}
+                    placeholder="Search owner name, ref code, location, or phone..."
+                    className={`w-full pl-10 pr-4 py-3 ${bgSubtle} border border-purple-800/60 rounded-xl text-xs ${textHeading} focus:outline-none focus:border-[#8DC63F]`}
+                  />
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto justify-between lg:justify-end">
+                  <div className="flex items-center gap-1.5 overflow-x-auto">
+                    {['All', 'Pending Evaluation', 'Active Mandate', 'Maintenance Active', 'Completed'].map((st) => (
+                      <button
+                        key={st}
+                        onClick={() => setManagementFilterStatus(st)}
+                        className={`px-3 py-2 rounded-xl text-xs font-bold transition-all shrink-0 ${
+                          managementFilterStatus === st
+                            ? 'bg-[#34073E] text-[#8DC63F] border border-[#8DC63F]'
+                            : `${bgSubtle} ${textMuted} hover:text-[#8DC63F]`
+                        }`}
+                      >
+                        {st}
+                      </button>
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={() => setIsAddManagementModalOpen(true)}
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#8DC63F] text-[#1E0424] font-bold text-xs shadow-md hover:bg-[#7bb532] active:scale-95 transition-all shrink-0 cursor-pointer"
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span>Register Property Mandate</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Management KPI Stat Strip */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div className={`${bgCard} p-6 rounded-[2rem] border shadow-md space-y-2`}>
+                  <div className="flex items-center justify-between">
+                    <span className={`text-xs font-mono font-bold uppercase ${textMuted}`}>Total Under Care</span>
+                    <div className="w-8 h-8 rounded-xl bg-purple-900/40 text-[#B462E8] flex items-center justify-center font-bold">
+                      <Building2 className="w-4 h-4" />
+                    </div>
+                  </div>
+                  <div className={`text-3xl font-bold font-mono ${textHeading}`}>
+                    {managementRecords.length}
+                  </div>
+                  <p className="text-[11px] text-purple-400">Total properties managed from our end</p>
+                </div>
+
+                <div className={`${bgCard} p-6 rounded-[2rem] border shadow-md space-y-2`}>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-mono font-bold uppercase text-[#8DC63F]">Active Mandates</span>
+                    <div className="w-8 h-8 rounded-xl bg-[#8DC63F]/20 text-[#8DC63F] flex items-center justify-center font-bold">
+                      <ShieldCheck className="w-4 h-4" />
+                    </div>
+                  </div>
+                  <div className="text-3xl font-bold font-mono text-[#8DC63F]">
+                    {managementRecords.filter(r => r.status === 'Active Mandate').length}
+                  </div>
+                  <p className="text-[11px] text-purple-400">On-ground stewardship & rent remittance</p>
+                </div>
+
+                <div className={`${bgCard} p-6 rounded-[2rem] border shadow-md space-y-2`}>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-mono font-bold uppercase text-amber-400">Pending Evaluation</span>
+                    <div className="w-8 h-8 rounded-xl bg-amber-400/20 text-amber-400 flex items-center justify-center font-bold">
+                      <Clock className="w-4 h-4" />
+                    </div>
+                  </div>
+                  <div className="text-3xl font-bold font-mono text-amber-400">
+                    {managementRecords.filter(r => r.status === 'Pending Evaluation').length}
+                  </div>
+                  <p className="text-[11px] text-purple-400">Website inquiries awaiting site audit</p>
+                </div>
+
+                <div className={`${bgCard} p-6 rounded-[2rem] border shadow-md space-y-2`}>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-mono font-bold uppercase text-purple-300">Active Maintenance</span>
+                    <div className="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center font-bold">
+                      <Wrench className="w-4 h-4" />
+                    </div>
+                  </div>
+                  <div className="text-3xl font-bold font-mono text-purple-300">
+                    {managementRecords.filter(r => r.status === 'Maintenance Active').length}
+                  </div>
+                  <p className="text-[11px] text-purple-400">Scheduled repairs & physical inspections</p>
+                </div>
+              </div>
+
+              {/* Main Managed Properties Table */}
+              <div className={`${bgCard} rounded-[2.25rem] border shadow-md overflow-hidden`}>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse min-w-[900px]">
+                    <thead>
+                      <tr className={`${bgSubtle} border-b border-purple-800/40 text-[11px] font-mono uppercase ${textMuted}`}>
+                        <th className="p-4">Ref Code & Date</th>
+                        <th className="p-4">Property & Location</th>
+                        <th className="p-4">Owner / Contact</th>
+                        <th className="p-4">Assigned Officer & Scope</th>
+                        <th className="p-4">Status & Quick Update</th>
+                        <th className="p-4 text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-purple-800/40 text-xs">
+                      {managementRecords
+                        .filter((rec) => {
+                          const q = managementSearch.toLowerCase();
+                          const matchesSearch =
+                            (rec.ownerName || '').toLowerCase().includes(q) ||
+                            (rec.refCode || '').toLowerCase().includes(q) ||
+                            (rec.propertyTitle || '').toLowerCase().includes(q) ||
+                            (rec.stateLocation || '').toLowerCase().includes(q) ||
+                            (rec.ownerPhone || '').includes(q);
+                          const matchesStatus = managementFilterStatus === 'All' || rec.status === managementFilterStatus;
+                          return matchesSearch && matchesStatus;
+                        })
+                        .map((rec) => (
+                          <tr key={rec.id} className="hover:bg-purple-900/10 transition-colors">
+                            <td className="p-4 align-top">
+                              <span className="font-mono font-bold text-[#8DC63F] block">{rec.refCode}</span>
+                              <span className={`text-[11px] ${textMuted}`}>{rec.dateRegistered}</span>
+                            </td>
+
+                            <td className="p-4 align-top">
+                              <div className={`font-bold ${textHeading} text-sm`}>{rec.propertyTitle}</div>
+                              <div className={`text-xs ${textMuted} flex items-center gap-1 mt-0.5`}>
+                                <MapPin className="w-3 h-3 text-[#8DC63F]" />
+                                <span>{rec.address || rec.stateLocation}</span>
+                              </div>
+                              <div className="mt-1 flex items-center gap-2">
+                                <span className="inline-block px-2 py-0.5 rounded-md bg-purple-900/40 text-[10px] font-mono text-purple-200">
+                                  {rec.unitsCount || '1 Unit'}
+                                </span>
+                                <span className="inline-block px-2 py-0.5 rounded-md bg-purple-900/40 text-[10px] font-mono text-[#8DC63F]">
+                                  {rec.propertyType}
+                                </span>
+                              </div>
+                            </td>
+
+                            <td className="p-4 align-top">
+                              <div className={`font-bold ${textHeading}`}>{rec.ownerName}</div>
+                              <div className="flex items-center gap-2 mt-1">
+                                <a
+                                  href={`tel:${rec.ownerPhone}`}
+                                  className="text-[11px] text-purple-300 hover:text-white flex items-center gap-1"
+                                >
+                                  <Phone className="w-3 h-3 text-[#8DC63F]" />
+                                  <span>{rec.ownerPhone}</span>
+                                </a>
+                              </div>
+                              {rec.ownerLocation && (
+                                <span className="inline-block mt-1 text-[10px] font-mono text-amber-300/90">
+                                  {rec.ownerLocation}
+                                </span>
+                              )}
+                            </td>
+
+                            <td className="p-4 align-top">
+                              <div className="text-xs font-semibold text-purple-200">{rec.assignedManager || 'Unassigned'}</div>
+                              <p className={`text-[11px] ${textMuted} mt-0.5 max-w-xs leading-snug`}>
+                                {rec.mandateType}
+                              </p>
+                              {rec.monthlyRentYield && rec.monthlyRentYield !== 'N/A' && (
+                                <div className="text-[11px] font-mono text-[#8DC63F] mt-1">
+                                  Yield: {rec.monthlyRentYield}
+                                </div>
+                              )}
+                            </td>
+
+                            <td className="p-4 align-top">
+                              <select
+                                value={rec.status}
+                                onChange={(e) => {
+                                  if (onUpdateManagementStatus) {
+                                    onUpdateManagementStatus(rec.id, e.target.value, `Status updated to "${e.target.value}" by staff`);
+                                  }
+                                }}
+                                className={`px-2.5 py-1.5 rounded-xl text-xs font-bold font-mono border focus:outline-none cursor-pointer ${
+                                  rec.status === 'Active Mandate'
+                                    ? 'bg-[#8DC63F]/20 text-[#8DC63F] border-[#8DC63F]/60'
+                                    : rec.status === 'Pending Evaluation'
+                                    ? 'bg-amber-400/20 text-amber-300 border-amber-400/60'
+                                    : rec.status === 'Maintenance Active'
+                                    ? 'bg-purple-500/20 text-purple-200 border-purple-400/60'
+                                    : rec.status === 'Completed'
+                                    ? 'bg-emerald-500/20 text-emerald-300 border-emerald-400/60'
+                                    : 'bg-purple-900/40 text-purple-200 border-purple-700'
+                                }`}
+                              >
+                                <option value="Pending Evaluation" className="bg-[#1E0424] text-white">Pending Evaluation</option>
+                                <option value="Active Mandate" className="bg-[#1E0424] text-white">Active Mandate</option>
+                                <option value="Maintenance Active" className="bg-[#1E0424] text-white">Maintenance Active</option>
+                                <option value="Proposal Sent" className="bg-[#1E0424] text-white">Proposal Sent</option>
+                                <option value="Completed" className="bg-[#1E0424] text-white">Completed</option>
+                              </select>
+                            </td>
+
+                            <td className="p-4 align-top text-right space-x-1.5">
+                              <button
+                                onClick={() => setSelectedManagementRecord(rec)}
+                                className="px-3 py-1.5 rounded-lg bg-[#34073E] hover:bg-[#4A0A58] text-white text-xs font-bold border border-purple-700/80 transition-all cursor-pointer inline-flex items-center gap-1"
+                                title="View In-Person Audit Notes & Staff Activity Logs"
+                              >
+                                <FileText className="w-3.5 h-3.5 text-[#8DC63F]" />
+                                <span>Logs ({rec.staffLogs?.length || 0})</span>
+                              </button>
+
+                              <a
+                                href={`https://wa.me/${rec.ownerPhone.replace(/[^0-9]/g, '')}?text=Hello%20${encodeURIComponent(rec.ownerName)},%20this%20is%20Ezeani%20Properties%20Asset%20Management%20Desk%20regarding%20${encodeURIComponent(rec.propertyTitle)}.`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-2 rounded-lg bg-[#25D366]/20 hover:bg-[#25D366] text-[#25D366] hover:text-white transition-all inline-block align-middle"
+                                title="Chat with Owner on WhatsApp"
+                              >
+                                <MessageSquare className="w-3.5 h-3.5 fill-current" />
+                              </a>
+
+                              <button
+                                onClick={() => {
+                                  if (onDeleteManagementRecord) {
+                                    onDeleteManagementRecord(rec.id);
+                                  }
+                                }}
+                                className="p-2 rounded-lg text-purple-400 hover:text-red-400 hover:bg-red-950/40 transition-all inline-block align-middle cursor-pointer"
+                                title="Delete Mandate Record"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
 
             </div>
@@ -2707,6 +2991,410 @@ export default function AdminDashboard({
                 </div>
               </form>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* PROPERTY MANAGEMENT MANDATE LOGS & INTERNAL AUDIT MODAL */}
+      {selectedManagementRecord && (
+        <div className="fixed inset-0 z-60 bg-[#1E0424]/90 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-[#34073E] text-white w-full max-w-2xl rounded-[2.25rem] border border-purple-800 p-6 sm:p-8 space-y-5 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            
+            {/* Header */}
+            <div className="flex items-start justify-between border-b border-purple-800/60 pb-4">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#8DC63F]/20 text-[#8DC63F] font-mono text-xs font-bold">
+                    {selectedManagementRecord.refCode}
+                  </span>
+                  <span className="text-xs text-purple-300 font-mono">
+                    Registered: {selectedManagementRecord.dateRegistered}
+                  </span>
+                </div>
+                <h3 className="text-xl font-bold font-heading text-white mt-1">
+                  {selectedManagementRecord.propertyTitle}
+                </h3>
+                <p className="text-xs text-purple-200">
+                  Owner: {selectedManagementRecord.ownerName} • {selectedManagementRecord.ownerPhone}
+                </p>
+              </div>
+
+              <button
+                onClick={() => {
+                  setSelectedManagementRecord(null);
+                  setNewStaffNote('');
+                }}
+                className="p-1.5 rounded-full bg-purple-900/40 text-purple-300 hover:text-white"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Property Overview Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-2xl bg-[#1E0424] border border-purple-800/60 text-xs">
+              <div>
+                <span className="text-[10px] uppercase font-mono text-purple-400 block">Category</span>
+                <span className="font-bold text-white">{selectedManagementRecord.propertyType}</span>
+              </div>
+              <div>
+                <span className="text-[10px] uppercase font-mono text-purple-400 block">Location</span>
+                <span className="font-bold text-white">{selectedManagementRecord.stateLocation}</span>
+              </div>
+              <div>
+                <span className="text-[10px] uppercase font-mono text-purple-400 block">Assigned Lead</span>
+                <span className="font-bold text-purple-200">{selectedManagementRecord.assignedManager || 'Unassigned'}</span>
+              </div>
+              <div>
+                <span className="text-[10px] uppercase font-mono text-purple-400 block">Current Status</span>
+                <span className="font-bold text-[#8DC63F]">{selectedManagementRecord.status}</span>
+              </div>
+            </div>
+
+            {/* Owner Note / Initial Inquiry Request */}
+            {selectedManagementRecord.notes && (
+              <div className="p-3.5 rounded-xl bg-purple-950/60 border border-purple-800/60 text-xs space-y-1">
+                <span className="text-[10px] font-mono uppercase text-purple-400 font-bold">Initial Request / Mandate Scope</span>
+                <p className="text-purple-200 leading-relaxed">{selectedManagementRecord.notes}</p>
+              </div>
+            )}
+
+            {/* Staff Internal Activity Stream & Maintenance History */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <h4 className="text-sm font-bold text-white flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-[#8DC63F]" />
+                  <span>Internal Staff Stewardship & Inspection Logs</span>
+                </h4>
+                <span className="text-[11px] font-mono text-purple-400">
+                  {selectedManagementRecord.staffLogs?.length || 0} entries
+                </span>
+              </div>
+
+              <div className="space-y-2 max-h-56 overflow-y-auto pr-1">
+                {(!selectedManagementRecord.staffLogs || selectedManagementRecord.staffLogs.length === 0) ? (
+                  <div className="p-4 rounded-xl bg-[#1E0424] text-center text-xs text-purple-400">
+                    No activity logs recorded yet. Log your first on-site inspection or tenant update below.
+                  </div>
+                ) : (
+                  selectedManagementRecord.staffLogs.map((log) => (
+                    <div key={log.id} className="p-3 rounded-xl bg-[#1E0424] border border-purple-800/40 text-xs space-y-1">
+                      <div className="flex items-center justify-between text-[11px]">
+                        <span className="font-bold text-[#8DC63F]">{log.author}</span>
+                        <span className="font-mono text-purple-400">{log.date}</span>
+                      </div>
+                      <p className="text-purple-200 leading-snug">{log.text}</p>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+
+            {/* Add New Staff Log Form */}
+            <div className="pt-2 border-t border-purple-800/60 space-y-2">
+              <label className="block text-xs font-bold text-white">
+                Log New In-Person Action, Inspection, or Maintenance Update
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={newStaffNote}
+                  onChange={(e) => setNewStaffNote(e.target.value)}
+                  placeholder="e.g. Conducted routine plumbing inspection. Cleared roof gutters, tested water pump."
+                  className="flex-1 px-3.5 py-2.5 rounded-xl bg-[#1E0424] border border-purple-800 text-xs text-white focus:outline-none focus:border-[#8DC63F]"
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!newStaffNote.trim()) return;
+                    if (onUpdateManagementStatus) {
+                      onUpdateManagementStatus(
+                        selectedManagementRecord.id,
+                        selectedManagementRecord.status,
+                        newStaffNote.trim()
+                      );
+                    }
+                    setSelectedManagementRecord(prev => ({
+                      ...prev,
+                      staffLogs: [
+                        {
+                          id: `log-${Date.now()}`,
+                          date: new Date().toISOString().split('T')[0],
+                          author: session?.user?.name || 'Staff Officer',
+                          text: newStaffNote.trim()
+                        },
+                        ...(prev.staffLogs || [])
+                      ]
+                    }));
+                    setNewStaffNote('');
+                  }}
+                  className="px-4 py-2.5 rounded-xl bg-[#8DC63F] hover:bg-[#7bb532] text-[#1E0424] font-bold text-xs shrink-0 cursor-pointer"
+                >
+                  Save Log
+                </button>
+              </div>
+            </div>
+
+            {/* Footer Direct WhatsApp Link & Close */}
+            <div className="flex items-center justify-between pt-3 border-t border-purple-800/60">
+              <a
+                href={`https://wa.me/${selectedManagementRecord.ownerPhone.replace(/[^0-9]/g, '')}?text=Hello%20${encodeURIComponent(selectedManagementRecord.ownerName)},%20this%20is%20Ezeani%20Properties%20Asset%20Management%20Desk%20regarding%20${encodeURIComponent(selectedManagementRecord.propertyTitle)}.`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#25D366] hover:bg-[#20ba5a] text-white text-xs font-bold shadow-sm"
+              >
+                <MessageSquare className="w-3.5 h-3.5 fill-current" />
+                <span>Message Owner on WhatsApp</span>
+              </a>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedManagementRecord(null);
+                  setNewStaffNote('');
+                }}
+                className="px-4 py-2 rounded-xl bg-purple-900/60 hover:bg-purple-800 text-purple-200 text-xs font-semibold"
+              >
+                Close Window
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* REGISTER NEW PROPERTY MANDATE MODAL */}
+      {isAddManagementModalOpen && (
+        <div className="fixed inset-0 z-60 bg-[#1E0424]/90 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-[#34073E] text-white w-full max-w-xl rounded-[2.25rem] border border-purple-800 p-6 sm:p-8 space-y-5 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            
+            <div className="flex items-center justify-between border-b border-purple-800/60 pb-4">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-xl bg-[#8DC63F] text-[#1E0424]">
+                  <Building2 className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold font-heading">Register Property Under Management</h3>
+                  <p className="text-[11px] text-purple-200/80">Add an owner's asset for internal stewardship & tracking</p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setIsAddManagementModalOpen(false)}
+                className="p-1.5 rounded-full bg-purple-900/40 text-purple-300 hover:text-white"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (!newManagementForm.ownerName || !newManagementForm.propertyTitle) return;
+
+                const newRec = {
+                  id: `mgt-${Date.now()}`,
+                  refCode: `MGT-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 900) + 100)}`,
+                  ownerName: newManagementForm.ownerName.trim(),
+                  ownerPhone: newManagementForm.ownerPhone.trim(),
+                  ownerEmail: newManagementForm.ownerEmail.trim(),
+                  ownerLocation: newManagementForm.ownerLocation.trim(),
+                  propertyTitle: newManagementForm.propertyTitle.trim(),
+                  propertyType: newManagementForm.propertyType,
+                  stateLocation: newManagementForm.stateLocation,
+                  address: newManagementForm.address.trim() || newManagementForm.stateLocation,
+                  unitsCount: newManagementForm.unitsCount,
+                  mandateType: newManagementForm.mandateType,
+                  status: 'Active Mandate',
+                  assignedManager: newManagementForm.assignedManager,
+                  inspectionFrequency: 'Bi-Weekly On-Site',
+                  monthlyRentYield: newManagementForm.monthlyRentYield.trim() || 'N/A',
+                  remittanceStatus: 'Active Mandate',
+                  dateRegistered: new Date().toISOString().split('T')[0],
+                  notes: newManagementForm.notes.trim() || 'Direct staff registration in command portal.',
+                  staffLogs: [
+                    {
+                      id: `log-${Date.now()}`,
+                      date: new Date().toISOString().split('T')[0],
+                      author: session?.user?.name || 'Lead Admin',
+                      text: `Property mandate registered and assigned to ${newManagementForm.assignedManager}.`
+                    }
+                  ]
+                };
+
+                if (onAddManagementRecord) {
+                  onAddManagementRecord(newRec);
+                }
+
+                setIsAddManagementModalOpen(false);
+                setNewManagementForm({
+                  ownerName: '',
+                  ownerPhone: '',
+                  ownerEmail: '',
+                  ownerLocation: '',
+                  propertyTitle: '',
+                  propertyType: 'Residential Villa/Mansion',
+                  stateLocation: 'Lagos State',
+                  address: '',
+                  unitsCount: '1-4 Units',
+                  mandateType: 'Full In-Person Facility & Tenancy Management',
+                  assignedManager: 'Engr. Christian Ezeani (Lead Steward)',
+                  monthlyRentYield: '',
+                  notes: ''
+                });
+              }}
+              className="space-y-4 text-xs font-medium"
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-purple-200 mb-1 font-bold">Owner / Landlord Name *</label>
+                  <input
+                    type="text"
+                    required
+                    value={newManagementForm.ownerName}
+                    onChange={(e) => setNewManagementForm({ ...newManagementForm, ownerName: e.target.value })}
+                    placeholder="e.g. Chief Emeka Okonkwo"
+                    className="w-full px-3 py-2.5 rounded-xl bg-[#1E0424] border border-purple-800 text-xs text-white focus:outline-none focus:border-[#8DC63F]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-purple-200 mb-1 font-bold">Phone / WhatsApp Number *</label>
+                  <input
+                    type="tel"
+                    required
+                    value={newManagementForm.ownerPhone}
+                    onChange={(e) => setNewManagementForm({ ...newManagementForm, ownerPhone: e.target.value })}
+                    placeholder="+234 or UK/US number"
+                    className="w-full px-3 py-2.5 rounded-xl bg-[#1E0424] border border-purple-800 text-xs text-white focus:outline-none focus:border-[#8DC63F]"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-purple-200 mb-1 font-bold">Owner Location / Diaspora</label>
+                  <input
+                    type="text"
+                    value={newManagementForm.ownerLocation}
+                    onChange={(e) => setNewManagementForm({ ...newManagementForm, ownerLocation: e.target.value })}
+                    placeholder="e.g. London, UK or Lagos"
+                    className="w-full px-3 py-2.5 rounded-xl bg-[#1E0424] border border-purple-800 text-xs text-white focus:outline-none focus:border-[#8DC63F]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-purple-200 mb-1 font-bold">Property Title *</label>
+                  <input
+                    type="text"
+                    required
+                    value={newManagementForm.propertyTitle}
+                    onChange={(e) => setNewManagementForm({ ...newManagementForm, propertyTitle: e.target.value })}
+                    placeholder="e.g. The Monarch 5-Bedroom Villa"
+                    className="w-full px-3 py-2.5 rounded-xl bg-[#1E0424] border border-purple-800 text-xs text-white focus:outline-none focus:border-[#8DC63F]"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-purple-200 mb-1 font-bold">Category</label>
+                  <select
+                    value={newManagementForm.propertyType}
+                    onChange={(e) => setNewManagementForm({ ...newManagementForm, propertyType: e.target.value })}
+                    className="w-full px-3 py-2.5 rounded-xl bg-[#1E0424] border border-purple-800 text-xs text-white focus:outline-none focus:border-[#8DC63F] cursor-pointer"
+                  >
+                    <option>Residential Villa/Mansion</option>
+                    <option>Block of Luxury Flats</option>
+                    <option>Commercial Plaza/Complex</option>
+                    <option>Industrial Warehouse</option>
+                    <option>Vacant Land / Layout</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-purple-200 mb-1 font-bold">State Location</label>
+                  <select
+                    value={newManagementForm.stateLocation}
+                    onChange={(e) => setNewManagementForm({ ...newManagementForm, stateLocation: e.target.value })}
+                    className="w-full px-3 py-2.5 rounded-xl bg-[#1E0424] border border-purple-800 text-xs text-white focus:outline-none focus:border-[#8DC63F] cursor-pointer"
+                  >
+                    <option>Lagos State</option>
+                    <option>Abuja (FCT)</option>
+                    <option>Delta State</option>
+                    <option>Anambra State</option>
+                    <option>Ebonyi State</option>
+                    <option>Enugu State</option>
+                    <option>Imo State</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-purple-200 mb-1 font-bold">Units</label>
+                  <select
+                    value={newManagementForm.unitsCount}
+                    onChange={(e) => setNewManagementForm({ ...newManagementForm, unitsCount: e.target.value })}
+                    className="w-full px-3 py-2.5 rounded-xl bg-[#1E0424] border border-purple-800 text-xs text-white focus:outline-none focus:border-[#8DC63F] cursor-pointer"
+                  >
+                    <option>1 Unit</option>
+                    <option>2-4 Units</option>
+                    <option>5-10 Units</option>
+                    <option>12+ Units</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-purple-200 mb-1 font-bold">Assigned Estate Manager</label>
+                  <input
+                    type="text"
+                    value={newManagementForm.assignedManager}
+                    onChange={(e) => setNewManagementForm({ ...newManagementForm, assignedManager: e.target.value })}
+                    placeholder="e.g. Engr. Christian Ezeani"
+                    className="w-full px-3 py-2.5 rounded-xl bg-[#1E0424] border border-purple-800 text-xs text-white focus:outline-none focus:border-[#8DC63F]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-purple-200 mb-1 font-bold">Annual Rent / Yield Projection</label>
+                  <input
+                    type="text"
+                    value={newManagementForm.monthlyRentYield}
+                    onChange={(e) => setNewManagementForm({ ...newManagementForm, monthlyRentYield: e.target.value })}
+                    placeholder="e.g. ₦18,000,000 / yr"
+                    className="w-full px-3 py-2.5 rounded-xl bg-[#1E0424] border border-purple-800 text-xs text-white focus:outline-none focus:border-[#8DC63F]"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-purple-200 mb-1 font-bold">Internal Operational Notes</label>
+                <textarea
+                  rows={2}
+                  value={newManagementForm.notes}
+                  onChange={(e) => setNewManagementForm({ ...newManagementForm, notes: e.target.value })}
+                  placeholder="Notes on tenant profile, key handover, generator servicing, etc."
+                  className="w-full px-3 py-2 rounded-xl bg-[#1E0424] border border-purple-800 text-xs text-white focus:outline-none focus:border-[#8DC63F]"
+                />
+              </div>
+
+              <div className="flex justify-end gap-3 pt-3 border-t border-purple-800/60">
+                <button
+                  type="button"
+                  onClick={() => setIsAddManagementModalOpen(false)}
+                  className="px-4 py-2.5 bg-purple-900/60 text-purple-200 rounded-xl text-xs font-semibold"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-6 py-2.5 bg-[#8DC63F] hover:bg-[#7bb532] text-[#1E0424] font-bold rounded-xl text-xs shadow-md"
+                >
+                  Save Mandate to Registry
+                </button>
+              </div>
+            </form>
+
           </div>
         </div>
       )}

@@ -138,7 +138,7 @@ export const PAYMENT_SERVICES_LIST = [
     name: "Property Management Onboarding Retainer",
     feeNgn: 100000,
     feeUsd: 125,
-    desc: "Initial estate audit, tenant vetting onboarding, digital dashboard ledger configuration, and facility handover."
+    desc: "Initial estate physical audit, tenant vetting onboarding, maintenance team assignment, and official facility onboarding."
   },
   {
     id: "reservation",
@@ -973,4 +973,104 @@ export function formatCurrencyPrice(amount, currency = 'NGN', isRental = false) 
   }).format(converted);
   return isRental ? `${formatted} / yr` : formatted;
 }
+
+export const SAMPLE_MANAGEMENT_RECORDS = [
+  {
+    id: 'mgt-001',
+    refCode: 'MGT-2026-001',
+    ownerName: 'Dr. Chidi Okafor',
+    ownerPhone: '+234 803 456 7890',
+    ownerEmail: 'c.okafor@diaspora-uk.com',
+    ownerLocation: 'London, United Kingdom (Diaspora)',
+    propertyTitle: 'The Ivory Terraces (4-Unit Luxury Residence)',
+    propertyType: 'Block of Luxury Flats',
+    stateLocation: 'Lagos State',
+    address: 'Admiralty Way, Lekki Phase 1, Lagos',
+    unitsCount: '4 Units',
+    mandateType: 'Full In-Person Facility & Tenancy Management',
+    status: 'Active Mandate',
+    assignedManager: 'Engr. Christian Ezeani (Lead Steward)',
+    inspectionFrequency: 'Bi-Weekly On-Site',
+    monthlyRentYield: '₦18,000,000 / annum',
+    remittanceStatus: 'Remitted via Corporate Escrow (Current)',
+    dateRegistered: '2026-10-12',
+    notes: 'Diaspora owner living in London. Ezeani team handles 100% on-ground maintenance, vetted tenants, generator fuel scheduling, and direct quarterly rental remittance.',
+    staffLogs: [
+      { id: 'log-1', date: '2026-10-24', author: 'Engr. Christian Ezeani', text: 'Completed bi-weekly physical inspection. Generator serviced; borehole water treatment chemical replenished.' },
+      { id: 'log-2', date: '2026-10-15', author: 'Lagos Ops Desk', text: 'Q3 rent disbursement of ₦4.5M sent to owner foreign-domiciliary account. Confirmation receipt delivered via WhatsApp.' }
+    ]
+  },
+  {
+    id: 'mgt-002',
+    refCode: 'MGT-2026-002',
+    ownerName: 'Barr. Ifeoma Nnamdi',
+    ownerPhone: '+234 812 345 6789',
+    ownerEmail: 'ifeoma.nnamdi@chambers.ng',
+    ownerLocation: 'Abuja (FCT)',
+    propertyTitle: 'Crown Crest Plaza & Commercial Suites',
+    propertyType: 'Commercial Plaza/Complex',
+    stateLocation: 'Anambra State',
+    address: 'Zik Avenue, Awka, Anambra State',
+    unitsCount: '12 Commercial Units',
+    mandateType: 'Commercial Facility Care & Lease Oversight',
+    status: 'Active Mandate',
+    assignedManager: 'Anambra State Operations Desk',
+    inspectionFrequency: 'Weekly Physical Audit',
+    monthlyRentYield: '₦32,000,000 / annum',
+    remittanceStatus: 'Remitted (Zero Default)',
+    dateRegistered: '2026-09-28',
+    notes: '12 commercial office/banking tenants. On-site facility team oversees security guards, waste disposal, cleaning contractor, and lease renewals.',
+    staffLogs: [
+      { id: 'log-3', date: '2026-10-22', author: 'Awka Operations Lead', text: 'Renewed 2 corporate tenancy agreements. Executed formal deed of lease.' }
+    ]
+  },
+  {
+    id: 'mgt-003',
+    refCode: 'MGT-2026-003',
+    ownerName: 'Chief Kenneth Aliyu',
+    ownerPhone: '+234 809 876 5432',
+    ownerEmail: 'kenneth.aliyu@gmail.com',
+    ownerLocation: 'Port Harcourt, Rivers State',
+    propertyTitle: 'Pine Wood Executive Duplex',
+    propertyType: 'Residential Villa/Mansion',
+    stateLocation: 'Delta State',
+    address: 'GRA Phase 2, Asaba, Delta State',
+    unitsCount: '1 Luxury Villa',
+    mandateType: 'Vacant Asset Protection & Preventive Maintenance',
+    status: 'Maintenance Active',
+    assignedManager: 'Asaba Field Supervisor',
+    inspectionFrequency: 'Weekly Perimeter Check',
+    monthlyRentYield: 'N/A (Vacant Executive Asset)',
+    remittanceStatus: 'N/A',
+    dateRegistered: '2026-10-20',
+    notes: 'Owner frequently travels. Managing perimeter security, landscaping, swimming pool water filtration, and electrical testing.',
+    staffLogs: [
+      { id: 'log-4', date: '2026-10-26', author: 'Asaba Supervisor', text: 'Pool chlorination and perimeter lighting repaired. Sent video confirmation to Chief Kenneth.' }
+    ]
+  },
+  {
+    id: 'mgt-004',
+    refCode: 'MGT-2026-004',
+    ownerName: 'Mrs. Folashade Adeyemi',
+    ownerPhone: '+234 802 999 1122',
+    ownerEmail: 'folashade.adeyemi@yahoo.com',
+    ownerLocation: 'Houston, Texas, USA (Diaspora)',
+    propertyTitle: 'Atlantic View 5-Bedroom Detached Duplex',
+    propertyType: 'Residential Villa/Mansion',
+    stateLocation: 'Lagos State',
+    address: 'Chevy View Estate, Chevron Tollgate, Lekki, Lagos',
+    unitsCount: '1 Unit',
+    mandateType: 'Full Hands-Off Stewardship & Tenant Sourcing',
+    status: 'Pending Evaluation',
+    assignedManager: 'Lagos Onboarding Desk',
+    inspectionFrequency: 'Pending Physical Walkthrough',
+    monthlyRentYield: 'Projected ₦14,000,000 / annum',
+    remittanceStatus: 'Awaiting Proposal Signature',
+    dateRegistered: '2026-10-28',
+    notes: 'Inquiry received via website. Owner is based in Houston and needs a trustworthy corporate manager to take over from an uncooperative former agent.',
+    staffLogs: [
+      { id: 'log-5', date: '2026-10-28', author: 'System Onboarding', text: 'Website inquiry received. Dispatched notification to Lead Admin.' }
+    ]
+  }
+];
 

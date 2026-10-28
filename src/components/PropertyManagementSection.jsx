@@ -21,13 +21,17 @@ import {
 } from 'lucide-react';
 import { EZEANI_COMPANY_INFO } from '../data/mockData';
 
-export default function PropertyManagementSection({ onOpenBooking, companyInfo = EZEANI_COMPANY_INFO }) {
-  const [activeTab, setActiveTab] = useState('in-person'); // 'in-person' | 'dashboard' | 'capacities'
+export default function PropertyManagementSection({ 
+  onOpenBooking, 
+  onSaveManagementInquiry,
+  companyInfo = EZEANI_COMPANY_INFO 
+}) {
+  const [activeTab, setActiveTab] = useState('in-person');
   const [ownerForm, setOwnerForm] = useState({
     name: '',
     phone: '',
     propertyType: 'Residential Mansion/Villa',
-    stateLocation: 'Lagos',
+    stateLocation: 'Lagos State',
     unitsCount: '1-4 Units',
     message: ''
   });
@@ -37,17 +41,57 @@ export default function PropertyManagementSection({ onOpenBooking, companyInfo =
     e.preventDefault();
     if (!ownerForm.name || !ownerForm.phone) return;
     
-    if (onOpenBooking) {
-      onOpenBooking({
-        clientName: ownerForm.name,
-        clientPhone: ownerForm.phone,
-        propertyTitle: `${ownerForm.propertyType} (${ownerForm.stateLocation})`,
-        serviceCategory: 'Property Management',
-        notes: `Property Management Inquiry: ${ownerForm.unitsCount} in ${ownerForm.stateLocation}. Note: ${ownerForm.message}`
-      });
+    const newRecord = {
+      id: `mgt-${Date.now()}`,
+      refCode: `MGT-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 900) + 100)}`,
+      ownerName: ownerForm.name.trim(),
+      ownerPhone: ownerForm.phone.trim(),
+      ownerEmail: '',
+      ownerLocation: ownerForm.stateLocation,
+      propertyTitle: `${ownerForm.propertyType} (${ownerForm.stateLocation})`,
+      propertyType: ownerForm.propertyType,
+      stateLocation: ownerForm.stateLocation,
+      address: `${ownerForm.stateLocation}`,
+      unitsCount: ownerForm.unitsCount || '1-4 Units',
+      mandateType: 'Full In-Person Facility & Tenancy Management',
+      status: 'Pending Evaluation',
+      assignedManager: 'Unassigned (Pending Review)',
+      inspectionFrequency: 'Pending Initial Inspection',
+      monthlyRentYield: 'To be determined',
+      remittanceStatus: 'Awaiting Contract',
+      dateRegistered: new Date().toISOString().split('T')[0],
+      notes: ownerForm.message ? ownerForm.message.trim() : 'Direct property submission via website form.',
+      staffLogs: [
+        {
+          id: `log-${Date.now()}`,
+          date: new Date().toISOString().split('T')[0],
+          author: 'Website Onboarding Intake',
+          text: `Owner inquiry received for ${ownerForm.propertyType} in ${ownerForm.stateLocation}. Contact phone: ${ownerForm.phone}`
+        }
+      ]
+    };
+
+    if (onSaveManagementInquiry) {
+      onSaveManagementInquiry(newRecord);
+    } else {
+      try {
+        const existing = JSON.parse(localStorage.getItem('ezeani_management_records') || '[]');
+        localStorage.setItem('ezeani_management_records', JSON.stringify([newRecord, ...existing]));
+      } catch (err) {
+        console.error('Failed to save management record:', err);
+      }
     }
+
     setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
+    setOwnerForm({
+      name: '',
+      phone: '',
+      propertyType: 'Residential Mansion/Villa',
+      stateLocation: 'Lagos State',
+      unitsCount: '1-4 Units',
+      message: ''
+    });
+    setTimeout(() => setSubmitted(false), 8000);
   };
 
   return (
@@ -78,7 +122,7 @@ export default function PropertyManagementSection({ onOpenBooking, companyInfo =
               </h2>
 
               <p className="text-base sm:text-lg text-[#52525B] dark:text-purple-200 leading-relaxed font-sans">
-                Whether you are an individual landlord, diaspora owner, or corporate asset investor, Ezeani Properties provides comprehensive, end-to-end stewardship. We pair <strong className="text-[#34073E] dark:text-white">rigorous in-person on-ground management</strong> with a <strong className="text-[#7A2FB0] dark:text-[#8DC63F]">digital telemetry dashboard</strong> that monitors, records, and reports your property’s performance in real time.
+                Whether you are an individual landlord, diaspora owner living abroad, or corporate asset investor, Ezeani Properties takes on the complete operational burden. We handle <strong className="text-[#34073E] dark:text-white">100% of the on-ground physical management, routine repairs, strict tenant vetting, and rent remittance from our end</strong>—so you enjoy passive returns and complete peace of mind without having to manage anything yourself.
               </p>
             </div>
 
@@ -117,7 +161,7 @@ export default function PropertyManagementSection({ onOpenBooking, companyInfo =
             <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-purple-200/90 dark:border-purple-800/80 group bg-[#1E0424]">
               <img
                 src="/images/property-management.jpg"
-                alt="Ezeani Properties On-Site Facility Management and Digital Dashboard"
+                alt="Ezeani Properties End-to-End Asset Stewardship and Facility Care"
                 className="w-full h-[360px] sm:h-[420px] lg:h-[460px] object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 loading="lazy"
               />
@@ -128,10 +172,10 @@ export default function PropertyManagementSection({ onOpenBooking, companyInfo =
               <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-[#1E0424]/85 backdrop-blur-md border border-purple-800/80 text-white space-y-1">
                 <div className="text-xs font-mono uppercase text-[#8DC63F] font-bold tracking-wider flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#8DC63F]" />
-                  <span>Physical Care + Live Telemetry</span>
+                  <span>Full-Spectrum On-Ground Stewardship</span>
                 </div>
                 <p className="text-xs text-purple-200 leading-snug">
-                  On-site inspections, routine facility fixes, and 24/7 digital records accessible to property owners worldwide.
+                  Regular physical walkthroughs, vetted tradesmen for repairs, strict tenant oversight, and prompt rent remittance directly to your bank account.
                 </p>
               </div>
             </div>
@@ -156,8 +200,8 @@ export default function PropertyManagementSection({ onOpenBooking, companyInfo =
 
             <div className="p-3 sm:p-4 space-y-1">
               <div className="text-2xl sm:text-3xl font-bold font-mono text-[#8DC63F]">100%</div>
-              <div className="text-xs sm:text-sm font-bold text-white">Digital Audit & Video Logs</div>
-              <p className="text-[11px] text-purple-300">Timestamped HD photos and reports accessible on dashboard</p>
+              <div className="text-xs sm:text-sm font-bold text-white">Hands-Off Owner Peace of Mind</div>
+              <p className="text-[11px] text-purple-300">We manage every operational detail from our end so owners enjoy hassle-free returns</p>
             </div>
 
             <div className="p-3 sm:p-4 space-y-1">
@@ -368,22 +412,22 @@ export default function PropertyManagementSection({ onOpenBooking, companyInfo =
             <div className="space-y-1.5 border-b border-purple-100 dark:border-purple-800/60 pb-4">
               <div className="inline-flex items-center gap-1.5 text-xs font-mono uppercase font-bold text-[#7A2FB0] dark:text-[#B462E8]">
                 <Building2 className="w-4 h-4 text-[#8DC63F]" />
-                <span>LANDLORD ONBOARDING DESK</span>
+                <span>PROPERTY MANAGEMENT DESK</span>
               </div>
               <h3 className="text-xl sm:text-2xl font-bold font-heading text-[#171717] dark:text-white">
-                Submit Your Property For Management
+                Hand Over Your Property For Professional Management
               </h3>
               <p className="text-xs text-[#71717A] dark:text-purple-300 font-sans">
-                Tell us about your property. Our asset team will evaluate it and prepare a customized management proposal.
+                Tell us about your property. Our estate team will inspect it, formulate an operational plan, and manage everything on your behalf.
               </p>
             </div>
 
             {submitted ? (
               <div className="p-6 rounded-2xl bg-[#8DC63F]/15 border border-[#8DC63F]/50 text-center space-y-2 animate-fade-in">
                 <CheckCircle2 className="w-8 h-8 text-[#8DC63F] mx-auto" />
-                <h4 className="text-base font-bold text-[#1E0424] dark:text-white">Inquiry Received</h4>
+                <h4 className="text-base font-bold text-[#1E0424] dark:text-white">Property Submission Logged</h4>
                 <p className="text-xs text-[#3F3F46] dark:text-purple-200">
-                  Our Asset Management team has received your property details. An executive manager will reach out within 2 hours.
+                  Your property details have been recorded in our internal management registry. A senior estate officer from Ezeani Properties will reach out directly within 2 hours.
                 </p>
               </div>
             ) : (
@@ -463,7 +507,7 @@ export default function PropertyManagementSection({ onOpenBooking, companyInfo =
                     rows={2}
                     value={ownerForm.message}
                     onChange={(e) => setOwnerForm({ ...ownerForm, message: e.target.value })}
-                    placeholder="e.g. 4-bedroom duplex currently vacant in Ikoyi; seeking full in-person management and digital dashboard recording."
+                    placeholder="e.g. 4-bedroom duplex currently vacant in Ikoyi; seeking full hands-off physical management, tenant screening, and prompt rent remittance."
                     className="w-full px-3.5 py-2 rounded-xl bg-[#FAF7FC] dark:bg-purple-950/60 border border-purple-200 dark:border-purple-800 text-xs focus:outline-none focus:ring-2 focus:ring-[#7A2FB0] dark:text-white"
                   />
                 </div>
