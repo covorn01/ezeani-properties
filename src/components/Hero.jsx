@@ -407,17 +407,17 @@ export default function Hero({ onOpenBooking, onOpenContacts, onFilterByState, o
           </div>
         </div>
 
-        {/* Contact Us Section (Between Hero Search and 3 Metric Cards) */}
-        <section id="contact-advisory" aria-label="Contact Ezeani Properties" className="relative z-20 max-w-5xl mx-auto mt-6 sm:mt-8 px-2 sm:px-4">
-          <div className="bg-white dark:bg-[#1E0424] rounded-[2rem] p-5 sm:p-7 lg:p-8 border border-purple-100/90 dark:border-purple-800/80 shadow-xl transition-all duration-300 relative overflow-hidden group">
+        {/* Contact Us Section (Between Hero Search and State Coverage Loop) */}
+        <section id="contact-advisory" aria-label="Contact Ezeani Properties" className="relative z-20 max-w-7xl mx-auto mt-8 sm:mt-10 px-4 sm:px-6 lg:px-8">
+          <div className="bg-white dark:bg-[#1E0424] rounded-[2.5rem] p-6 sm:p-8 lg:p-10 border border-purple-100/90 dark:border-purple-800/80 shadow-2xl transition-all duration-300 relative overflow-hidden group">
             
             {/* Top decorative gradient line */}
             <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#8DC63F] via-[#B462E8] to-[#34073E]" />
 
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               
-              {/* Left Column: Heading, Subtitle & Fast Meta Info */}
-              <div className="space-y-2.5 max-w-xl">
+              {/* Left Column: Heading, Subtitle, Fast Meta Info & Vertically Stacked Action Buttons */}
+              <div className="lg:col-span-7 space-y-4">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 dark:bg-purple-900/40 text-[#7A2FB0] dark:text-[#B462E8] text-xs font-mono font-bold uppercase tracking-wider">
                   <span className="flex h-2 w-2 relative">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8DC63F] opacity-75"></span>
@@ -435,69 +435,103 @@ export default function Hero({ onOpenBooking, onOpenContacts, onFilterByState, o
                 </p>
 
                 {/* Direct info links */}
-                <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-1.5 text-xs text-[#71717A] dark:text-purple-300">
+                <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-1 text-xs sm:text-sm text-[#71717A] dark:text-purple-300">
                   <a 
                     href={`tel:${companyInfo?.phone || EZEANI_COMPANY_INFO.phone}`} 
-                    className="inline-flex items-center gap-1.5 font-medium hover:text-[#7A2FB0] dark:hover:text-[#B462E8] transition-colors"
+                    className="inline-flex items-center gap-1.5 font-semibold hover:text-[#7A2FB0] dark:hover:text-[#B462E8] transition-colors"
                   >
                     <Phone className="w-3.5 h-3.5 text-[#8DC63F]" />
                     <span>{companyInfo?.phone || EZEANI_COMPANY_INFO.phone}</span>
                   </a>
-                  <span className="hidden sm:inline text-purple-300 dark:text-purple-700">•</span>
+                  <span className="text-purple-300 dark:text-purple-700">•</span>
                   <a 
                     href={`mailto:${companyInfo?.email || EZEANI_COMPANY_INFO.email}`} 
-                    className="inline-flex items-center gap-1.5 font-medium hover:text-[#7A2FB0] dark:hover:text-[#B462E8] transition-colors"
+                    className="inline-flex items-center gap-1.5 font-semibold hover:text-[#7A2FB0] dark:hover:text-[#B462E8] transition-colors"
                   >
                     <Mail className="w-3.5 h-3.5 text-[#8DC63F]" />
                     <span>{companyInfo?.email || EZEANI_COMPANY_INFO.email}</span>
                   </a>
-                  <span className="hidden md:inline text-purple-300 dark:text-purple-700">•</span>
-                  <span className="hidden md:inline-flex items-center gap-1.5">
+                  <span className="hidden sm:inline text-purple-300 dark:text-purple-700">•</span>
+                  <span className="hidden sm:inline-flex items-center gap-1.5 font-medium">
                     <MapPin className="w-3.5 h-3.5 text-[#8DC63F]" />
                     <span>Asaba HQ & Awka Desk</span>
                   </span>
                 </div>
-              </div>
 
-              {/* Right Column: High-Conversion CTA Buttons */}
-              <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row items-stretch sm:items-center gap-3 shrink-0">
-                
-                {/* 1. Primary WhatsApp Action Button */}
-                <a
-                  href={`https://wa.me/${(companyInfo?.whatsapp || EZEANI_COMPANY_INFO.whatsapp).replace(/[^0-9]/g, '')}?text=Hello%20Ezeani%20Properties,%20I%20would%20like%20to%20inquire%20about%20your%20verified%20properties.`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-sm shadow-md hover:shadow-lg hover:shadow-[#25D366]/30 transition-all duration-200 active:scale-95 group cursor-pointer"
-                  title="Contact Ezeani Properties on WhatsApp"
-                >
-                  <svg className="w-5 h-5 fill-current shrink-0" viewBox="0 0 24 24">
-                    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19.01L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67ZM8.53 7.33C8.37 7.33 8.1 7.39 7.87 7.64C7.65 7.89 7.02 8.48 7.02 9.71C7.02 10.93 7.91 12.11 8.03 12.28C8.16 12.44 9.79 14.94 12.27 16.02C12.86 16.28 13.32 16.43 13.68 16.55C14.28 16.74 14.82 16.71 15.25 16.65C15.73 16.58 16.73 16.04 16.94 15.45C17.15 14.86 17.15 14.36 17.09 14.26C17.03 14.16 16.86 14.1 16.61 13.98C16.36 13.85 15.13 13.24 14.9 13.16C14.67 13.08 14.51 13.04 14.34 13.28C14.18 13.53 13.71 14.1 13.56 14.26C13.42 14.43 13.27 14.45 13.02 14.32C12.77 14.2 11.97 13.93 11.02 13.09C10.28 12.43 9.78 11.61 9.63 11.36C9.49 11.11 9.62 10.98 9.74 10.86C9.85 10.75 9.99 10.57 10.12 10.42C10.24 10.27 10.29 10.17 10.37 10.01C10.45 9.84 10.41 9.7 10.35 9.57C10.29 9.45 9.82 8.29 9.62 7.82C9.43 7.36 9.23 7.42 9.08 7.41C8.94 7.41 8.78 7.4 8.61 7.4C8.45 7.4 8.19 7.46 7.96 7.71L8.53 7.33Z"/>
-                  </svg>
-                  <span>Contact on WhatsApp</span>
-                </a>
+                {/* Contact Action Buttons Row at the bottom of the text */}
+                <div className="flex flex-wrap items-center gap-3 pt-2">
+                  
+                  {/* 1. Primary WhatsApp Action Button */}
+                  <a
+                    href={`https://wa.me/${(companyInfo?.whatsapp || EZEANI_COMPANY_INFO.whatsapp).replace(/[^0-9]/g, '')}?text=Hello%20Ezeani%20Properties,%20I%20would%20like%20to%20inquire%20about%20your%20verified%20properties.`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-sm sm:text-base shadow-md hover:shadow-lg hover:shadow-[#25D366]/30 transition-all duration-200 active:scale-95 group cursor-pointer"
+                    title="Contact Ezeani Properties on WhatsApp"
+                  >
+                    <svg className="w-5 h-5 fill-current shrink-0" viewBox="0 0 24 24">
+                      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19.01L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67ZM8.53 7.33C8.37 7.33 8.1 7.39 7.87 7.64C7.65 7.89 7.02 8.48 7.02 9.71C7.02 10.93 7.91 12.11 8.03 12.28C8.16 12.44 9.79 14.94 12.27 16.02C12.86 16.28 13.32 16.43 13.68 16.55C14.28 16.74 14.82 16.71 15.25 16.65C15.73 16.58 16.73 16.04 16.94 15.45C17.15 14.86 17.15 14.36 17.09 14.26C17.03 14.16 16.86 14.1 16.61 13.98C16.36 13.85 15.13 13.24 14.9 13.16C14.67 13.08 14.51 13.04 14.34 13.28C14.18 13.53 13.71 14.1 13.56 14.26C13.42 14.43 13.27 14.45 13.02 14.32C12.77 14.2 11.97 13.93 11.02 13.09C10.28 12.43 9.78 11.61 9.63 11.36C9.49 11.11 9.62 10.98 9.74 10.86C9.85 10.75 9.99 10.57 10.12 10.42C10.24 10.27 10.29 10.17 10.37 10.01C10.45 9.84 10.41 9.7 10.35 9.57C10.29 9.45 9.82 8.29 9.62 7.82C9.43 7.36 9.23 7.42 9.08 7.41C8.94 7.41 8.78 7.4 8.61 7.4C8.45 7.4 8.19 7.46 7.96 7.71L8.53 7.33Z"/>
+                    </svg>
+                    <span>Contact on WhatsApp</span>
+                  </a>
 
-                {/* 2. Direct Call & Send Message */}
-                <div className="flex items-center gap-2">
+                  {/* 2. Direct Call Action Button */}
                   <a
                     href={`tel:${companyInfo?.phone || EZEANI_COMPANY_INFO.phone}`}
-                    className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl bg-purple-50 hover:bg-purple-100 dark:bg-purple-900/40 dark:hover:bg-purple-900/60 text-[#34073E] dark:text-purple-100 font-bold text-xs sm:text-sm border border-purple-200/80 dark:border-purple-800/80 transition-all duration-200 active:scale-95 cursor-pointer whitespace-nowrap"
+                    className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-purple-50 hover:bg-purple-100 dark:bg-purple-900/40 dark:hover:bg-purple-900/60 text-[#34073E] dark:text-purple-100 font-bold text-sm sm:text-base border border-purple-200/80 dark:border-purple-800/80 transition-all duration-200 active:scale-95 cursor-pointer"
                   >
                     <Phone className="w-4 h-4 text-[#7A2FB0] dark:text-[#B462E8]" />
                     <span>Call Us</span>
                   </a>
 
+                  {/* 3. Send Inquiry Action Button */}
                   <button
                     type="button"
                     onClick={() => {
                       if (onOpenContacts) onOpenContacts();
                     }}
-                    className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl bg-[#34073E] hover:bg-[#4A0A58] dark:bg-[#B462E8] dark:hover:bg-[#c27af0] text-white dark:text-[#1E0424] font-bold text-xs sm:text-sm shadow-md transition-all duration-200 active:scale-95 cursor-pointer whitespace-nowrap"
+                    className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#34073E] hover:bg-[#4A0A58] dark:bg-[#B462E8] dark:hover:bg-[#c27af0] text-white dark:text-[#1E0424] font-bold text-sm sm:text-base shadow-md transition-all duration-200 active:scale-95 cursor-pointer"
                   >
                     <Mail className="w-4 h-4" />
                     <span>Send Inquiry</span>
                   </button>
-                </div>
 
+                </div>
+              </div>
+
+              {/* Right Column: Contact & Property Advisory Depiction Image */}
+              <div className="lg:col-span-5 relative">
+                <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-purple-100 dark:border-purple-800/80 group">
+                  <img
+                    src="/images/contact-advisory.jpg"
+                    alt="Ezeani Properties Advisory & Inquiries Desk"
+                    className="w-full h-72 sm:h-80 lg:h-[420px] object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                    loading="lazy"
+                  />
+                  
+                  {/* Subtle Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1E0424]/80 via-transparent to-transparent pointer-events-none" />
+
+                  {/* Floating Status Badge */}
+                  <div className="absolute bottom-4 left-4 right-4 bg-white/95 dark:bg-[#1E0424]/95 backdrop-blur-md rounded-xl p-3 sm:p-4 border border-purple-100/90 dark:border-purple-700/60 shadow-lg flex items-center justify-between">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#8DC63F] animate-pulse"></span>
+                        <p className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#7A2FB0] dark:text-[#B462E8]">
+                          Concierge & Advisory Desk
+                        </p>
+                      </div>
+                      <p className="text-sm font-bold text-[#171717] dark:text-white mt-0.5">
+                        Instant Client Advisory
+                      </p>
+                    </div>
+                    <div className="shrink-0 pl-2">
+                      <span className="px-2.5 py-1 rounded-lg bg-[#8DC63F]/15 text-[#34073E] dark:text-[#8DC63F] text-xs font-bold font-mono">
+                        Online Now
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
             </div>
