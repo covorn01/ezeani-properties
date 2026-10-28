@@ -543,6 +543,7 @@ export default function Hero({ onOpenBooking, onOpenContacts, onFilterByState, o
               </h2>
               <p className="text-sm sm:text-base text-[#52525B] dark:text-purple-200 mt-1 max-w-2xl font-sans">
                 Active coverage in Lagos, Abuja, Delta, Ebonyi, Anambra, and across the South-East. Click any card to view available verified listings.
+              </p>
             </div>
           </div>
 
