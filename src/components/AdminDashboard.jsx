@@ -29,7 +29,6 @@ import {
   RefreshCw,
   LogOut,
   MapPin,
-  Sparkles,
   Lock,
   KeyRound,
   Sun,
@@ -1101,7 +1100,6 @@ export default function AdminDashboard({
                     <h3 className={`text-base font-bold font-heading ${textHeading}`}>
                       Administrative Audit Trail
                     </h3>
-                    <Sparkles className="w-4 h-4 text-[#8DC63F]" />
                   </div>
 
                   <div className="space-y-3.5 max-h-[300px] overflow-y-auto pr-1">
@@ -1512,7 +1510,6 @@ export default function AdminDashboard({
                       Edit headlines, badge pills, custom image uploads (&le;5MB), and video stream URLs for each section of the site.
                     </p>
                   </div>
-                  <Sparkles className="w-6 h-6 text-[#8DC63F] shrink-0" />
                 </div>
 
                 {copySaved && (

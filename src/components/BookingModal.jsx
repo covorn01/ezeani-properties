@@ -17,7 +17,6 @@ import {
   Copy,
   ChevronRight,
   ChevronLeft,
-  Sparkles,
   ShieldCheck,
   Award
 } from 'lucide-react';

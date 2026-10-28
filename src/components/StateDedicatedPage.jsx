@@ -15,7 +15,6 @@ import {
   Calendar,
   CheckCircle2,
   Filter,
-  Sparkles,
   ArrowRight
 } from 'lucide-react';
 import { COVERED_STATES, formatCurrencyPrice, EZEANI_COMPANY_INFO } from '../data/mockData';

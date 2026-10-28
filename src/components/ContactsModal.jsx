@@ -10,7 +10,6 @@ import {
   Compass, 
   ArrowRight, 
   User, 
-  Sparkles,
   Building2
 } from 'lucide-react';
 import { EZEANI_COMPANY_INFO } from '../data/mockData';
@@ -73,7 +72,6 @@ export default function ContactsModal({ isOpen, onClose }) {
               
               {/* Eyebrow Badge */}
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[#8DC63F] text-[11px] font-mono font-bold uppercase tracking-wider backdrop-blur-md border border-white/20">
-                <Sparkles className="w-3.5 h-3.5 text-[#8DC63F]" />
                 <span>Regional Advisory Desk</span>
               </div>
 

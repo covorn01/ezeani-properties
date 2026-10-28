@@ -8,7 +8,6 @@ import {
   ArrowRight, 
   ShieldCheck, 
   Landmark,
-  Sparkles,
   ChevronLeft,
   ChevronRight,
   MapPin,

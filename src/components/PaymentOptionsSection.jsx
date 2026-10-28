@@ -12,7 +12,6 @@ import {
   Lock, 
   FileCheck, 
   Globe, 
-  Sparkles,
   Smartphone,
   ExternalLink,
   Receipt,

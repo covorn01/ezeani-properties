@@ -15,7 +15,6 @@ import {
   Clock, 
   Lock, 
   Eye, 
-  Sparkles,
   Layers,
   Smartphone,
   Check

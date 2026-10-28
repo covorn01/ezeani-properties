@@ -9,8 +9,7 @@ import {
   ShieldCheck, 
   Check, 
   ExternalLink,
-  Layers,
-  Sparkles
+  Layers
 } from 'lucide-react';
 import { formatCurrencyPrice } from '../data/mockData';
 

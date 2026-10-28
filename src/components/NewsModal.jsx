@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Newspaper, Calendar, Clock, ArrowRight, Sparkles } from 'lucide-react';
+import { X, Newspaper, Calendar, Clock, ArrowRight } from 'lucide-react';
 import { NEWS_ARTICLES } from '../data/mockData';
 
 export default function NewsModal({ isOpen, onClose }) {

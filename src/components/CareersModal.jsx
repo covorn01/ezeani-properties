@@ -12,7 +12,6 @@ import {
   Mail, 
   Phone, 
   Globe,
-  Sparkles,
   ShieldCheck
 } from 'lucide-react';
 import { CAREERS_LIST } from '../data/mockData';
@@ -157,7 +156,6 @@ export default function CareersModal({ isOpen, onClose }) {
             <div className="lg:col-span-5 bg-[#34073E] text-white dark:bg-[#1E0424] p-7 sm:p-9 rounded-[1.75rem] border border-purple-900 flex flex-col justify-between space-y-6 relative overflow-hidden shadow-xl">
               <div className="space-y-4">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1E0424] text-[#8DC63F] text-[10px] font-mono font-bold uppercase tracking-wider border border-purple-900">
-                  <Sparkles className="w-3 h-3 text-[#8DC63F]" />
                   <span>Join Our Professional Team</span>
                 </div>
 

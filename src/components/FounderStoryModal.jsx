@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { 
   X, 
   Quote, 
-  Sparkles, 
+  Star, 
   ShieldCheck, 
   Compass, 
   CheckCircle2, 
@@ -200,7 +200,7 @@ export default function FounderStoryModal({ isOpen, onClose, onOpenBooking }) {
               <div className="absolute top-0 right-0 -mr-8 -mt-8 w-48 h-48 bg-[#8DC63F]/10 rounded-full blur-3xl pointer-events-none" />
               <div className="relative z-10 space-y-4">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#8DC63F] text-[#34073E] text-[11px] font-mono font-bold uppercase tracking-wider">
-                  <Sparkles className="w-3.5 h-3.5" />
+                  <Star className="w-3.5 h-3.5 fill-current" />
                   <span>Foundational Manifesto</span>
                 </div>
                 

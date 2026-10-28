@@ -7,7 +7,6 @@ import {
   Camera, 
   User, 
   CheckCircle2, 
-  Sparkles,
   Briefcase,
   Compass,
   FileCheck

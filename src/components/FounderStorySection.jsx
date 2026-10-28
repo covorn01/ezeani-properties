@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
   Quote, 
-  Sparkles, 
+  Star, 
   ArrowRight, 
   ShieldCheck, 
   CheckCircle2, 
@@ -59,7 +59,7 @@ export default function FounderStorySection({ onOpenFullStory, onOpenBooking }) 
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 border-b border-purple-200/70 dark:border-purple-900/60 pb-10">
           <div className="space-y-4 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-100 dark:bg-purple-950 text-[#7A2FB0] dark:text-[#B462E8] text-xs font-mono uppercase tracking-widest font-bold">
-              <Sparkles className="w-3.5 h-3.5 text-[#8DC63F]" />
+              <Star className="w-3.5 h-3.5 text-[#8DC63F] fill-[#8DC63F]" />
               <span>THE FOUNDER'S JOURNEY & IDENTITY</span>
             </div>
 
@@ -120,7 +120,7 @@ export default function FounderStorySection({ onOpenFullStory, onOpenBooking }) 
             {/* Left: Name, Cultural Identity & Story Narrative */}
             <div className="lg:col-span-7 space-y-6 sm:space-y-7">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#8DC63F]/20 text-[#8DC63F] text-xs font-mono font-bold uppercase tracking-wider border border-[#8DC63F]/30 backdrop-blur-xs">
-                <Sparkles className="w-3.5 h-3.5 text-[#8DC63F]" />
+                <Star className="w-3.5 h-3.5 text-[#8DC63F] fill-[#8DC63F]" />
                 <span>HONORARY TITLE & REVERED IDENTITY</span>
               </div>
 

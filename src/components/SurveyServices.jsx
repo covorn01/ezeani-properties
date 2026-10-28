@@ -11,7 +11,6 @@ import {
   FileText, 
   Clock, 
   DollarSign, 
-  Sparkles,
   Info,
   ChevronDown
 } from 'lucide-react';
