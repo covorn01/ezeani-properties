@@ -552,15 +552,6 @@ export default function Hero({ onOpenBooking, onOpenContacts, onFilterByState, o
               </h2>
               <p className="text-sm sm:text-base text-[#52525B] dark:text-purple-200 mt-1 max-w-2xl font-sans">
                 Active coverage in Lagos, Abuja, Delta, Ebonyi, Anambra, and across the South-East. Click any card to view available verified listings.
-              </p>
-            </div>
-
-            <div className="text-xs font-mono text-[#8DC63F] flex items-center gap-1.5 shrink-0 self-start sm:self-end bg-purple-950/40 dark:bg-purple-900/40 px-3 py-1.5 rounded-full border border-purple-800/40">
-              <span className="flex h-2 w-2 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8DC63F] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#8DC63F]"></span>
-              </span>
-              <span>Automated Loop • Hover to Pause</span>
             </div>
           </div>
 
