@@ -174,11 +174,30 @@ export default function Navbar({
                     <span>Luxury Lands</span>
                     <span className="text-xs font-mono text-[#8DC63F] font-bold">Plots</span>
                   </button>
+                  <button
+                    onClick={() => scrollToSection('property-management')}
+                    className="w-full text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#1F0A26] dark:text-purple-100 hover:bg-purple-50 dark:hover:bg-purple-900 flex items-center justify-between border-t border-purple-100 dark:border-purple-800/60"
+                  >
+                    <span>Property Management</span>
+                    <span className="text-xs font-mono text-[#8DC63F] font-bold">Official</span>
+                  </button>
                 </div>
               )}
             </div>
 
-            {/* 2. About */}
+            {/* 2. Property Management */}
+            <button
+              onClick={() => scrollToSection('property-management')}
+              className={`px-3.5 py-2 rounded-xl text-sm sm:text-[15px] font-bold transition-all ${
+                activeSection === 'property-management'
+                  ? 'text-[#7A2FB0] dark:text-[#B462E8] bg-purple-50 dark:bg-purple-950/60'
+                  : 'text-[#34073E] dark:text-purple-100 hover:text-[#7A2FB0] dark:hover:text-[#B462E8]'
+              }`}
+            >
+              Management
+            </button>
+
+            {/* 3. About */}
             <button
               onClick={() => scrollToSection('about')}
               className={`px-3.5 py-2 rounded-xl text-sm sm:text-[15px] font-bold transition-all ${
@@ -349,6 +368,13 @@ export default function Navbar({
               className="w-full text-left px-4 py-3 rounded-lg text-sm font-bold text-[#34073E] dark:text-purple-100 hover:bg-purple-100 dark:hover:bg-purple-900"
             >
               Properties Directory
+            </button>
+            <button
+              onClick={() => scrollToSection('property-management')}
+              className="w-full text-left px-4 py-3 rounded-lg text-sm font-bold text-[#34073E] dark:text-purple-100 hover:bg-purple-100 dark:hover:bg-purple-900 flex items-center justify-between"
+            >
+              <span>Property Management</span>
+              <span className="text-xs font-mono text-[#8DC63F] font-bold">Official Mandate</span>
             </button>
             <button
               onClick={() => scrollToSection('about')}

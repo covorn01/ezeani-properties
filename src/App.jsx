@@ -18,6 +18,7 @@ import LeadershipSection from './components/LeadershipSection';
 import FounderStorySection from './components/FounderStorySection';
 import FounderStoryModal from './components/FounderStoryModal';
 import StateDedicatedPage from './components/StateDedicatedPage';
+import PropertyManagementSection from './components/PropertyManagementSection';
 
 import { MOCK_PROPERTIES, SAMPLE_BOOKINGS, EZEANI_COMPANY_INFO, COVERED_STATES } from './data/mockData';
 
@@ -363,6 +364,12 @@ export default function App() {
               currency={currency}
               selectedStateFilter={selectedStateFilter}
               onSelectStateFilter={setSelectedStateFilter}
+            />
+
+            {/* Official Property Management & Asset Stewardship Section */}
+            <PropertyManagementSection
+              onOpenBooking={handleOpenBooking}
+              companyInfo={companyInfo}
             />
 
             {/* The Founder's Journey & Identity Section */}

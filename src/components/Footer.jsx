@@ -129,7 +129,12 @@ export default function Footer({ onOpenBooking, onOpenMyBookings, onOpenAdmin, c
                 </a>
               </li>
               <li>
-                <a href="#founder-story" className="hover:text-[#8DC63F] transition-colors flex items-center gap-1.5 text-[#8DC63F] font-semibold">
+                <a href="#property-management" className="hover:text-[#8DC63F] transition-colors flex items-center gap-1.5 text-[#8DC63F] font-semibold">
+                  <span>Property Management</span>
+                </a>
+              </li>
+              <li>
+                <a href="#founder-story" className="hover:text-[#8DC63F] transition-colors flex items-center gap-1.5 font-semibold">
                   <span>Founder's Story</span>
                 </a>
               </li>
