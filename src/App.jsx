@@ -312,7 +312,11 @@ export default function App() {
         />
 
         {/* Why Ezeani & 4-Step Process (About Section) */}
-        <WhyEzeani onOpenBooking={handleOpenBooking} companyInfo={companyInfo} />
+        <WhyEzeani 
+          onOpenBooking={handleOpenBooking} 
+          onOpenContacts={() => setContactsModalOpen(true)} 
+          companyInfo={companyInfo} 
+        />
 
         {/* Land Surveying Services (Commented out for real estate & luxury focus) */}
         {/* <SurveyServices onOpenBooking={handleOpenBooking} companyInfo={companyInfo} /> */}

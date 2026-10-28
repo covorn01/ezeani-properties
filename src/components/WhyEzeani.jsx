@@ -14,12 +14,13 @@ import {
   TrendingUp,
   HeartHandshake,
   Heart,
-  Scale
+  Scale,
+  PhoneCall
 } from 'lucide-react';
 import { EZEANI_COMPANY_INFO } from '../data/mockData';
 import LeadershipSection from './LeadershipSection';
 
-export default function WhyEzeani({ onOpenBooking, companyInfo }) {
+export default function WhyEzeani({ onOpenBooking, onOpenContacts, companyInfo }) {
   const valueIcons = [ShieldCheck, Eye, TrendingUp, Scale, HeartHandshake];
   const whyImage = companyInfo?.whyMedia || "/images/hero-villa.jpg";
   const isWhyVideo = Boolean(
@@ -186,8 +187,8 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
         {/* 5 Core Values - 2-Column Bento Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start pt-4">
           
-          {/* Left Column: Section Copy */}
-          <div className="lg:col-span-5 lg:sticky lg:top-28 space-y-4">
+          {/* Left Column: Section Copy & Contact Us CTA */}
+          <div className="lg:col-span-5 lg:sticky lg:top-28 space-y-5">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-100 dark:bg-purple-950/80 text-[#7A2FB0] dark:text-[#B462E8] text-xs font-mono uppercase tracking-wider font-bold border border-purple-200/80 dark:border-purple-800/60 shadow-2xs">
               <span className="w-2 h-2 rounded-full bg-[#8DC63F] animate-pulse"></span>
               <span>UNCOMPROMISING PILLARS</span>
@@ -198,6 +199,26 @@ export default function WhyEzeani({ onOpenBooking, companyInfo }) {
             <p className="text-base sm:text-lg text-[#3F3F46] dark:text-purple-200 leading-relaxed font-sans">
               These principles were not created in a boardroom; they were forged through years of ground-level experience in Nigeria's real estate terrain.
             </p>
+
+            {/* Contact Us CTA Button */}
+            <div className="pt-2">
+              <button
+                type="button"
+                onClick={() => {
+                  if (onOpenContacts) {
+                    onOpenContacts();
+                  } else {
+                    const el = document.getElementById('contact-advisory');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#34073E] hover:bg-[#4A0A58] dark:bg-[#8DC63F] dark:hover:bg-[#9de047] text-white dark:text-[#1E0424] font-bold text-sm sm:text-base shadow-lg shadow-purple-950/20 dark:shadow-[#8DC63F]/20 hover:shadow-xl transition-all duration-200 active:scale-95 group cursor-pointer"
+              >
+                <PhoneCall className="w-4 h-4 text-[#8DC63F] dark:text-[#1E0424]" />
+                <span>Contact Us</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
           </div>
 
           {/* Right Column: Bento Grid of Cards */}
