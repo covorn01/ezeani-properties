@@ -407,19 +407,14 @@ export default function Hero({ onOpenBooking, onOpenContacts, onFilterByState, o
           </div>
         </div>
 
-        {/* Contact Us Section (Between Hero Search and State Coverage Loop) */}
-        <section id="contact-advisory" aria-label="Contact Ezeani Properties" className="relative z-20 max-w-7xl mx-auto mt-8 sm:mt-10 px-4 sm:px-6 lg:px-8">
-          <div className="bg-white dark:bg-[#1E0424] rounded-[2.5rem] p-6 sm:p-8 lg:p-10 border border-purple-100/90 dark:border-purple-800/80 shadow-2xl transition-all duration-300 relative overflow-hidden group">
+        {/* Contact Us Section */}
+        <section id="contact-advisory" aria-label="Contact Ezeani Properties" className="relative z-20 max-w-7xl mx-auto py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
-            {/* Top decorative gradient line */}
-            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#8DC63F] via-[#B462E8] to-[#34073E]" />
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
-              
-              {/* Left Column: Heading, Subtitle, Fast Meta Info & Action Buttons at Bottom */}
-              <div className="lg:col-span-7 flex flex-col justify-between space-y-5">
-                <div className="space-y-3.5">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 dark:bg-purple-900/40 text-[#7A2FB0] dark:text-[#B462E8] text-xs font-mono font-bold uppercase tracking-wider">
+            {/* Left Column: Heading, Direct Info & Action Buttons */}
+            <div className="lg:col-span-6 flex flex-col justify-center space-y-6 lg:space-y-8">
+              <div className="space-y-4">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-100 dark:bg-purple-950/80 text-[#7A2FB0] dark:text-[#B462E8] text-xs font-mono font-bold uppercase tracking-wider border border-purple-200/80 dark:border-purple-800/60">
                   <span className="flex h-2 w-2 relative">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8DC63F] opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-[#8DC63F]"></span>
@@ -427,13 +422,9 @@ export default function Hero({ onOpenBooking, onOpenContacts, onFilterByState, o
                   <span>Direct Advisory Desk • Fast Response</span>
                 </div>
 
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-heading text-[#171717] dark:text-white tracking-tight leading-tight">
-                  Contact Us For Immediate Property Guidance
+                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-heading text-[#171717] dark:text-white tracking-tight leading-tight">
+                  Contact Us
                 </h2>
-
-                <p className="text-base sm:text-lg text-[#52525B] dark:text-purple-200 font-sans leading-relaxed">
-                  Have questions about verified titles, strategic land allocations, or booking an on-site inspection? Connect directly via WhatsApp, direct phone call, or our advisory form.
-                </p>
 
                 {/* Direct info links */}
                 <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-1 text-xs sm:text-sm text-[#71717A] dark:text-purple-300">
@@ -501,41 +492,39 @@ export default function Hero({ onOpenBooking, onOpenContacts, onFilterByState, o
                 </div>
               </div>
 
-              {/* Right Column: Contact & Property Advisory Depiction Image (Fills Blank Space) */}
-              <div className="lg:col-span-5 relative flex flex-col">
-                <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-purple-100 dark:border-purple-800/80 group h-full min-h-[300px] sm:min-h-[340px] lg:min-h-[380px]">
-                  <img
-                    src="/images/contact-advisory.jpg"
-                    alt="Ezeani Properties Advisory & Inquiries Desk"
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
-                    loading="lazy"
-                  />
-                  
-                  {/* Subtle Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1E0424]/80 via-transparent to-transparent pointer-events-none" />
+            {/* Right Column: Contact & Property Advisory Depiction Image with Expanded Height */}
+            <div className="lg:col-span-6 relative flex flex-col">
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-purple-200/80 dark:border-purple-800/80 group h-[440px] sm:h-[500px] lg:h-[560px]">
+                <img
+                  src="/images/contact-advisory.jpg"
+                  alt="Ezeani Properties Advisory & Inquiries Desk"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                  loading="lazy"
+                />
+                
+                {/* Subtle Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1E0424]/85 via-transparent to-transparent pointer-events-none" />
 
-                  {/* Floating Status Badge */}
-                  <div className="absolute bottom-4 left-4 right-4 bg-white/95 dark:bg-[#1E0424]/95 backdrop-blur-md rounded-xl p-3 sm:p-4 border border-purple-100/90 dark:border-purple-700/60 shadow-lg flex items-center justify-between">
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="w-2.5 h-2.5 rounded-full bg-[#8DC63F] animate-pulse"></span>
-                        <p className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#7A2FB0] dark:text-[#B462E8]">
-                          Concierge & Advisory Desk
-                        </p>
-                      </div>
-                      <p className="text-sm font-bold text-[#171717] dark:text-white mt-0.5">
-                        Instant Client Advisory
+                {/* Floating Status Badge */}
+                <div className="absolute bottom-5 left-5 right-5 bg-white/95 dark:bg-[#1E0424]/95 backdrop-blur-md rounded-2xl p-4 border border-purple-100/90 dark:border-purple-700/60 shadow-xl flex items-center justify-between">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full bg-[#8DC63F] animate-pulse"></span>
+                      <p className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#7A2FB0] dark:text-[#B462E8]">
+                        Concierge & Advisory Desk
                       </p>
                     </div>
-                    <div className="shrink-0 pl-2">
-                      <span className="px-2.5 py-1 rounded-lg bg-[#8DC63F]/15 text-[#34073E] dark:text-[#8DC63F] text-xs font-bold font-mono">
-                        Online Now
-                      </span>
-                    </div>
+                    <p className="text-base font-bold text-[#171717] dark:text-white mt-0.5">
+                      Instant Client Advisory
+                    </p>
+                  </div>
+                  <div className="shrink-0 pl-3">
+                    <span className="px-3 py-1.5 rounded-lg bg-[#8DC63F]/15 text-[#34073E] dark:text-[#8DC63F] text-xs font-bold font-mono">
+                      Online Now
+                    </span>
                   </div>
                 </div>
               </div>
-
             </div>
 
           </div>
