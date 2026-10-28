@@ -123,15 +123,6 @@ export default function PropertyManagementSection({ onOpenBooking, companyInfo =
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1E0424]/90 via-[#1E0424]/30 to-transparent pointer-events-none" />
               
-              {/* Floating Top Badge */}
-              <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-                <span className="px-3.5 py-1.5 rounded-full bg-[#8DC63F] text-[#1E0424] text-xs font-mono font-bold uppercase tracking-wider shadow-md">
-                  Dual-Pillar Management
-                </span>
-                <span className="px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md text-purple-200 text-xs font-mono border border-white/15">
-                  Official Mandate
-                </span>
-              </div>
 
               {/* Floating Bottom Card / Caption */}
               <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-[#1E0424]/85 backdrop-blur-md border border-purple-800/80 text-white space-y-1">
