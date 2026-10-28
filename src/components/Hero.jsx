@@ -414,11 +414,12 @@ export default function Hero({ onOpenBooking, onOpenContacts, onFilterByState, o
             {/* Top decorative gradient line */}
             <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#8DC63F] via-[#B462E8] to-[#34073E]" />
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
               
-              {/* Left Column: Heading, Subtitle, Fast Meta Info & Vertically Stacked Action Buttons */}
-              <div className="lg:col-span-7 space-y-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 dark:bg-purple-900/40 text-[#7A2FB0] dark:text-[#B462E8] text-xs font-mono font-bold uppercase tracking-wider">
+              {/* Left Column: Heading, Subtitle, Fast Meta Info & Action Buttons at Bottom */}
+              <div className="lg:col-span-7 flex flex-col justify-between space-y-5">
+                <div className="space-y-3.5">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 dark:bg-purple-900/40 text-[#7A2FB0] dark:text-[#B462E8] text-xs font-mono font-bold uppercase tracking-wider">
                   <span className="flex h-2 w-2 relative">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8DC63F] opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-[#8DC63F]"></span>
@@ -457,9 +458,10 @@ export default function Hero({ onOpenBooking, onOpenContacts, onFilterByState, o
                     <span>Asaba HQ & Awka Desk</span>
                   </span>
                 </div>
+              </div>
 
-                {/* Contact Action Buttons Row at the bottom of the text */}
-                <div className="flex flex-wrap items-center gap-3 pt-2">
+              {/* Contact Action Buttons Row at the bottom of the text */}
+              <div className="flex flex-wrap items-center gap-3 pt-3">
                   
                   {/* 1. Primary WhatsApp Action Button */}
                   <a
@@ -499,13 +501,13 @@ export default function Hero({ onOpenBooking, onOpenContacts, onFilterByState, o
                 </div>
               </div>
 
-              {/* Right Column: Contact & Property Advisory Depiction Image */}
-              <div className="lg:col-span-5 relative">
-                <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-purple-100 dark:border-purple-800/80 group">
+              {/* Right Column: Contact & Property Advisory Depiction Image (Fills Blank Space) */}
+              <div className="lg:col-span-5 relative flex flex-col">
+                <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-purple-100 dark:border-purple-800/80 group h-full min-h-[300px] sm:min-h-[340px] lg:min-h-[380px]">
                   <img
                     src="/images/contact-advisory.jpg"
                     alt="Ezeani Properties Advisory & Inquiries Desk"
-                    className="w-full h-72 sm:h-80 lg:h-[420px] object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                     loading="lazy"
                   />
                   
