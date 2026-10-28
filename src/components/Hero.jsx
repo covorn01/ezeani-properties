@@ -426,6 +426,10 @@ export default function Hero({ onOpenBooking, onOpenContacts, onFilterByState, o
                   Contact Us
                 </h2>
 
+                <p className="text-base sm:text-lg text-[#52525B] dark:text-purple-200 leading-relaxed max-w-xl">
+                  Speak directly with our dedicated real estate advisors to find verified properties tailored to your investment goals. Whether you are buying, leasing, or seeking professional property management, we ensure seamless, transparent guidance every step of the way.
+                </p>
+
                 {/* Direct info links */}
                 <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-1 text-xs sm:text-sm text-[#71717A] dark:text-purple-300">
                   <a 
