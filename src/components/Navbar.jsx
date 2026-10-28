@@ -40,7 +40,8 @@ export default function Navbar({
   onOpenNews,
   onOpenCareers,
   onOpenContacts,
-  onOpenAdmin
+  onOpenAdmin,
+  onNavigateHome
 }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -84,6 +85,10 @@ export default function Navbar({
     setMobileMenuOpen(false);
     setPropertiesDropdownOpen(false);
     setServicesDropdownOpen(false);
+    if (onNavigateHome) {
+      onNavigateHome(id);
+      return;
+    }
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });

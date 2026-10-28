@@ -17,8 +17,9 @@ import Footer from './components/Footer';
 import LeadershipSection from './components/LeadershipSection';
 import FounderStorySection from './components/FounderStorySection';
 import FounderStoryModal from './components/FounderStoryModal';
+import StateDedicatedPage from './components/StateDedicatedPage';
 
-import { MOCK_PROPERTIES, SAMPLE_BOOKINGS, EZEANI_COMPANY_INFO } from './data/mockData';
+import { MOCK_PROPERTIES, SAMPLE_BOOKINGS, EZEANI_COMPANY_INFO, COVERED_STATES } from './data/mockData';
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -58,6 +59,19 @@ export default function App() {
   });
 
   const [selectedStateFilter, setSelectedStateFilter] = useState('All');
+  
+  // Dedicated State Listings Page State
+  const [dedicatedState, setDedicatedState] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash.toLowerCase();
+      if (hash.startsWith('#state-')) {
+        const stateId = hash.replace('#state-', '');
+        const found = COVERED_STATES.find(s => s.id.toLowerCase() === stateId || s.name.toLowerCase() === stateId);
+        return found ? found.name : null;
+      }
+    }
+    return null;
+  });
 
   useEffect(() => {
     localStorage.setItem('ezeani_properties', JSON.stringify(properties));
@@ -150,6 +164,18 @@ export default function App() {
         const shouldBeAdmin = path === '/internal-admin' || path === '/admin' || hash === '#internal-admin' || hash === '#admin';
         setIsAdminRoute(shouldBeAdmin);
         if (shouldBeAdmin) setAdminDashboardOpen(true);
+
+        if (hash.startsWith('#state-')) {
+          const stateId = hash.replace('#state-', '');
+          const found = COVERED_STATES.find(s => s.id.toLowerCase() === stateId || s.name.toLowerCase() === stateId);
+          if (found) {
+            setDedicatedState(found.name);
+            window.scrollTo({ top: 0, behavior: 'instant' });
+          }
+        } else if (!hash.startsWith('#state-') && !hash.includes('admin')) {
+          // If hash was cleared (e.g. browser back button to home)
+          setDedicatedState((prev) => (prev ? null : prev));
+        }
       }
     };
 
@@ -238,6 +264,34 @@ export default function App() {
     }
   };
 
+  const handleOpenStatePage = (stateName) => {
+    setDedicatedState(stateName);
+    setSelectedStateFilter(stateName);
+    const matched = COVERED_STATES.find(s => s.name.toLowerCase() === stateName.toLowerCase());
+    const stateId = matched ? matched.id : stateName.toLowerCase();
+    window.location.hash = `#state-${stateId}`;
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  const handleNavigateHome = (sectionId = 'hero') => {
+    setDedicatedState(null);
+    if (window.location.hash.startsWith('#state')) {
+      window.history.pushState(null, '', window.location.pathname);
+    }
+    if (sectionId === 'hero') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 50);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white dark:bg-[#1E0424] text-[#1F0A26] dark:text-[#F7F2FA] flex flex-col justify-between font-sans selection:bg-[#34073E] selection:text-white dark:selection:bg-[#B462E8] dark:selection:text-[#1E0424] transition-colors duration-300">
       
@@ -259,67 +313,86 @@ export default function App() {
         onOpenCareers={() => setCareersModalOpen(true)}
         onOpenContacts={() => setContactsModalOpen(true)}
         onOpenAdmin={() => setAdminDashboardOpen(true)}
+        onNavigateHome={handleNavigateHome}
       />
 
       {/* Main Content */}
       <main className="flex-1">
-        {/* Hero */}
-        <Hero
-          onOpenBooking={handleOpenBooking}
-          onOpenContacts={() => setContactsModalOpen(true)}
-          onFilterByState={(stateName) => {
-            setSelectedStateFilter(stateName);
-            const el = document.getElementById('properties');
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-          }}
-          onSearchProperties={() => setActiveSection('properties')}
-          onQuickSurvey={() => setActiveSection('surveying')}
-          onQuickBuild={() => setActiveSection('construction')}
-          currency={currency}
-          companyInfo={companyInfo}
-        />
+        {dedicatedState ? (
+          <StateDedicatedPage
+            stateName={dedicatedState}
+            allStates={COVERED_STATES}
+            properties={properties}
+            currency={currency}
+            favorites={favorites}
+            onToggleFavorite={handleToggleFavorite}
+            comparedIds={comparedIds}
+            onToggleCompare={handleToggleCompare}
+            onOpenCompare={() => setCompareModalOpen(true)}
+            onSelectProperty={(prop) => setSelectedProperty(prop)}
+            onOpenBooking={handleOpenBooking}
+            onOpenContacts={() => setContactsModalOpen(true)}
+            onBackHome={() => handleNavigateHome('hero')}
+            onSelectState={(newStateName) => handleOpenStatePage(newStateName)}
+            companyInfo={companyInfo}
+          />
+        ) : (
+          <>
+            {/* Hero */}
+            <Hero
+              onOpenBooking={handleOpenBooking}
+              onOpenContacts={() => setContactsModalOpen(true)}
+              onFilterByState={handleOpenStatePage}
+              onSearchProperties={() => setActiveSection('properties')}
+              onQuickSurvey={() => setActiveSection('surveying')}
+              onQuickBuild={() => setActiveSection('construction')}
+              currency={currency}
+              companyInfo={companyInfo}
+            />
 
-        {/* Featured Properties */}
-        <PropertyListings
-          properties={properties}
-          onSelectProperty={(prop) => setSelectedProperty(prop)}
-          favorites={favorites}
-          onToggleFavorite={handleToggleFavorite}
-          onOpenBooking={handleOpenBooking}
-          comparedIds={comparedIds}
-          onToggleCompare={handleToggleCompare}
-          onOpenCompare={() => setCompareModalOpen(true)}
-          currency={currency}
-          selectedStateFilter={selectedStateFilter}
-          onSelectStateFilter={setSelectedStateFilter}
-        />
+            {/* Featured Properties */}
+            <PropertyListings
+              properties={properties}
+              onSelectProperty={(prop) => setSelectedProperty(prop)}
+              favorites={favorites}
+              onToggleFavorite={handleToggleFavorite}
+              onOpenBooking={handleOpenBooking}
+              comparedIds={comparedIds}
+              onToggleCompare={handleToggleCompare}
+              onOpenCompare={() => setCompareModalOpen(true)}
+              currency={currency}
+              selectedStateFilter={selectedStateFilter}
+              onSelectStateFilter={setSelectedStateFilter}
+            />
 
-        {/* The Founder's Journey & Identity Section */}
-        <FounderStorySection
-          onOpenFullStory={() => setFounderStoryModalOpen(true)}
-          onOpenBooking={handleOpenBooking}
-        />
+            {/* The Founder's Journey & Identity Section */}
+            <FounderStorySection
+              onOpenFullStory={() => setFounderStoryModalOpen(true)}
+              onOpenBooking={handleOpenBooking}
+            />
 
-        {/* Home Page Leadership Preview */}
-        <LeadershipSection 
-          variant="preview" 
-          companyInfo={companyInfo} 
-          onOpenBooking={handleOpenBooking}
-          onViewAll={() => {
-            const el = document.getElementById('about');
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-          }}
-        />
+            {/* Home Page Leadership Preview */}
+            <LeadershipSection 
+              variant="preview" 
+              companyInfo={companyInfo} 
+              onOpenBooking={handleOpenBooking}
+              onViewAll={() => {
+                const el = document.getElementById('about');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+            />
 
-        {/* Why Ezeani & 4-Step Process (About Section) */}
-        <WhyEzeani 
-          onOpenBooking={handleOpenBooking} 
-          onOpenContacts={() => setContactsModalOpen(true)} 
-          companyInfo={companyInfo} 
-        />
+            {/* Why Ezeani & 4-Step Process (About Section) */}
+            <WhyEzeani 
+              onOpenBooking={handleOpenBooking} 
+              onOpenContacts={() => setContactsModalOpen(true)} 
+              companyInfo={companyInfo} 
+            />
 
-        {/* Land Surveying Services (Commented out for real estate & luxury focus) */}
-        {/* <SurveyServices onOpenBooking={handleOpenBooking} companyInfo={companyInfo} /> */}
+            {/* Land Surveying Services (Commented out for real estate & luxury focus) */}
+            {/* <SurveyServices onOpenBooking={handleOpenBooking} companyInfo={companyInfo} /> */}
+          </>
+        )}
       </main>
 
       {/* Footer */}
