@@ -177,10 +177,10 @@ export default function PropertyManagementSection({ onOpenBooking, companyInfo =
           </div>
         </div>
 
-        {/* 3. The Two Pillars in Detail: In-Person Physical Operations vs. Digital Dashboard Monitoring */}
+        {/* COMMENTED OUT FOR NOW - TWO PILLARS DETAIL (In-Person Physical Operations vs. Digital Dashboard Monitoring):
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
           
-          {/* Pillar 1: In-Person Physical Maintenance & On-Ground Operations */}
+          Pillar 1: In-Person Physical Maintenance & On-Ground Operations
           <div className="bg-white dark:bg-[#1E0424] rounded-3xl p-6 sm:p-8 lg:p-10 border border-purple-100/90 dark:border-purple-800/80 shadow-lg flex flex-col justify-between space-y-6">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
@@ -201,7 +201,7 @@ export default function PropertyManagementSection({ onOpenBooking, companyInfo =
                 </p>
               </div>
 
-              {/* Service Features Checklist */}
+              Service Features Checklist
               <div className="space-y-3.5 pt-2">
                 {[
                   {
@@ -242,7 +242,7 @@ export default function PropertyManagementSection({ onOpenBooking, companyInfo =
             </div>
           </div>
 
-          {/* Pillar 2: Digital Telemetry, Monitoring & Owner Dashboard Ledger */}
+          Pillar 2: Digital Telemetry, Monitoring & Owner Dashboard Ledger
           <div className="bg-white dark:bg-[#1E0424] rounded-3xl p-6 sm:p-8 lg:p-10 border border-purple-100/90 dark:border-purple-800/80 shadow-lg flex flex-col justify-between space-y-6">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
@@ -263,7 +263,7 @@ export default function PropertyManagementSection({ onOpenBooking, companyInfo =
                 </p>
               </div>
 
-              {/* Service Features Checklist */}
+              Service Features Checklist
               <div className="space-y-3.5 pt-2">
                 {[
                   {
@@ -305,6 +305,7 @@ export default function PropertyManagementSection({ onOpenBooking, companyInfo =
           </div>
 
         </div>
+        */}
 
         {/* 4. Official Capacities We Handle & Onboarding Form */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
