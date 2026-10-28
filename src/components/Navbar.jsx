@@ -181,6 +181,13 @@ export default function Navbar({
                     <span>Property Management</span>
                     <span className="text-xs font-mono text-[#8DC63F] font-bold">Official</span>
                   </button>
+                  <button
+                    onClick={() => scrollToSection('payment-options')}
+                    className="w-full text-left px-3.5 py-2.5 rounded-xl text-sm font-semibold text-[#1F0A26] dark:text-purple-100 hover:bg-purple-50 dark:hover:bg-purple-900 flex items-center justify-between border-t border-purple-100 dark:border-purple-800/60"
+                  >
+                    <span>Payment Channels</span>
+                    <span className="text-xs font-mono text-[#8DC63F] font-bold">Online / Wire</span>
+                  </button>
                 </div>
               )}
             </div>
@@ -375,6 +382,13 @@ export default function Navbar({
             >
               <span>Property Management</span>
               <span className="text-xs font-mono text-[#8DC63F] font-bold">Official Mandate</span>
+            </button>
+            <button
+              onClick={() => scrollToSection('payment-options')}
+              className="w-full text-left px-4 py-3 rounded-lg text-sm font-bold text-[#34073E] dark:text-purple-100 hover:bg-purple-100 dark:hover:bg-purple-900 flex items-center justify-between"
+            >
+              <span>Payment Channels</span>
+              <span className="text-xs font-mono text-[#8DC63F] font-bold">Online & Transfer</span>
             </button>
             <button
               onClick={() => scrollToSection('about')}

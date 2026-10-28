@@ -19,6 +19,7 @@ import FounderStorySection from './components/FounderStorySection';
 import FounderStoryModal from './components/FounderStoryModal';
 import StateDedicatedPage from './components/StateDedicatedPage';
 import PropertyManagementSection from './components/PropertyManagementSection';
+import PaymentOptionsSection from './components/PaymentOptionsSection';
 
 import { MOCK_PROPERTIES, SAMPLE_BOOKINGS, EZEANI_COMPANY_INFO, COVERED_STATES } from './data/mockData';
 
@@ -394,6 +395,12 @@ export default function App() {
               onOpenBooking={handleOpenBooking} 
               onOpenContacts={() => setContactsModalOpen(true)} 
               companyInfo={companyInfo} 
+            />
+
+            {/* Flexible Payment Channels Section (Pay Online or Corporate Bank Transfer) */}
+            <PaymentOptionsSection
+              onOpenBooking={handleOpenBooking}
+              currency={currency}
             />
 
             {/* Land Surveying Services (Commented out for real estate & luxury focus) */}

@@ -83,6 +83,72 @@ export const EZEANI_COMPANY_INFO = {
 
 export { LEADERSHIP_MEMBERS };
 
+export const CORPORATE_BANK_ACCOUNTS = [
+  {
+    bankName: "Zenith Bank PLC",
+    accountName: "Ezeani Properties Limited",
+    accountNumber: "1018942201",
+    currency: "NGN (Naira)",
+    type: "Corporate Operations & Inspection Fees",
+    iconColor: "#8DC63F"
+  },
+  {
+    bankName: "Access Bank PLC",
+    accountName: "Ezeani Properties Limited",
+    accountNumber: "0782991043",
+    currency: "NGN (Naira)",
+    type: "Property Allocations & Escrow Retainer",
+    iconColor: "#B462E8"
+  },
+  {
+    bankName: "Guaranty Trust Bank (GTBank)",
+    accountName: "Ezeani Properties Limited",
+    accountNumber: "0219488102",
+    currency: "USD / Domiciliary",
+    type: "Diaspora Inflows & Foreign Currency Remittance",
+    swiftCode: "GTBINGLA",
+    iconColor: "#34073E"
+  }
+];
+
+export const PAYMENT_SERVICES_LIST = [
+  {
+    id: "inspection",
+    name: "Site Inspection & Field Escort",
+    feeNgn: 25000,
+    feeUsd: 30,
+    desc: "Includes physical site escort, GPS beacon confirmation, surveyor accompaniment, or private live 4K video inspection for diaspora clients."
+  },
+  {
+    id: "consultation",
+    name: "Executive & Founder Advisory",
+    feeNgn: 50000,
+    feeUsd: 65,
+    desc: "1-on-1 strategic portfolio allocation session with Christian Ezeani or senior positioning architect for high-yield acquisitions."
+  },
+  {
+    id: "title-search",
+    name: "Legal Cadastral & Registry Title Search",
+    feeNgn: 75000,
+    feeUsd: 95,
+    desc: "Full legal verification with State Ministry of Lands, Surveyor-General cadastral registry audit, and caveat search."
+  },
+  {
+    id: "property-mgmt",
+    name: "Property Management Onboarding Retainer",
+    feeNgn: 100000,
+    feeUsd: 125,
+    desc: "Initial estate audit, tenant vetting onboarding, digital dashboard ledger configuration, and facility handover."
+  },
+  {
+    id: "reservation",
+    name: "Property Holding & Allocation Deposit",
+    feeNgn: 500000,
+    feeUsd: 650,
+    desc: "Initial refundable commitment to freeze property price, reserve plot boundaries, and initiate contract drafting."
+  }
+];
+
 export const MOCK_PROPERTIES = [
   {
     id: "ez-prop-1",
