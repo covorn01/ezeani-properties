@@ -82,7 +82,7 @@ export default function FounderStoryModal({ isOpen, onClose, onOpenBooking }) {
               {/* Founder Portrait Frame */}
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-purple-700/60 aspect-[3/4] w-full group bg-purple-950">
                 <img
-                  src="/images/christian-ezeani.jpg"
+                  src="/images/placeholder-founder.svg"
                   alt="Christian Ezeani - Founder & Managing Director"
                   className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
@@ -174,7 +174,7 @@ export default function FounderStoryModal({ isOpen, onClose, onOpenBooking }) {
             <div className="lg:hidden rounded-3xl overflow-hidden border border-purple-200 dark:border-purple-800 shadow-xl bg-[#34073E] text-white p-4 sm:p-5 flex flex-col sm:flex-row items-center gap-5">
               <div className="w-36 h-48 sm:w-44 sm:h-56 shrink-0 rounded-2xl overflow-hidden shadow-lg border border-purple-700/60 bg-purple-950">
                 <img 
-                  src="/images/christian-ezeani.jpg" 
+                  src="/images/placeholder-founder.svg" 
                   alt="Christian Ezeani - Founder & Managing Director" 
                   className="w-full h-full object-cover object-top" 
                 />

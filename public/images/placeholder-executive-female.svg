@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000">
+  <defs>
+    <linearGradient id="bgGradF" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1A021E"/>
+      <stop offset="50%" stop-color="#2D0637"/>
+      <stop offset="100%" stop-color="#120115"/>
+    </linearGradient>
+    <radialGradient id="glowGradF" cx="50%" cy="30%" r="50%">
+      <stop offset="0%" stop-color="#B462E8" stop-opacity="0.18"/>
+      <stop offset="60%" stop-color="#7A2FB0" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#1A021E" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="silhouetteGradF" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4B125B"/>
+      <stop offset="60%" stop-color="#2B0735"/>
+      <stop offset="100%" stop-color="#190220"/>
+    </linearGradient>
+    <linearGradient id="blazerHighlight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#B462E8" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#7A2FB0" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#8DC63F" stop-opacity="0.4"/>
+    </linearGradient>
+    <filter id="subtleShadowF" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="800" height="1000" fill="url(#bgGradF)"/>
+  <rect width="800" height="1000" fill="url(#glowGradF)"/>
+
+  <!-- Monogram Background Watermark -->
+  <text x="400" y="520" text-anchor="middle" font-family="'Cinzel', 'Playfair Display', Georgia, serif" font-size="280" font-weight="900" fill="#7A2FB0" opacity="0.08" letter-spacing="10">ME</text>
+
+  <!-- Geometric Luxury Pattern Accents -->
+  <circle cx="400" cy="380" r="260" fill="none" stroke="#7A2FB0" stroke-width="1.5" stroke-dasharray="6 8" opacity="0.25"/>
+  <circle cx="400" cy="380" r="290" fill="none" stroke="#8DC63F" stroke-width="1" opacity="0.2"/>
+
+  <!-- Executive Silhouette Body -->
+  <g filter="url(#subtleShadowF)">
+    <!-- Shoulders & Blazer Torso -->
+    <path d="M 180 880 C 180 750, 250 650, 320 610 L 360 570 L 440 570 L 480 610 C 550 650, 620 750, 620 880 L 180 880 Z" fill="url(#silhouetteGradF)" stroke="url(#blazerHighlight)" stroke-width="2"/>
+    
+    <!-- Tailored Blazer Lapels Left & Right -->
+    <path d="M 360 570 L 380 740 L 400 770 L 350 670 Z" fill="#3D0948" stroke="#B462E8" stroke-width="1.5" opacity="0.8"/>
+    <path d="M 440 570 L 420 740 L 400 770 L 450 670 Z" fill="#3D0948" stroke="#B462E8" stroke-width="1.5" opacity="0.8"/>
+    
+    <!-- Inner Silk Blouse (V-Neck) -->
+    <polygon points="380,570 420,570 400,670" fill="#FAF7FC" opacity="0.9"/>
+    <!-- Subtle Pearl / Gold Accent Necklace -->
+    <path d="M 388 610 Q 400 625 412 610" fill="none" stroke="#8DC63F" stroke-width="2.5"/>
+
+    <!-- Neck -->
+    <rect x="370" y="475" width="60" height="100" rx="20" fill="url(#silhouetteGradF)" stroke="#7A2FB0" stroke-width="1.5"/>
+
+    <!-- Head / Jaw Silhouette -->
+    <ellipse cx="400" cy="385" rx="105" ry="135" fill="url(#silhouetteGradF)" stroke="url(#blazerHighlight)" stroke-width="2"/>
+    
+    <!-- Elegant Hairstyle Silhouette -->
+    <path d="M 280 430 C 270 280, 330 210, 400 210 C 470 210, 530 280, 520 430 C 500 460, 480 440, 475 360 C 470 270, 435 240, 400 240 C 365 240, 330 270, 325 360 C 320 440, 300 460, 280 430 Z" fill="#24032C"/>
+  </g>
+
+  <!-- Top Badge Overlay: Mandate -->
+  <g transform="translate(400, 80)">
+    <rect x="-140" y="-22" width="280" height="44" rx="22" fill="#1E0424" fill-opacity="0.85" stroke="#7A2FB0" stroke-width="1.5"/>
+    <circle cx="-105" cy="0" r="5" fill="#8DC63F"/>
+    <text x="-85" y="5" font-family="'Courier New', Courier, monospace" font-size="12" font-weight="bold" fill="#8DC63F" letter-spacing="2">EXECUTIVE DIRECTOR</text>
+  </g>
+
+  <!-- Bottom Elegant Title Plaque -->
+  <g transform="translate(0, 860)">
+    <rect x="50" y="0" width="700" height="105" rx="24" fill="#16021B" fill-opacity="0.9" stroke="#7A2FB0" stroke-opacity="0.6" stroke-width="1.5"/>
+    <rect x="50" y="0" width="700" height="3" fill="#8DC63F"/>
+    
+    <text x="400" y="42" text-anchor="middle" font-family="'Cinzel', 'Playfair Display', Georgia, serif" font-size="24" font-weight="bold" fill="#FFFFFF" letter-spacing="1">MRS. EZEANI</text>
+    <text x="400" y="72" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#B462E8" letter-spacing="2">EXECUTIVE DIRECTOR • STRATEGY &amp; ADVISORY</text>
+    <text x="400" y="92" text-anchor="middle" font-family="'Courier New', Courier, monospace" font-size="11" font-weight="normal" fill="#8DC63F" opacity="0.9">OFFICIAL CORPORATE PORTRAIT IN PRODUCTION</text>
+  </g>
+</svg>

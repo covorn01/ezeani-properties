@@ -19,46 +19,19 @@ import { LEADERSHIP_MEMBERS } from '../data/leadershipData';
  * where executive headshots can be dropped in later.
  */
 function ProfilePictureFrame({ image, name, initials, badge, role }) {
-  if (image) {
-    return (
-      <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden bg-gray-100 dark:bg-purple-950/60 border border-purple-200/80 dark:border-purple-800/80 group-hover:border-[#8DC63F] transition-all duration-300 shadow-sm">
-        <img 
-          src={image} 
-          alt={name} 
-          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" 
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-      </div>
-    );
-  }
+  const displayImage = image || "/images/placeholder-leader.svg";
 
   return (
-    <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-b from-gray-50 via-gray-100 to-gray-200 dark:from-[#2A0631] dark:via-[#24052B] dark:to-[#1E0424] border-2 border-dashed border-gray-300 dark:border-purple-800/80 group-hover:border-[#8DC63F] dark:group-hover:border-[#8DC63F] transition-all duration-300 flex flex-col items-center justify-center p-6 text-center select-none shadow-inner">
-      {/* Background Monogram Watermark */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.07] dark:opacity-[0.12]">
-        <span className="font-heading font-black text-7xl sm:text-8xl tracking-tighter text-[#34073E] dark:text-[#B462E8]">
-          {initials || "EP"}
-        </span>
-      </div>
-
-      {/* Center Avatar Placeholder Icon */}
-      <div className="relative z-10 w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white dark:bg-[#34073E] shadow-md border border-gray-200 dark:border-purple-700/60 flex items-center justify-center group-hover:scale-105 transition-transform duration-300 mb-3">
-        <User className="w-10 h-10 sm:w-12 sm:h-12 text-gray-400 dark:text-purple-300/70" />
-      </div>
-
-      {/* Frame Label */}
-      <div className="relative z-10 space-y-1">
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 dark:bg-[#34073E]/90 border border-gray-200 dark:border-purple-800 text-[10px] font-mono font-bold text-[#7A2FB0] dark:text-[#B462E8] shadow-xs">
-          <Camera className="w-3 h-3 text-[#8DC63F]" />
-          <span>Executive Photo Frame</span>
-        </div>
-        <p className="text-[10px] text-gray-400 dark:text-purple-400 font-sans">
-          Placeholder • Ready for headshot
-        </p>
-      </div>
-
+    <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden bg-gray-100 dark:bg-purple-950/60 border border-purple-200/80 dark:border-purple-800/80 group-hover:border-[#8DC63F] transition-all duration-300 shadow-sm">
+      <img 
+        src={displayImage} 
+        alt={name} 
+        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" 
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+      
       {/* Corner Badge */}
-      <div className="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-[#34073E]/80 dark:bg-[#8DC63F]/20 text-[#8DC63F] dark:text-[#8DC63F] text-[9px] font-mono font-bold uppercase tracking-wider backdrop-blur-xs">
+      <div className="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-[#1E0424]/85 text-[#8DC63F] text-[10px] font-mono font-bold uppercase tracking-wider backdrop-blur-md border border-purple-700/50 shadow-xs">
         {badge || "Executive"}
       </div>
     </div>
